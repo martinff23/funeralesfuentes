@@ -14,20 +14,20 @@ $router->post('/login', [AuthController::class, 'login']);
 $router->post('/logout', [AuthController::class, 'logout']);
 
 // Crear Cuenta
-$router->get('/registro', [AuthController::class, 'registro']);
-$router->post('/registro', [AuthController::class, 'registro']);
+$router->get('/register', [AuthController::class, 'register']);
+$router->post('/register', [AuthController::class, 'register']);
 
 // Formulario de olvide mi password
-$router->get('/olvide', [AuthController::class, 'olvide']);
-$router->post('/olvide', [AuthController::class, 'olvide']);
+$router->get('/forgot', [AuthController::class, 'forgot']);
+$router->post('/forgot', [AuthController::class, 'forgot']);
 
 // Colocar el nuevo password
-$router->get('/reestablecer', [AuthController::class, 'reestablecer']);
-$router->post('/reestablecer', [AuthController::class, 'reestablecer']);
+$router->get('/reset', [AuthController::class, 'reset']);
+$router->post('/reset', [AuthController::class, 'reset']);
 
 // Confirmación de Cuenta
-$router->get('/mensaje', [AuthController::class, 'mensaje']);
-$router->get('/confirmar-cuenta', [AuthController::class, 'confirmar']);
+$router->get('/message', [AuthController::class, 'message']);
+$router->get('/confirmAccount', [AuthController::class, 'confirmaccount']);
 
 
-$router->comprobarRutas();
+$router->verifyRoutes();

@@ -5,7 +5,7 @@ namespace MVC;
 class Router
 {
     public array $getRoutes = [];
-    public array $postRoutes = [];
+    public array $setRoutes = [];
 
     public function get($url, $fn)
     {
@@ -14,19 +14,19 @@ class Router
 
     public function post($url, $fn)
     {
-        $this->postRoutes[$url] = $fn;
+        $this->setRoutes[$url] = $fn;
     }
 
-    public function comprobarRutas()
+    public function verifyRoutes()
     {
 
-        $url_actual = $_SERVER['PATH_INFO'] ?? '/';
+        $currentURL = $_SERVER['PATH_INFO'] ?? '/';
         $method = $_SERVER['REQUEST_METHOD'];
 
         if ($method === 'GET') {
-            $fn = $this->getRoutes[$url_actual] ?? null;
+            $fn = $this->getRoutes[$currentURL] ?? null;
         } else {
-            $fn = $this->postRoutes[$url_actual] ?? null;
+            $fn = $this->setRoutes[$currentURL] ?? null;
         }
 
         if ( $fn ) {
@@ -36,9 +36,9 @@ class Router
         }
     }
 
-    public function render($view, $datos = [])
+    public function render($view, $data = [])
     {
-        foreach ($datos as $key => $value) {
+        foreach ($data as $key => $value) {
             $$key = $value; 
         }
 
