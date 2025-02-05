@@ -1,27 +1,34 @@
 // Fuentes
-$fuente-principal: 'Outfit', sans-serif;
+$principal-font: 'Avenir', 'Charter', sans-serif;
 
 // Tamaño de Media Queries
-$telefono: 480px;
+$telephone: 480px;
 $tablet: 768px;
 $desktop: 1024px;
 $xl_desktop: 1200px;
 
+@function cmyk-to-rgb($c, $m, $y, $k) {
+    $r:255*(1-$c)*(1-$k);
+    $g:255*(1-$m)*(1-$k);
+    $b:255*(1-$y)*(1-$k);
+    @return rgb($r,$g,$b);
+}
+
 // Colores
-$azul: #007df4;
-$secundario: #00c8c2;
+$c_blue: cmyk-to-rgb(0.9, 0.8, 0.5, 0.6);
+$c_secondary: #00c8c2;
 
-$negro: #1a1b15;
-$blanco: #FFFFFF;
-$gris: #64748B;
-$gris-claro: #F8FAFC;
-$gris-oscuro: #1E293B;
+$c_black: #1a1b15;
+$c_white: #FFFFFF;
+$c_gray: #64748B;
+$c_light-gray: #F8FAFC;
+$c_dark-gray: #1E293B;
 
-$rojo: rgb(169, 0, 0);
-$verde: #02db02;
+$c_red: rgb(169, 0, 0);
+$c_green: #02db02;
 
 // Fuentes
-$delgada: 300;
+$light: 300;
 $regular: 400;
 $bold: 700;
 $black: 900

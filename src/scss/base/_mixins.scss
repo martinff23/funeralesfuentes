@@ -1,31 +1,31 @@
-@use 'variables' as v;
+@use 'variables' as var;
 
 /** Media Queries **/
-@mixin telefono {
-    @media (min-width: v.$telefono) {
+@mixin telephone {
+    @media (min-width: var.$telephone) {
         @content;
     }
 }
 @mixin tablet {
-    @media (min-width: v.$tablet) {
+    @media (min-width: var.$tablet) {
         @content;
     }
 }
 @mixin desktop {
-    @media (min-width: v.$desktop) {
+    @media (min-width: var.$desktop) {
         @content;
     }
 }
 @mixin xl_desktop {
-    @media (min-width: v.$xl_desktop) {
+    @media (min-width: var.$xl_desktop) {
         @content;
     }
 }
 
-@mixin boton($bgColor, $colorTexto) {
+@mixin button($bgColor, $textColor) {
     background-color: $bgColor;
     padding: 1.5rem 4rem;
-    color: $colorTexto;
+    color: $textColor;
     font-size: 1.8rem;
     font-weight: 700;
     border: none;
@@ -41,8 +41,30 @@
     }
 }
 
-@mixin grid($columnas, $espaciado ) {
+@mixin grid($columns, $space) {
     display: grid;
-    gap: $espaciado;
-    grid-template-columns: repeat($columnas, 1fr);
+    gap: $space;
+    grid-template-columns: repeat($columns, 1fr);
+}
+
+@mixin container{
+    width: min(95%,120rem);
+    margin: 0 auto;
+}
+
+@mixin container-sm{
+    width: min(95%,60rem);
+    margin: 0 auto;
+}
+
+@mixin headings{
+    font-family: var.$principal-font;
+    font-weight: var.$black;
+    margin: 2rem 0;
+}
+
+@mixin page-name{
+    @include headings;
+    margin: 6rem 0 3rem 0;
+    text-align: center;
 }

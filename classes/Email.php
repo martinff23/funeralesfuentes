@@ -2,6 +2,8 @@
 
 namespace Classes;
 
+use PHPMailer\PHPMailer\PHPMailer;
+
 class Email {
 
     public $email;
@@ -18,7 +20,7 @@ class Email {
     public function sendConfirmation() {
 
          // create a new object
-         $mail = new PHPMailer();
+         $mail = new PHPMailer(true);
          $mail->isSMTP();
          $mail->Host = $_ENV['EMAIL_HOST'];
          $mail->SMTPAuth = true;
@@ -26,7 +28,7 @@ class Email {
          $mail->Username = $_ENV['EMAIL_USER'];
          $mail->Password = $_ENV['EMAIL_PASS'];
      
-         $mail->setFrom('cuentas@devwebcamp.com');
+         $mail->setFrom('contacto@funeralesfuentes.com');
          $mail->addAddress($this->email, $this->name);
          $mail->Subject = 'Confirma tu Cuenta';
 
@@ -35,7 +37,7 @@ class Email {
          $mail->CharSet = 'UTF-8';
 
          $content = '<html>';
-         $content .= "<p><strong>Hola " . $this->name .  "</strong> Has Registrado Correctamente tu cuenta en DevWebCamp; pero es necesario confirmarla</p>";
+         $content .= "<p><strong>Hola " . $this->name .  "</strong> Has Registrado Correctamente tu cuenta en Funerales Fuentes; pero es necesario confirmarla</p>";
          $content .= "<p>Presiona aquí: <a href='" . $_ENV['HOST'] . "/confirmar-cuenta?token=" . $this->token . "'>Confirmar Cuenta</a>";       
          $content .= "<p>Si tu no creaste esta cuenta; puedes ignorar el mensaje</p>";
          $content .= '</html>';
@@ -49,7 +51,7 @@ class Email {
     public function sendInstructions() {
 
         // create a new object
-        $mail = new PHPMailer();
+        $mail = new PHPMailer(true);
         $mail->isSMTP();
         $mail->Host = $_ENV['EMAIL_HOST'];
         $mail->SMTPAuth = true;
@@ -57,7 +59,7 @@ class Email {
         $mail->Username = $_ENV['EMAIL_USER'];
         $mail->Password = $_ENV['EMAIL_PASS'];
     
-        $mail->setFrom('cuentas@devwebcamp.com');
+        $mail->setFrom('contacto@funeralesfuentes.com');
         $mail->addAddress($this->email, $this->name);
         $mail->Subject = 'Reestablece tu password';
 

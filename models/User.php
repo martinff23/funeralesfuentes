@@ -3,7 +3,7 @@
 namespace Model;
 
 class User extends ActiveRecord {
-    protected static $table = 'usuarios';
+    protected static $table = 'users';
     protected static $databaseColumns = ['id', 'name', 'f_name', 'email', 'password', 'confirmed', 'token', 'admin'];
 
     public $id;
@@ -42,7 +42,7 @@ class User extends ActiveRecord {
             self::$alerts['error'][] = 'Email no válido';
         }
         if(!$this->password) {
-            self::$alerts['error'][] = 'El Password no puede ir vacio';
+            self::$alerts['error'][] = 'La contraseña no puede ir vacia';
         }
         return self::$alerts;
 
@@ -60,13 +60,13 @@ class User extends ActiveRecord {
             self::$alerts['error'][] = 'El Email es Obligatorio';
         }
         if(!$this->password) {
-            self::$alerts['error'][] = 'El Password no puede ir vacio';
+            self::$alerts['error'][] = 'La contraseña no puede ir vacia';
         }
         if(strlen($this->password) < 6) {
-            self::$alerts['error'][] = 'El password debe contener al menos 6 caracteres';
+            self::$alerts['error'][] = 'La contraseña debe contener al menos 6 caracteres';
         }
         if($this->password !== $this->password2) {
-            self::$alerts['error'][] = 'Los password son diferentes';
+            self::$alerts['error'][] = 'Las contraseñas son diferentes';
         }
         return self::$alerts;
     }
@@ -85,23 +85,23 @@ class User extends ActiveRecord {
     // Valida el Password 
     public function validatePassword() {
         if(!$this->password) {
-            self::$alerts['error'][] = 'El Password no puede ir vacio';
+            self::$alerts['error'][] = 'La contraseña no puede ir vacia';
         }
         if(strlen($this->password) < 6) {
-            self::$alerts['error'][] = 'El password debe contener al menos 6 caracteres';
+            self::$alerts['error'][] = 'La contraseña debe contener al menos 6 caracteres';
         }
         return self::$alerts;
     }
 
     public function newPassword() : array {
         if(!$this->currentPassword) {
-            self::$alerts['error'][] = 'El Password Actual no puede ir vacio';
+            self::$alerts['error'][] = 'La contrasela actual no puede ir vacio';
         }
         if(!$this->newPassword) {
-            self::$alerts['error'][] = 'El Password Nuevo no puede ir vacio';
+            self::$alerts['error'][] = 'La contraseña nueva no puede ir vacio';
         }
         if(strlen($this->newPassword) < 6) {
-            self::$alerts['error'][] = 'El Password debe contener al menos 6 caracteres';
+            self::$alerts['error'][] = 'La contraseña debe contener al menos 6 caracteres';
         }
         return self::$alerts;
     }

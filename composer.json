@@ -1,6 +1,6 @@
 {
-    "name": "juandelatorre/devwebcamp",
-    "description": "Proyecto PHP 8, MVC, SQL, BEM, SASS",
+    "name": "martinfuentesfernandez/funeralesfuentes",
+    "description": "Proyecto Funerales Fuentes",
     "type": "project",
     "autoload": {
         "psr-4": {
@@ -12,11 +12,11 @@
     },
     "authors": [
         {
-            "name": "Juan Pablo De la torre Valdez https://twitter.com/@codigoconjuan https://codigoconjuan.com "
+            "name": "Martín Fuentes Fernández https://martinfuentesfernandez.com "
         }
     ],
     "require": {
-        "phpmailer/phpmailer": "^6.5",
+        "phpmailer/phpmailer": "^6.9",
         "vlucas/phpdotenv": "^5.4",
         "intervention/image": "^2.7"
     }

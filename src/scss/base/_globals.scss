@@ -1,15 +1,18 @@
-@use 'variables' as v;
-@use 'mixins' as m;
+@use 'variables' as var;
+@use 'mixins' as mix;
 
 html {
     font-size: 62.5%;
     box-sizing: border-box;
+    background-image: url('../img/golden_background.svg');
+    background-size: 5rem 5rem;
+    background-repeat: repeat;
 }
 *, *:before, *:after {
     box-sizing: inherit;
 }
 body {
-    font-family: v.$fuente_principal;
+    font-family: var.$principal-font;
     font-size: 1.8rem;
 }
 a {

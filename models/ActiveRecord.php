@@ -4,9 +4,10 @@ class ActiveRecord {
 
     // Base DE DATOS
     protected static $db;
-    protected static $id;
     protected static $table = '';
     protected static $databaseColumns = [];
+
+    public $id;
 
     // Alertas y Mensajes
     protected static $alerts = [];
@@ -18,18 +19,18 @@ class ActiveRecord {
 
     // Setear un tipo de Alerta
     public static function setAlert($type, $message) {
-        static::$alerts[$type][] = $message;
+        self::$alerts[$type][] = $message;
     }
 
     // Obtener las alertas
     public static function getAlerts() {
-        return static::$alerts;
+        return self::$alerts;
     }
 
     // Validación que se hereda en modelos
     public function validate() {
-        static::$alerts = [];
-        return static::$alerts;
+        self::$alerts = [];
+        return self::$alerts;
     }
 
     // Consulta SQL para crear un objeto en Memoria (Active Record)
@@ -40,7 +41,7 @@ class ActiveRecord {
         // Iterar los resultados
         $array = [];
         while($record = $result->fetch_assoc()) {
-            $array[] = static::createObject($record);
+            $array[] = self::createObject($record);
         }
 
         // liberar la memoria
@@ -65,7 +66,7 @@ class ActiveRecord {
     // Identificar y unir los atributos de la BD
     public function attributes() {
         $attributes = [];
-        foreach(static::$databaseColumns as $column) {
+        foreach(self::$databaseColumns as $column) {
             if($column === 'id') continue;
             $attributes[$column] = $this->$column;
         }
@@ -138,7 +139,7 @@ class ActiveRecord {
         $attributes = $this->sanitizeAttributes();
 
         // Insertar en la base de datos
-        $query = " INSERT INTO " . static::$table . " ( ";
+        $query = " INSERT INTO " . self::$table . " ( ";
         $query .= join(', ', array_keys($attributes));
         $query .= " ) VALUES (' "; 
         $query .= join("', '", array_values($attributes));
@@ -149,7 +150,7 @@ class ActiveRecord {
         // Resultado de la consulta
         $result = self::$db->query($query);
         return [
-           'resultado' =>  $result,
+           'result' =>  $result,
            'id' => self::$db->insert_id
         ];
     }
@@ -166,7 +167,7 @@ class ActiveRecord {
         }
 
         // Consulta SQL
-        $query = "UPDATE " . static::$table ." SET ";
+        $query = "UPDATE " . self::$table ." SET ";
         $query .=  join(', ', $values );
         $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
         $query .= " LIMIT 1 "; 
@@ -178,7 +179,7 @@ class ActiveRecord {
 
     // Eliminar un Registro por su ID
     public function deleteElement() {
-        $query = "DELETE FROM "  . static::$table . " WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
+        $query = "DELETE FROM "  . self::$table . " WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
         $result = self::$db->query($query);
         return $result;
     }

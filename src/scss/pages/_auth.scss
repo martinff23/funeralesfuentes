@@ -1,0 +1,9 @@
+@use 'base/mixins' as mix;
+
+.auth{
+    @include mix.container-sm;
+}
+
+.auth__text{
+    font-size: 2rem;
+}

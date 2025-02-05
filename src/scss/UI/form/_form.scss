@@ -1,0 +1,28 @@
+@use 'base/variables' as var;
+@use 'base/mixins' as mix;
+
+.form{
+    display: flex;
+    flex-direction: column;
+    &__field{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin: 1.5rem 0;
+    }
+    &__label{
+        display: block;
+        font-size: 1.8rem;
+        color: rgba(var.$c_black,0.8);
+    }
+    &__input{
+        padding: 1rem;
+        border: 1px solid darken(var.$c_dark-gray,20);
+        border-radius: 0.5rem;
+    }
+    &__submit{
+        @include mix.button(var.$c_blue,var.$c_white);
+        // width: auto;
+        // align-self: center;
+    }
+}
