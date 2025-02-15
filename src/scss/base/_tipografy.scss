@@ -3,6 +3,11 @@
 
 h1, h2, h3 {
     @include mix.headings;
+    font-family: 'Charter';
+}
+
+p,a{
+    font-family: 'Charter';
 }
 
 h1 {

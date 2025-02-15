@@ -1,0 +1,20 @@
+@use 'base/variables' as var;
+@use 'base/mixins' as mix;
+
+.bar{
+    background-color: var.$c_blue;
+    &__content{
+        @include mix.container;
+        display: flex;
+        flex-direction: column;
+        @include mix.desktop{
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+    &__logo{
+        @include mix.logo;
+        @include mix.fluid-text(2rem,3rem);
+    }
+}

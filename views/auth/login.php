@@ -15,6 +15,6 @@
     </form>
     <div class="actions">
         <a href="/register" class="actions__link">¿Aún no tienes una cuenta? Crea una</a>
-        <a href="/forgot" class="actions__link">¿Olvidaste tu contraseña? Recuperar contraseña</a>
+        <a href="/forgot" class="actions__link">¿Olvidaste tu contraseña? Recupérala</a>
     </div>
 </main>

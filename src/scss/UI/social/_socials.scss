@@ -1,0 +1,13 @@
+@use 'base/variables' as var;
+@use 'base/mixins' as mix;
+
+.socialNet{
+    @include mix.socialNet(var.$c_golden,2rem);
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 4rem 0;
+    @include mix.tablet{
+        justify-content: flex-end;
+    }
+}

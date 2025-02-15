@@ -314,7 +314,7 @@ html {
 }
 
 body {
-  font-family: "Avenir", "Charter", sans-serif;
+  font-family: "Charter", "Avenir", sans-serif;
   font-size: 1.8rem;
 }
 
@@ -327,10 +327,21 @@ img {
   height: auto;
 }
 
+@font-face {
+  font-family: "Charter";
+  src: url("fonts/charter_regular.woff") format("woff"), url("fonts/charter_regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 h1, h2, h3 {
-  font-family: "Avenir", "Charter", sans-serif;
+  font-family: "Charter", "Avenir", sans-serif;
   font-weight: 900;
   margin: 2rem 0;
+  font-family: "Charter";
+}
+
+p, a {
+  font-family: "Charter";
 }
 
 h1 {
@@ -350,7 +361,7 @@ h3 {
 }
 
 [class$=__heading] {
-  font-family: "Avenir", "Charter", sans-serif;
+  font-family: "Charter", "Avenir", sans-serif;
   font-weight: 900;
   margin: 2rem 0;
   margin: 6rem 0 3rem 0;
@@ -413,5 +424,244 @@ h3 {
 .form__submit:hover {
   background-color: rgb(1.7, 3.4, 8.5);
   cursor: pointer;
+}
+
+.header {
+  font-family: "Charter";
+  min-height: 60rem;
+  background-image: url(../img/header.avif);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.header__container {
+  width: min(95%, 140rem);
+  margin: 0 auto;
+}
+.header__nav {
+  padding: 5rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+}
+@media (min-width: 768px) {
+  .header__nav {
+    justify-content: flex-end;
+  }
+}
+.header__link {
+  color: #e6d36c;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 1rem;
+}
+.header__link:hover {
+  background-color: #e6d36c;
+  color: rgb(10.2, 20.4, 51);
+}
+.header__content {
+  padding-top: 10rem;
+}
+@media (min-width: 768px) {
+  .header__content {
+    padding-top: 5rem;
+  }
+}
+.header__logo {
+  font-size: clamp(2rem, 7.5vw, 3.5rem);
+  background: linear-gradient(to right, #e6d36c, #FFFFFF);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  text-transform: uppercase;
+}
+@media (min-width: 768px) {
+  .header__logo {
+    text-align: left;
+    display: inline-block;
+  }
+}
+.header__text {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #e6d36c;
+  margin: 2rem 0;
+  text-transform: uppercase;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .header__text {
+    text-align: left;
+  }
+}
+.header__text--slogan {
+  font-size: 1.5rem;
+}
+.header__button {
+  background-color: rgb(10.2, 20.4, 51);
+  padding: 1.5rem 4rem;
+  color: #e6d36c;
+  font-size: 1.8rem;
+  font-weight: 700;
+  border: none;
+  transition-property: background-color;
+  transition-duration: 0.3s;
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+  text-transform: uppercase;
+  margin: 2rem 0;
+}
+.header__button:hover {
+  background-color: rgb(1.7, 3.4, 8.5);
+  cursor: pointer;
+}
+@media (min-width: 768px) {
+  .header__button {
+    width: auto;
+  }
+}
+
+.bar {
+  background-color: rgb(10.2, 20.4, 51);
+}
+.bar__content {
+  width: min(95%, 140rem);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 1024px) {
+  .bar__content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+.bar__logo {
+  color: #e6d36c;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: clamp(2rem, 7.5vw, 3rem);
+}
+@media (min-width: 1024px) {
+  .bar__logo {
+    text-align: left;
+    margin: 0;
+  }
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 1024px) {
+  .nav {
+    flex-direction: row;
+  }
+}
+.nav__link {
+  color: #e6d36c;
+  font-size: 1.8rem;
+  padding: 2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-align: center;
+}
+.nav__link:hover {
+  background-color: #e6d36c;
+  color: rgb(10.2, 20.4, 51);
+}
+
+.footer {
+  background-color: rgb(10.2, 20.4, 51);
+  margin-top: 5rem;
+  padding-top: 3rem;
+  color: #e6d36c;
+}
+.footer__grid {
+  width: min(95%, 140rem);
+  margin: 0 auto;
+}
+@media (min-width: 768px) {
+  .footer__grid {
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.footer__logo {
+  color: #e6d36c;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: clamp(1rem, 7.5vw, 3.5rem);
+}
+@media (min-width: 1024px) {
+  .footer__logo {
+    text-align: left;
+    margin: 0;
+  }
+}
+.footer__text {
+  line-height: 2;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .footer__text {
+    text-align: left;
+  }
+}
+.footer__copyright {
+  background-color: rgb(1.7, 3.4, 8.5);
+  margin: 3rem 0 0 0;
+  padding: 2rem 0;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 900;
+}
+.footer__copyright--regular {
+  font-weight: 400;
+}
+
+.socialNet {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 4rem 0;
+}
+.socialNet__link::before {
+  color: #e6d36c;
+  font-size: 2rem;
+  display: inline-block;
+  font-style: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Font Awesome 6 Brands";
+}
+.socialNet__link[href*="https://facebook.com"]::before {
+  content: "\f39e";
+}
+.socialNet__link[href*="https://github.com"]::before {
+  content: "\f09b";
+}
+.socialNet__link[href*="https://tiktok.com"]::before {
+  content: "\e07b";
+}
+.socialNet__link[href*="https://instagram.com"]::before {
+  content: "\f16d";
+}
+.socialNet__link[href*="https://youtube.com"]::before {
+  content: "\f167";
+}
+.socialNet__link[href*="https://twitter.com"]::before {
+  content: "\f099";
+}
+.socialNet__hide {
+  display: none;
+}
+@media (min-width: 768px) {
+  .socialNet {
+    justify-content: flex-end;
+  }
 }
 /*# sourceMappingURL=app.css.map */

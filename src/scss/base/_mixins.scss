@@ -48,7 +48,7 @@
 }
 
 @mixin container{
-    width: min(95%,120rem);
+    width: min(95%,140rem);
     margin: 0 auto;
 }
 
@@ -67,4 +67,59 @@
     @include headings;
     margin: 6rem 0 3rem 0;
     text-align: center;
+}
+
+@mixin fluid-text($min,$max){
+    font-size: clamp($min,7.5vw,$max);
+}
+
+@mixin degraded-text($start,$end){
+    background: linear-gradient(to right,$start,$end);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@mixin logo{
+    color: var.$c_golden;
+    text-align: center;
+    margin-bottom: 2rem;
+    @include desktop{
+        text-align: left;
+        margin: 0;
+    }
+}
+
+@mixin socialNet($color,$size){
+    &__link{
+        &::before{
+            color: $color;
+            font-size: $size;
+            display: inline-block;
+            font-style: normal;
+            text-rendering: auto;
+            -webkit-font-smoothing:antialiased;
+            font-family: 'Font Awesome 6 Brands';
+        }
+        &[href*="https://facebook.com"]::before {
+            content: "\f39e";
+        }
+        &[href*="https://github.com"]::before {
+            content: "\f09b";
+        }        
+        &[href*="https://tiktok.com"]::before {
+            content: "\e07b";
+        }
+        &[href*="https://instagram.com"]::before {
+            content: "\f16d";
+        }
+        &[href*="https://youtube.com"]::before {
+            content: "\f167";
+        }
+        &[href*="https://twitter.com"]::before {
+            content: "\f099";
+        }
+    }
+    &__hide{
+        display: none;
+    }
 }

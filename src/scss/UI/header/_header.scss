@@ -1,0 +1,71 @@
+@use 'base/variables' as var;
+@use 'base/mixins' as mix;
+
+.header{
+    font-family: 'Charter';
+    min-height: 60rem;
+    background-image: url(../img/header.avif);
+    background-repeat: no-repeat;
+    background-size: cover;
+    &__container{
+        @include mix.container;
+    }
+    &__nav{
+        padding: 5rem 0;
+        display: flex;
+        justify-content: center;
+        gap: 2.5rem;
+        @include mix.tablet{
+            justify-content: flex-end;
+        }
+    }
+    &__link{
+        color: var.$c_golden;
+        font-size: 1.4rem;
+        text-transform: uppercase;
+        font-weight: var.$bold;
+        padding: 1rem;
+        &:hover{
+            background-color: var.$c_golden;
+            color: var.$c_blue;
+        }
+    }
+    &__content{
+        padding-top: 10rem;
+        @include mix.tablet{
+            padding-top: 5rem;
+        }
+    }
+    &__logo{
+        @include mix.fluid-text(2rem,3.5rem);
+        @include mix.degraded-text(var.$c_golden,var.$c_white);
+        text-align: center;
+        text-transform: uppercase;
+        @include mix.tablet{
+            text-align: left;
+            display: inline-block;
+        }
+    }
+    &__text{
+        font-size: 2rem;
+        font-weight: var.$bold;
+        color: var.$c_golden;
+        margin: 2rem 0;
+        text-transform: uppercase;
+        text-align: center;
+        @include mix.tablet{
+            text-align: left;
+        }
+        &--slogan{
+            font-size: 1.5rem;
+        }
+    }
+    &__button{
+        @include mix.button(var.$c_blue,var.$c_golden);
+        text-transform: uppercase;
+        margin: 2rem 0;
+        @include mix.tablet{
+            width: auto;
+        }
+    }
+}

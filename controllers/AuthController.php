@@ -48,7 +48,7 @@ class AuthController {
         
         // Render a la vista 
         $router->render('auth/login', [
-            'title' => 'Iniciar Sesión',
+            'title' => 'Inicio de sesión',
             'alerts' => $alerts
         ]);
     }
@@ -105,7 +105,7 @@ class AuthController {
 
         // Render a la vista
         $router->render('auth/register', [
-            'title' => 'Crea tu cuenta en Funerales Fuentes',
+            'title' => 'Creación de cuenta',
             'user' => $user, 
             'alerts' => $alerts
         ]);
@@ -150,8 +150,8 @@ class AuthController {
         }
 
         // Muestra la vista
-        $router->render('auth/olvide', [
-            'title' => 'Olvide mi Password',
+        $router->render('auth/forgot', [
+            'title' => 'Olvidé mi contraseña',
             'alerts' => $alerts
         ]);
     }

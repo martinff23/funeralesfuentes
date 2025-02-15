@@ -22,3 +22,11 @@ img {
     width: 100%;
     height: auto;
 }
+
+@font-face {
+    font-family: 'Charter';
+    src: url('fonts/charter_regular.woff') format('woff'),
+         url('fonts/charter_regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

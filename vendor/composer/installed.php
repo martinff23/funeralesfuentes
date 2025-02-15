@@ -3,7 +3,7 @@
         'name' => 'martinfuentesfernandez/funeralesfuentes',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '288e70d592d8cdb321cb52c4b1328393a08a8db0',
+        'reference' => 'c7310180dd7e1c0c366ab568cdd1d55557846c03',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -40,7 +40,7 @@
         'martinfuentesfernandez/funeralesfuentes' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '288e70d592d8cdb321cb52c4b1328393a08a8db0',
+            'reference' => 'c7310180dd7e1c0c366ab568cdd1d55557846c03',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
