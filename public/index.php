@@ -2,8 +2,30 @@
 
 require_once __DIR__ . '/../includes/app.php';
 
+use Controllers\APIBirthdaysController;
+use Controllers\APICemeteriesController;
+use Controllers\APIChapelsController;
+use Controllers\APIComplementsController;
+use Controllers\APICrematoriesController;
+use Controllers\APIHearsesController;
+use Controllers\APIInventoryController;
+use Controllers\APIProductsController;
+use Controllers\APIServicesController;
 use MVC\Router;
 use Controllers\AuthController;
+use Controllers\CemeteriesController;
+use Controllers\ChapelsController;
+use Controllers\ComplementsController;
+use Controllers\CotizationsController;
+use Controllers\CrematoriesController;
+use Controllers\DashboardController;
+use Controllers\HearsesController;
+use Controllers\IntranetController;
+use Controllers\PackagesController;
+use Controllers\PagesController;
+use Controllers\ProductsController;
+use Controllers\ServicesController;
+use Controllers\UserPagesController;
 
 $router = new Router();
 
@@ -13,21 +35,124 @@ $router->get('/login', [AuthController::class, 'login']);
 $router->post('/login', [AuthController::class, 'login']);
 $router->post('/logout', [AuthController::class, 'logout']);
 
-// Crear Cuenta
+// Create account
 $router->get('/register', [AuthController::class, 'register']);
 $router->post('/register', [AuthController::class, 'register']);
 
-// Formulario de olvide mi password
+// Forgot my password
 $router->get('/forgot', [AuthController::class, 'forgot']);
 $router->post('/forgot', [AuthController::class, 'forgot']);
 
-// Colocar el nuevo password
+// New password
 $router->get('/reset', [AuthController::class, 'reset']);
 $router->post('/reset', [AuthController::class, 'reset']);
 
-// Confirmación de Cuenta
+// Account confirm
 $router->get('/message', [AuthController::class, 'message']);
 $router->get('/confirmAccount', [AuthController::class, 'confirmaccount']);
 
+// Admin area
+$router->get('/dashboard/start', [DashboardController::class, 'dashboard']);
+
+$router->get('/dashboard/services', [ServicesController::class, 'dashboard']);
+$router->get('/dashboard/services/create', [ServicesController::class, 'create']);
+$router->post('/dashboard/services/create', [ServicesController::class, 'create']);
+$router->get('/dashboard/services/edit', [ServicesController::class, 'edit']);
+$router->post('/dashboard/services/edit', [ServicesController::class, 'edit']);
+$router->post('/dashboard/services/delete', [ServicesController::class, 'delete']);
+
+$router->get('/dashboard/products', [ProductsController::class, 'dashboard']);
+$router->get('/dashboard/products/create', [ProductsController::class, 'create']);
+$router->post('/dashboard/products/create', [ProductsController::class, 'create']);
+$router->get('/dashboard/products/edit', [ProductsController::class, 'edit']);
+$router->post('/dashboard/products/edit', [ProductsController::class, 'edit']);
+$router->post('/dashboard/products/delete', [ProductsController::class, 'delete']);
+
+$router->get('/dashboard/complements', [ComplementsController::class, 'dashboard']);
+$router->get('/dashboard/complements/create', [ComplementsController::class, 'create']);
+$router->post('/dashboard/complements/create', [ComplementsController::class, 'create']);
+$router->get('/dashboard/complements/edit', [ComplementsController::class, 'edit']);
+$router->post('/dashboard/complements/edit', [ComplementsController::class, 'edit']);
+$router->post('/dashboard/complements/delete', [ComplementsController::class, 'delete']);
+
+$router->get('/dashboard/chapels', [ChapelsController::class, 'dashboard']);
+$router->get('/dashboard/chapels/create', [ChapelsController::class, 'create']);
+$router->post('/dashboard/chapels/create', [ChapelsController::class, 'create']);
+$router->get('/dashboard/chapels/edit', [ChapelsController::class, 'edit']);
+$router->post('/dashboard/chapels/edit', [ChapelsController::class, 'edit']);
+$router->post('/dashboard/chapels/delete', [ChapelsController::class, 'delete']);
+
+$router->get('/dashboard/hearses', [HearsesController::class, 'dashboard']);
+$router->get('/dashboard/hearses/create', [HearsesController::class, 'create']);
+$router->post('/dashboard/hearses/create', [HearsesController::class, 'create']);
+$router->get('/dashboard/hearses/edit', [HearsesController::class, 'edit']);
+$router->post('/dashboard/hearses/edit', [HearsesController::class, 'edit']);
+$router->post('/dashboard/hearses/delete', [HearsesController::class, 'delete']);
+
+$router->get('/dashboard/cemeteries', [CemeteriesController::class, 'dashboard']);
+$router->get('/dashboard/cemeteries/create', [CemeteriesController::class, 'create']);
+$router->post('/dashboard/cemeteries/create', [CemeteriesController::class, 'create']);
+$router->get('/dashboard/cemeteries/edit', [CemeteriesController::class, 'edit']);
+$router->post('/dashboard/cemeteries/edit', [CemeteriesController::class, 'edit']);
+$router->post('/dashboard/cemeteries/delete', [CemeteriesController::class, 'delete']);
+
+$router->get('/dashboard/crematories', [CrematoriesController::class, 'dashboard']);
+$router->get('/dashboard/crematories/create', [CrematoriesController::class, 'create']);
+$router->post('/dashboard/crematories/create', [CrematoriesController::class, 'create']);
+$router->get('/dashboard/crematories/edit', [CrematoriesController::class, 'edit']);
+$router->post('/dashboard/crematories/edit', [CrematoriesController::class, 'edit']);
+$router->post('/dashboard/crematories/delete', [CrematoriesController::class, 'delete']);
+
+$router->get('/dashboard/packages', [PackagesController::class, 'dashboard']);
+$router->get('/dashboard/packages/create', [PackagesController::class, 'create']);
+$router->post('/dashboard/packages/create', [PackagesController::class, 'create']);
+$router->get('/dashboard/packages/edit', [PackagesController::class, 'edit']);
+$router->post('/dashboard/packages/edit', [PackagesController::class, 'edit']);
+$router->post('/dashboard/packages/delete', [PackagesController::class, 'delete']);
+
+$router->get('/dashboard/cotization', [CotizationsController::class, 'dashboard']);
+
+// Intranet area
+$router->get('/dashboard/intranet', [IntranetController::class, 'dashboard']);
+$router->get('/dashboard/intranet/contract', [IntranetController::class, 'contract']);
+
+// API to check product inventory
+$router->get('/api/product-inventory', [APIInventoryController::class, 'index']);
+$router->get('/api/coffins', [APIProductsController::class, 'indexCoffins']);
+$router->get('/api/urns', [APIProductsController::class, 'indexUrns']);
+$router->get('/api/services', [APIServicesController::class, 'index']);
+$router->get('/api/complements', [APIComplementsController::class, 'index']);
+$router->get('/api/chapels', [APIChapelsController::class, 'index']);
+$router->get('/api/hearses', [APIHearsesController::class, 'index']);
+$router->get('/api/cemeteries', [APICemeteriesController::class, 'index']);
+$router->get('/api/crematories', [APICrematoriesController::class, 'index']);
+$router->get('/api/birthdays', [APIBirthdaysController::class, 'index']);
+
+
+// Public areas
+$router->get('/', [PagesController::class, 'index']);
+$router->get('/about', [PagesController::class, 'about']);
+$router->get('/packages', [PagesController::class, 'packages']);
+$router->get('/products', [PagesController::class, 'products']);
+$router->get('/services', [PagesController::class, 'services']);
+$router->get('/chapels', [PagesController::class, 'chapels']);
+$router->get('/hearses', [PagesController::class, 'hearses']);
+$router->get('/cemeteries', [PagesController::class, 'cemeteries']);
+$router->get('/crematories', [PagesController::class, 'crematories']);
+$router->get('/cotization', [PagesController::class, 'cotization']);
+
+
+// User sites
+$router->get('/user/menu', [UserPagesController::class, 'index']);
+$router->get('/user/info', [UserPagesController::class, 'info']);
+$router->post('/user/info', [UserPagesController::class, 'info']);
+$router->get('/user/password', [UserPagesController::class, 'password']);
+$router->post('/user/password', [UserPagesController::class, 'password']);
+$router->get('/user/photo', [UserPagesController::class, 'photo']);
+$router->post('/user/photo', [UserPagesController::class, 'photo']);
+$router->get('/user/email', [UserPagesController::class, 'email']);
+$router->post('/user/email', [UserPagesController::class, 'email']);
+$router->get('/user/subscriptions', [UserPagesController::class, 'subscriptions']);
+$router->post('/user/subscriptions', [UserPagesController::class, 'subscriptions']);
 
 $router->verifyRoutes();

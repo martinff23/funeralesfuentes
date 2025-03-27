@@ -1,0 +1,46 @@
+@use 'base/mixins' as mix;
+@use 'base/variables' as var;
+
+.packages{
+    &__grid{
+        @include mix.container;
+        @include mix.grid(1, 3rem);
+        @include mix.tablet{
+            @include mix.grid(3, 3rem);
+        }
+    }
+}
+
+.package{
+    @include mix.card;
+    &__name{
+        font-size: 2.8rem;
+        color: var.$c_blue;
+        font-weight: var.$black;
+        text-align: center;
+    }
+    &__description{
+        font-size: 1.8rem;
+        font-style: italic;
+        margin: 3rem 0;
+    }
+    &__list{
+        @include mix.reset-list;
+        margin-left: 2rem;
+        font-size: 1.5rem;
+        color: var.$c_blue;
+        line-height: 1.8;
+    }
+    &__price{
+        font-size: 3rem;
+        padding: 1rem;
+        margin: 3rem 0 0 0;
+        background-color: var.$c_golden;
+        color: var.$c_blue;
+        font-weight: var.$black;
+        text-align: center;
+    }
+    &__contact{
+        @include mix.button(var.$c_blue, var.$c_golden);
+    }
+}

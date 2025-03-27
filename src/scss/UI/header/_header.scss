@@ -2,8 +2,8 @@
 @use 'base/mixins' as mix;
 
 .header{
-    font-family: 'Charter';
-    min-height: 60rem;
+    // font-family: 'Charter';
+    min-height: 55rem;
     background-image: url(../img/header.avif);
     background-repeat: no-repeat;
     background-size: cover;
@@ -19,16 +19,23 @@
             justify-content: flex-end;
         }
     }
+    &__user-image{
+        margin: 0;
+        padding: 0;
+        width: 35px;
+        height: 35px;
+        object-fit: cover;
+        border-radius: 50%;
+        display: block;
+    }
     &__link{
-        color: var.$c_golden;
-        font-size: 1.4rem;
-        text-transform: uppercase;
-        font-weight: var.$bold;
-        padding: 1rem;
-        &:hover{
-            background-color: var.$c_golden;
-            color: var.$c_blue;
-        }
+        @include mix.link;
+    }
+    &__form{
+        display: flex;
+    }
+    &__submit{
+        @extend .header__link;
     }
     &__content{
         padding-top: 10rem;
@@ -37,7 +44,8 @@
         }
     }
     &__logo{
-        @include mix.fluid-text(2rem,3.5rem);
+        @include mix.logo;
+        @include mix.fluid-text(3rem,6rem);
         @include mix.degraded-text(var.$c_golden,var.$c_white);
         text-align: center;
         text-transform: uppercase;
@@ -50,7 +58,7 @@
         font-size: 2rem;
         font-weight: var.$bold;
         color: var.$c_golden;
-        margin: 2rem 0;
+        margin: 1rem 0;
         text-transform: uppercase;
         text-align: center;
         @include mix.tablet{

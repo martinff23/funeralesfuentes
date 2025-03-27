@@ -1,0 +1,104 @@
+@use 'base/mixins' as mix;
+@use 'base/variables' as var;
+
+.dashboard{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    &__header{
+        background-color: var.$c_blue;
+        padding: 2rem;
+    }
+    &__header-grid{
+        display: flex;
+        flex-direction: column;
+        @include mix.tablet{
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+    &__logo{
+        @include mix.logo;
+        @include mix.fluid-text(2rem,3rem);
+    }
+    &__nav{
+
+    }
+    &__formlogout{
+        display: flex;
+        justify-content: center;
+    }
+    &__submit--logout{
+        @include mix.link;
+    }
+    &__grid{
+        display: flex;
+        flex: 1;
+        overflow-y: auto;
+    }
+    &__sidebar{
+        background-color: var.$c_blue;
+        width: 10rem;
+    }
+    &__menu{
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    &__link{
+        color: var.$c_gray;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.2rem 0;
+        transition: 300ms background-color ease, 300ms color ease;
+        &:hover,
+        &--current{
+            background-color: darken(var.$c_blue,20%);
+            color: var.$c_gray;
+        }
+    }
+    &__icon{
+        font-size: 1.5rem;
+    }
+    &__menu-text{
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        font-weight: var.$bold;
+        margin-top: 0.5rem;
+    }
+    &__content{
+        padding: 1rem 1rem 3rem 1rem;
+        width: 100%;
+        overflow-y: scroll;
+        @include mix.tablet{
+            padding: 1rem 5rem 3rem 5rem;
+        }
+    }
+    &__button-container{
+        margin-bottom: 5rem;
+        @include mix.tablet{
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+    &__button{
+        @include mix.button(var.$c_blue,var.$c_golden);
+        text-transform: uppercase;
+        font-size: 1.4rem;
+        @include mix.tablet{
+            width: auto;
+        }
+    }
+    &__container{
+        @include mix.shadow;
+        background-color: var.$c_golden;
+        padding: 2rem;
+        border-radius: 1rem;
+    }
+    &__form{
+        @extend .dashboard__container;
+        @include mix.container-md;
+    }
+}

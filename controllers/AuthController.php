@@ -5,6 +5,10 @@ namespace Controllers;
 use Classes\Email;
 use Model\User;
 use MVC\Router;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Encoders\PngEncoder;
+use Intervention\Image\Encoders\WebpEncoder;
 
 
 class AuthController {
@@ -21,10 +25,10 @@ class AuthController {
                 // Verificar que el usuario exista
                 $user = User::where('email', $auth->email);
                 if(!$user instanceof User){
-                    User::setAlert('error', 'El Usuario no existe');
+                    User::setAlert('error', 'El usuario no existe');
                 } else {
                     if(!$user->confirmed){
-                        User::setAlert('error', 'El Usuario no esta confirmado');
+                        User::setAlert('error', 'El usuario no esta confirmado');
                     } else{
                         // El Usuario existe
                         if( password_verify($_POST['password'], $user->password) ){
@@ -34,10 +38,18 @@ class AuthController {
                             $_SESSION['name'] = $user->name;
                             $_SESSION['f_name'] = $user->f_name;
                             $_SESSION['email'] = $user->email;
-                            $_SESSION['admin'] = $user->admin ?? null;
+                            $_SESSION['isAdmin'] = $user->isAdmin ?? null;
+                            $_SESSION['isEmployee'] = $user->isEmployee ?? null;
+
+                            //Redirection
+                            if($user->isAdmin){
+                                header('Location: /dashboard/start');
+                            } else{
+                                header('Location: /user');
+                            }
                             
                         } else {
-                            User::setAlert('error', 'Password Incorrecto');
+                            User::setAlert('error', 'Contraseña incorrecta o usuario no verificado');
                         }
                     }
                 }
@@ -57,7 +69,9 @@ class AuthController {
         if('POST'===$_SERVER['REQUEST_METHOD']) {
             session_start();
             $_SESSION = [];
+            session_destroy();
             header('Location: /');
+            exit();
         }
        
     }
@@ -67,15 +81,40 @@ class AuthController {
         $user = new User;
 
         if('POST'===$_SERVER['REQUEST_METHOD']){
+            $imageFolder='../public/build/img/users/';
+
+            $imageName=md5(uniqid(rand(),true));
+            if(!empty(trim($_FILES['user_image']['tmp_name']))){
+                $manager = new ImageManager(new Driver());
+                $pngImage=$manager->read(trim($_FILES['user_image']['tmp_name']))->cover(800,600)->encode(new PngEncoder(80));
+                $webpImage=$manager->read(trim($_FILES['user_image']['tmp_name']))->cover(800,600)->encode(new WebpEncoder(80));
+                $_POST['image']=$imageName;
+                $savePicture=true;
+            } else{
+                $_POST['image']=$user->currentImage;
+            }
 
             $user->sincronize($_POST);
             
             $alerts = $user->validateAccount();
 
-            if(empty($alerts)) {
-                $existeUsuario = User::where('email', $user->email);
+            if(empty($alerts)) {if($savePicture){
 
-                if($existeUsuario) {
+                // Create folder if does not exist
+                    if(!is_dir(trim($imageFolder))){
+                        mkdir(trim($imageFolder),0777,true);
+                    }
+
+                    // Make the foldar ALWAYS writable
+                    chmod($imageFolder, 0777);
+
+                    // Put image on server
+                    $pngImage->save(trim($imageFolder.$imageName).'.png');
+                    $webpImage->save(trim($imageFolder.$imageName).'.webp');
+                }
+                $userExists = User::where('email', $user->email);
+
+                if($userExists) {
                     User::setAlert('error', 'El Usuario ya esta registrado');
                     $alerts = User::getAlerts();
                 } else {
@@ -97,7 +136,7 @@ class AuthController {
                     
 
                     if($resultado) {
-                        header('Location: /mensaje');
+                        header('Location: /message');
                     }
                 }
             }
@@ -137,9 +176,9 @@ class AuthController {
 
 
                     // Imprimir la alerta
-                    // Usuario::setAlerta('exito', 'Hemos enviado las instrucciones a tu email');
+                    // Usuario::setAlerta('success', 'Hemos enviado las instrucciones a tu email');
 
-                    $alerts['exito'][] = 'Hemos enviado las instrucciones a tu email';
+                    $alerts['success'][] = 'Hemos enviado las instrucciones a tu email';
                 } else {
                  
                     // Usuario::setAlerta('error', 'El Usuario no existe o no esta confirmado');
@@ -168,19 +207,28 @@ class AuthController {
         $user = User::where('token', $token);
 
         if(!$user instanceof User){
-            User::setAlert('error', 'Usuario no válido');
+            User::setAlert('error', 'Token no válido');
+            $alerts = User::getAlerts();
+            // Muestra la vista
+            $router->render('auth/reset', [
+                'title' => 'Reestablecer contraseña',
+                'alerts' => $alerts,
+                'validToken' => $validToken
+            ]);
+            
         } else{
             if(empty($user)) {
-                User::setAlert('error', 'Token No Válido, intenta de nuevo');
+                User::setAlert('error', 'Token no válido');
                 $validToken = false;
             }
             if('POST'===$_SERVER['REQUEST_METHOD']) {
 
                 // Añadir el nuevo password
                 $user->sincronize($_POST);
+                debug($user);
     
                 // Validar el password
-                $alerts = $user->validatePassword();
+                $alerts = $user->validatePasswordRecovery();
     
                 if(empty($alerts)) {
                     // Hashear el nuevo password
@@ -194,16 +242,15 @@ class AuthController {
     
                     // Redireccionar
                     if($resultado) {
-                        header('Location: /');
+                        header('Location: /login');
                     }
                 }
             }
     
             $alerts = User::getAlerts();
-            
             // Muestra la vista
-            $router->render('auth/reestablecer', [
-                'title' => 'Reestablecer Password',
+            $router->render('auth/reset', [
+                'title' => 'Reestablecer contraseña',
                 'alerts' => $alerts,
                 'validToken' => $validToken
             ]);
@@ -212,12 +259,12 @@ class AuthController {
 
     public static function message(Router $router) {
 
-        $router->render('auth/mensaje', [
-            'title' => 'Cuenta Creada Exitosamente'
+        $router->render('auth/message', [
+            'title' => 'Cuenta creada exitosamente'
         ]);
     }
 
-    public static function confirm(Router $router) {
+    public static function confirmaccount(Router $router) {
         
         $token = s($_GET['token']);
 
@@ -227,11 +274,11 @@ class AuthController {
         $user = User::where('token', $token);
 
         if(!$user instanceof User){
-            User::setAlert('error', 'Usuario no válido');
+            User::setAlert('error', 'Token no válido, la cuenta no se confirmó');
         } else{
             if(empty($user)) {
                 // No se encontró un usuario con ese token
-                User::setAlert('error', 'Token no válido');
+                User::setAlert('error', 'Token no válido, la cuenta no se confirmó');
             } else {
                 // Confirmar la cuenta
                 $user->confirmed = 1;
@@ -241,13 +288,13 @@ class AuthController {
                 // Guardar en la BD
                 $user->saveElement();
     
-                User::setAlert('exito', 'Cuenta Comprobada Correctamente');
+                User::setAlert('success', 'Cuenta Comprobada Correctamente');
             }
         }
 
      
 
-        $router->render('auth/confirmar', [
+        $router->render('auth/confirm', [
             'title' => 'Confirma tu cuenta Funerales Fuentes',
             'alerts' => User::getAlerts()
         ]);

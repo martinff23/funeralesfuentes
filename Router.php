@@ -43,6 +43,13 @@ class Router{
 
         $content = ob_get_clean();
 
-        include_once __DIR__ . '/views/layout.php';
+        //Use layout according to URL
+        $currentURL = $_SERVER['PATH_INFO'] ?? '/';
+
+        if(str_contains($currentURL,'/dashboard')){
+            include_once __DIR__ . '/views/adminLayout.php';
+        } else{
+            include_once __DIR__ . '/views/layout.php';
+        }
     }
 }

@@ -49,11 +49,19 @@
 
 @mixin container{
     width: min(95%,140rem);
+    @include tablet(){
+        width: min(100%,140rem);
+    }
     margin: 0 auto;
 }
 
 @mixin container-sm{
     width: min(95%,60rem);
+    margin: 0 auto;
+}
+
+@mixin container-md{
+    width: min(95%,80rem);
     margin: 0 auto;
 }
 
@@ -69,6 +77,14 @@
     text-align: center;
 }
 
+@mixin page-description{
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: var.$light;
+    color: var.$c_dark-gray;
+    margin-bottom: 5rem;
+}
+
 @mixin fluid-text($min,$max){
     font-size: clamp($min,7.5vw,$max);
 }
@@ -80,12 +96,28 @@
 }
 
 @mixin logo{
+    font-family: 'Charter';
     color: var.$c_golden;
     text-align: center;
-    margin-bottom: 2rem;
+    margin: 0;
     @include desktop{
         text-align: left;
-        margin: 0;
+    }
+}
+
+@mixin link{
+    all: unset;
+    color: var.$c_golden;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    font-weight: var.$bold;
+    padding: 1rem;
+    background-color: transparent;
+    border: none;
+    &:hover{
+        background-color: var.$c_golden;
+        color: var.$c_blue;
+        cursor: pointer;
     }
 }
 
@@ -103,9 +135,6 @@
         &[href*="https://facebook.com"]::before {
             content: "\f39e";
         }
-        &[href*="https://github.com"]::before {
-            content: "\f09b";
-        }        
         &[href*="https://tiktok.com"]::before {
             content: "\e07b";
         }
@@ -118,8 +147,50 @@
         &[href*="https://twitter.com"]::before {
             content: "\f099";
         }
+        &[href*="https://x.com"]::before {
+            content: "\f099";
+        }
+        &[href*="https://linkedin.com"]::before {
+            content: "\f08c";
+        }
     }
     &__hide{
         display: none;
+    }
+}
+
+@mixin shadow{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+@mixin reset-list{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+@mixin tags{
+    @include reset-list;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    >li{
+        background-color: var.$c_blue;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        font-size: 1.2rem;
+        color: var.$c_golden;
+        font-weight: var.$bold;
+    }
+}
+
+@mixin card{
+    border: 2px solid lighten(var.$c_gray, 10);
+    padding: 3rem;
+    &__name{
+        font-weight: var.$black;
+        font-size: 2.6rem;
+        margin: 2rem 0;
     }
 }

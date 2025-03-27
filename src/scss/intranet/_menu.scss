@@ -1,0 +1,173 @@
+@use 'base/mixins' as mix;
+@use 'base/variables' as var;
+
+.intranet-menu{
+    &__heading{
+        text-align: left;
+    }
+    &__title{
+        font-size: 2.5rem;
+        margin: 5rem 0 0 0;
+    }
+    &__date{
+        display: block;
+        justify-content: space-around;
+        font-weight: var.$bold;
+        font-size: 1.8rem;
+        @include mix.tablet{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem 1rem;
+        }
+    }
+    &__title-text{
+        font-size: 2rem;
+        margin-top: 5rem;
+    }
+    &__left-info{
+        text-align: right;
+    }
+    &__right-info{
+        text-align: left;
+    }
+    &__birthdays{
+        margin: 0 auto;
+        width: 95%;
+        @include mix.tablet{
+            width: 100%;
+        }
+        @include mix.desktop{
+            width: 40%;
+            margin: 0;
+        }
+        border-collapse: collapse;
+    }
+    &__birthdays th{
+        border: none;
+        padding: 0.8rem;
+        text-align: left;
+        font-size: 1.8rem;
+    }
+    &__birthdays td{
+        border: none;
+        padding: 0.8rem;
+        text-align: left;
+        font-size: 1.8rem;
+        &:last-child {
+            text-align: right;
+        }
+    }
+    &__birthdays th{
+        background-color: var.$c_blue;
+        color: var.$c_golden;
+    }
+    &__btn{
+        background-color: var.$c_blue;
+        color: var.$c_golden;
+        font-weight: var.$bold;
+        padding: 1rem 1.5rem;
+        border: none;
+        border-radius: 1rem;
+        font-size: 1.2rem;
+        cursor: pointer;
+        &:hover {
+            background-color: var.$c_golden;
+            color: var.$c_blue;
+        }
+        @include mix.tablet{
+            font-size: 1.8rem;
+        }
+    }
+    &__news-banner{
+        width: 100%;
+        background-color: var.$c_light-gray;
+        color: #1A1A1A;
+        padding: 1rem;
+        overflow: hidden;
+        white-space: nowrap;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        font-weight: bold;
+        font-size: 1.7rem;
+        position: relative;
+        z-index: -1;
+    }
+    &__news-content{
+        display: inline-block;
+        padding-left: 100%;
+        animation: scroll-left 25s linear infinite;
+    }  
+    @keyframes scroll-left{
+        from {
+            transform: translateX(0%);
+        }
+        to {
+            transform: translateX(-100%);
+        }
+    }
+      
+}
+
+.intranet-options{
+    margin-top: 1rem;
+    &__grid{
+        margin: 0 auto;
+        @include mix.container;
+        @include mix.grid(1,0);
+        align-items: center;
+        @include mix.tablet{
+            @include mix.grid(3,0);
+        }
+        @include mix.desktop{
+            @include mix.grid(5,0);
+        }
+    }
+    &__link{
+        color: var.$c_blue;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.2rem 0;
+        transition: 300ms background-color ease, 300ms color ease;
+        border: 1px solid var.$c_blue;
+        &:hover,
+        &--current{
+            background-color: darken(var.$c_blue,20%);
+            color: var.$c_golden;
+        }
+    }
+    &__icon{
+        font-size: 5rem;
+    }
+    &__menu-text{
+        font-size: 1.8rem;
+        // text-transform: uppercase;
+        font-weight: var.$bold;
+        margin-top: 2rem;
+        align-items: center;
+        text-align: center;
+    }
+    &__button-container{
+        margin: 1rem 0;
+        @include mix.tablet{
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+    &__button{
+        @include mix.button(var.$c_blue,var.$c_golden);
+        text-transform: uppercase;
+        font-size: 1.4rem;
+        @include mix.tablet{
+            width: auto;
+        }
+    }
+    &__text{
+        margin-top: 3rem;
+    }
+    &__image{
+        max-width: 20rem;
+        margin: 2rem 0;
+    }
+}

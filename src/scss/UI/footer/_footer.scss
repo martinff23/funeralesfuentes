@@ -14,10 +14,11 @@
     }
     &__logo{
         @include mix.logo;
-        @include mix.fluid-text(1rem,3.5rem);
+        @include mix.fluid-text(1rem,3rem);
     }
     &__text{
-        line-height: 2;
+        line-height: 1.5;
+        font-size: 1.2rem;
         text-align: center;
         @include mix.tablet{
             text-align: left;

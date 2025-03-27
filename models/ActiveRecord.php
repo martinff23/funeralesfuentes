@@ -15,7 +15,7 @@ class ActiveRecord {
     // Definir la conexión a la BD - includes/database.php
     public static function setDB($database) {
         self::$db = $database;
-    }
+    }    
 
     // Setear un tipo de Alerta
     public static function setAlert($type, $message) {
@@ -36,6 +36,7 @@ class ActiveRecord {
     // Consulta SQL para crear un objeto en Memoria (Active Record)
     public static function querySQL($query) {
         // Consultar la base de datos
+        // debug($query);
         $result = self::$db->query($query);
 
         // Iterar los resultados
@@ -66,7 +67,7 @@ class ActiveRecord {
     // Identificar y unir los atributos de la BD
     public function attributes() {
         $attributes = [];
-        foreach(self::$databaseColumns as $column) {
+        foreach(static::$databaseColumns as $column) {
             if($column === 'id') continue;
             $attributes[$column] = $this->$column;
         }
@@ -112,9 +113,16 @@ class ActiveRecord {
         return $result;
     }
 
+    // Obtener todos los Registros vinculados a una palabra
+    public static function allWhere($columnName,$columnValue) {
+        $query = "SELECT * FROM " . static::$table . " WHERE ".$columnName." LIKE '%" .$columnValue. "%' ORDER BY ".$columnName." ASC";
+        $result = self::querySQL($query);
+        return $result;
+    }
+
     // Busca un registro por su id
     public static function find($id) {
-        $query = "SELECT * FROM " . static::$table . " WHERE id = " . $id;
+        $query = "SELECT * FROM " . static::$table . " WHERE id = " . $id ;
         $result = self::querySQL($query);
         return array_shift( $result ) ;
     }
@@ -126,11 +134,33 @@ class ActiveRecord {
         return array_shift( $result ) ;
     }
 
+    // Records pagination
+    public static function paginate($recordsPerPage, $offset){
+        $query = "SELECT * FROM " . static::$table . " ORDER BY id ASC LIMIT ".$recordsPerPage." OFFSET ".$offset."" ;
+        $result = self::querySQL($query);
+        return $result;
+    }
+
     // Busqueda Where con Columna 
     public static function where($column, $value) {
         $query = "SELECT * FROM " . static::$table . " WHERE ".$column." = '".$value."'";
         $result = self::querySQL($query);
         return array_shift( $result ) ;
+    }
+
+    // Count total records
+    public static function countRecords(){
+        $query = "SELECT COUNT(*) FROM " . static::$table;
+        $result = self::$db->query($query);
+        $total = $result->fetch_array();
+        return array_shift($total);
+    }
+
+    // Return the records by order
+    public static function order($column, $order){
+        $query = "SELECT * FROM " . static::$table . " ORDER BY ".$column." ".$order;
+        $result = self::querySQL($query);
+        return $result;
     }
 
     // crea un nuevo registro
@@ -139,7 +169,7 @@ class ActiveRecord {
         $attributes = $this->sanitizeAttributes();
 
         // Insertar en la base de datos
-        $query = " INSERT INTO " . self::$table . " ( ";
+        $query = " INSERT INTO " . static::$table . " ( ";
         $query .= join(', ', array_keys($attributes));
         $query .= " ) VALUES (' "; 
         $query .= join("', '", array_values($attributes));
@@ -167,7 +197,7 @@ class ActiveRecord {
         }
 
         // Consulta SQL
-        $query = "UPDATE " . self::$table ." SET ";
+        $query = "UPDATE " . static::$table ." SET ";
         $query .=  join(', ', $values );
         $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
         $query .= " LIMIT 1 "; 
@@ -179,7 +209,7 @@ class ActiveRecord {
 
     // Eliminar un Registro por su ID
     public function deleteElement() {
-        $query = "DELETE FROM "  . self::$table . " WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
+        $query = "DELETE FROM "  . static::$table . " WHERE id = " . static::$db->escape_string($this->id) . " LIMIT 1";
         $result = self::$db->query($query);
         return $result;
     }

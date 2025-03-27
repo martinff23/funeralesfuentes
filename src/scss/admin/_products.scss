@@ -1,0 +1,40 @@
+@use 'base/mixins' as mix;
+@use 'base/variables' as var;
+
+.container_product {
+    position: relative; /* Necesario para que el dropdown siga al input */
+    width: 100%;
+    max-width: 100%; /* Ajusta esto según el diseño */
+}
+
+#coffin_search {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+.dropdown div {
+    padding: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.dropdown div:hover {
+    background-color: #f0f0f0;
+}
+.dropdown div.selected {
+    background-color: var.$c_blue;
+    color: white;
+}

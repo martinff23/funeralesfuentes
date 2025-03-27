@@ -1,0 +1,26 @@
+@use 'base/mixins' as mix;
+@use 'base/variables' as var;
+
+.about{
+    &__grid{
+        @include mix.container;
+        @include mix.grid(1,3rem);
+        @include mix.tablet{
+            @include mix.grid(2,5rem);
+            align-items: center;
+        }
+    }
+    &__text{
+        font-size: 1.2rem;
+        line-height: 1.1;
+        @include mix.desktop{
+            font-size: 1.5rem;
+        }
+    }
+    &__list{
+        font-size: 1.2rem;
+        @include mix.desktop{
+            font-size: 1.5rem;
+        }
+    }
+}

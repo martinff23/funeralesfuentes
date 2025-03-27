@@ -1,0 +1,53 @@
+@use 'base/mixins' as mix;
+@use 'base/variables' as var;
+
+.table{
+    font-size: 1.3rem;
+    background-color: var.$c_light-gray;
+    width: 100%;
+    border-collapse: collapse;
+    &__thead{
+        background-color: var.$c_blue;
+        color: var.$c_golden;
+    }
+    &__th{
+        padding: 1rem;
+        text-align: left;
+    }
+    &__tr{
+        &:nth-of-type(even){
+            background-color: lighten(var.$c_gray,40%);
+        }
+    }
+    &__td{
+        padding: 1.5rem 1rem;
+        &--actions{
+            @extend .table__td;
+            align-items: center;
+            text-align: center;
+            @include mix.tablet{
+                display: flex;
+                justify-content: flex-end;
+                gap: 1rem;
+            }
+        }
+    }
+    &__action{
+        all: unset;
+        text-transform: uppercase;
+        font-weight: var.$bold;
+        padding: 1rem 0;
+        @include mix.tablet{
+            padding: 0;
+        }
+        &--edit{
+            color: var.$c_blue;
+        }
+        &--delete{
+            color: var.$c_red;
+        }
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}

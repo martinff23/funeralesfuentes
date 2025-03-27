@@ -1,0 +1,42 @@
+@use 'base/mixins' as mix;
+@use 'base/variables' as var;
+
+.page-main{
+    padding: 2rem 0;
+    @include mix.container;
+    &__heading{
+        font-size: 5rem;
+    }
+    &__description{
+        font-size: 2.5rem;
+    }
+}
+
+.page-element{
+    &__heading{
+        font-size: 3.5rem;
+        color: var.$c_blue;
+        margin: 5rem 0;
+        text-align: left;
+        font-size: 4rem;
+        font-size: clamp(2rem, -0.8rem + 8vw, 3.5rem);
+    }
+    &__no-elements{
+        font-size: 1.5rem;
+        margin: 5rem 0;
+        font-size: 4rem;
+        font-size: clamp(2rem, -0.8rem + 8vw, 3.5rem);
+        text-align: center;
+        color: var.$c_red;
+    }
+    &__type{
+        font-size: 2.5rem;
+        color: lighten(var.$c_blue, 10);
+        margin: 3rem 0 1rem 0;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev{
+        color: rgba(var.$c_golden, .85);
+    }
+}

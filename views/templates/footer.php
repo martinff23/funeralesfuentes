@@ -7,23 +7,23 @@
             <p class="footer__text">FUNERALES FUENTES es una empresa proveedora de servicios funerarios de alta calidad establecida en 2002.</p>
         </div>
         <nav class="socialNet"> 
-            <a class="socialNet__link" rel="noopener noreferrer" target="_blank" href="https://facebook.com/C%C3%B3digo-Con-Juan-103341632130628">
+            <a class="socialNet__link" rel="noopener noreferrer" target="_blank" href="https://facebook.com/oficialfuneralesfuentes">
                 <span class="socialNet__hide">Facebook</span>
-            </a> 
-            <a class="socialNet__link" rel="noopener noreferrer" target="_blank" href="https://twitter.com/codigoconjuan">
+            </a>
+            <a class="socialNet__link" rel="noopener noreferrer" target="_blank" href="https://x.com/funefuentes">
                 <span class="socialNet__hide">Twitter</span>
-            </a> 
-            <a class="socialNet__link" rel="noopener noreferrer" target="_blank" href="https://youtube.com/codigoconjuan">
+            </a>
+            <a class="socialNet__link" rel="noopener noreferrer" target="_blank" href="https://youtube.com/@funeralesfuentes">
                 <span class="socialNet__hide">YouTube</span>
-            </a> 
-            <a class="socialNet__link" rel="noopener noreferrer" target="_blank" href="https://instagram.com/codigoconjuan">
+            </a>
+            <a class="socialNet__link" rel="noopener noreferrer" target="_blank" href="https://instagram.com/_funeralesfuentes">
                 <span class="socialNet__hide">Instagram</span>
-            </a> 
-            <a class="socialNet__link" rel="noopener noreferrer" target="_blank" href="https://tiktok.com/@codigoconjuan">
+            </a>
+            <a class="socialNet__link" rel="noopener noreferrer" target="_blank" href="https://tiktok.com/@funerales.fuentes">
                 <span class="socialNet__hide">Tiktok</span>
-            </a> 
-            <a class="socialNet__link" rel="noopener noreferrer" target="_blank" href="https://github.com/codigoconjuan">
-                <span class="socialNet__hide">Tiktok</span>
+            </a>
+            <a class="socialNet__link" rel="noopener noreferrer" target="_blank" href="https://linkedin.com/company/funeralesfuentes">
+                <span class="socialNet__hide">LinkedIn</span>
             </a>
         </nav>
     </div>

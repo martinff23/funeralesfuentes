@@ -1,0 +1,21 @@
+@use 'base/variables' as var;
+@use 'base/mixins' as mix;
+
+.alert{
+    padding: 1.5rem 1.5rem 1.5rem 3rem;
+    text-transform: uppercase;
+    margin: 1rem 0;
+    font-size: 1.2rem;
+    font-weight: var.$bold;
+    &__error{
+        background-color: lighten(var.$c_red,60%);
+        border-left: 0.5rem solid var.$c_red;
+        color: var.$c_red;
+    }
+    &__success{
+        background-color: lighten(var.$c_green,40%);
+        border-left: 0.5rem solid var.$c_green;
+        color: darken(var.$c_green,20%);
+
+    }
+}

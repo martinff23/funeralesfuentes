@@ -38,7 +38,7 @@ class Email {
 
          $content = '<html>';
          $content .= "<p><strong>Hola " . $this->name .  "</strong> Has Registrado Correctamente tu cuenta en Funerales Fuentes; pero es necesario confirmarla</p>";
-         $content .= "<p>Presiona aquí: <a href='" . $_ENV['HOST'] . "/confirmar-cuenta?token=" . $this->token . "'>Confirmar Cuenta</a>";       
+         $content .= "<p>Presiona aquí: <a href='" . $_ENV['HOST'] . "/confirmAccount?token=" . $this->token . "'>Confirmar Cuenta</a>";       
          $content .= "<p>Si tu no creaste esta cuenta; puedes ignorar el mensaje</p>";
          $content .= '</html>';
          $mail->Body = $content;
@@ -69,7 +69,7 @@ class Email {
 
         $content = '<html>';
         $content .= "<p><strong>Hola " . $this->name .  "</strong> Has solicitado reestablecer tu password, sigue el siguiente enlace para hacerlo.</p>";
-        $content .= "<p>Presiona aquí: <a href='" . $_ENV['HOST'] . "/recuperar?token=" . $this->token . "'>Reestablecer Password</a>";        
+        $content .= "<p>Presiona aquí: <a href='" . $_ENV['HOST'] . "/reset?token=" . $this->token . "'>Reestablecer Password</a>";        
         $content .= "<p>Si tu no solicitaste este cambio, puedes ignorar el mensaje</p>";
         $content .= '</html>';
         $mail->Body = $content;

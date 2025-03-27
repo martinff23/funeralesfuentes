@@ -2,7 +2,11 @@
     <h2 class="auth__heading"><?php echo $title;?></h2>
     <p class="auth__text">Recupera el acceso a tu cuenta en Funerales Fuentes</p>
 
-    <form class="form" action="">
+    <?php
+        require_once __DIR__.'/../templates/alerts.php';    
+    ?>
+
+    <form method="POST" class="form" action="/forgot">
         <div class="form__field">
             <label class="form__label" for="email">Correo electrónico</label>
             <input type="email" class="form__input" placeholder="Tu correo electrónico" id="email" name="email">
