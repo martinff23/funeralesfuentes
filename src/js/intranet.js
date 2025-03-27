@@ -153,10 +153,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const today = new Date();
     const currentYear = today.getFullYear();
   
-    // Calcular inicio (lunes) y fin (domingo) de la semana actual
-    const startOfWeek = new Date(today);
-    const dayOfWeek = today.getDay(); // 0 = domingo, 1 = lunes...
+    // Calcular inicio y fin de la semana
+    const dayOfWeek = today.getDay();
     const diffToMonday = (dayOfWeek === 0 ? -6 : 1) - dayOfWeek;
+  
+    const startOfWeek = new Date(today);
     startOfWeek.setDate(today.getDate() + diffToMonday);
     startOfWeek.setHours(0, 0, 0, 0);
   
@@ -164,14 +165,31 @@ document.addEventListener("DOMContentLoaded", () => {
     endOfWeek.setDate(startOfWeek.getDate() + 6);
     endOfWeek.setHours(23, 59, 59, 999);
   
-    // Filtrar cumpleaños de esta semana (ignorando el año)
-    const filtered = birthdays.filter(b => {
-      const [_, month, day] = b.date.split("-").map(Number);
-      const birthdayThisYear = new Date(currentYear, month - 1, day);
-      return birthdayThisYear >= startOfWeek && birthdayThisYear <= endOfWeek;
-    });
+    // Mostrar rango de la semana en formato "Semana del x al y de marzo"
+    const startDay = startOfWeek.getDate();
+    const endDay = endOfWeek.getDate();
+    const monthName = startOfWeek.toLocaleString("es-ES", { month: "long" });
+    const headerRow = document.createElement("tr");
+    const headerCell = document.createElement("td");
+    headerCell.colSpan = 3;
+    headerCell.style.fontWeight = "bold";
+    headerCell.style.textAlign = "center";
+    headerCell.style.padding = "10px 0";
+    headerCell.textContent = `🎉 Cumpleaños de la semana: del ${startDay} al ${endDay} de ${monthName}`;
+    headerRow.appendChild(headerCell);
   
     tableEl.innerHTML = "";
+    tableEl.appendChild(headerRow);
+  
+    // Filtrar los cumpleaños dentro de la semana actual
+    const filtered = birthdays
+      .map(b => {
+        const [_, month, day] = b.date.split("-").map(Number);
+        const birthdayThisYear = new Date(currentYear, month - 1, day);
+        return { ...b, birthdayDate: birthdayThisYear };
+      })
+      .filter(b => b.birthdayDate >= startOfWeek && b.birthdayDate <= endOfWeek)
+      .sort((a, b) => a.birthdayDate - b.birthdayDate); // ordenar por fecha ascendente
   
     if (filtered.length === 0) {
       const row = document.createElement("tr");
@@ -185,16 +203,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   
     filtered.forEach(b => {
-      const [year, month, day] = b.date.split("-").map(Number);
-      const dateObj = new Date(year, month - 1, day);
-      const dayText = day.toString().padStart(2, "0");
-      const monthText = dateObj.toLocaleString("es-ES", { month: "long" });
+      const day = b.birthdayDate.getDate().toString().padStart(2, "0");
+      const month = b.birthdayDate.toLocaleString("es-ES", { month: "long" });
+  
       const row = document.createElement("tr");
       const btnId = `felicitar-${b.name.replace(/\s/g, "-").toLowerCase()}`;
   
       row.innerHTML = `
         <td>${b.name}</td>
-        <td>${dayText} de ${monthText}</td>
+        <td>${day} de ${month}</td>
         <td class="btnCol">
           <button class="intranet-menu__btn" data-name="${b.name}" id="${btnId}">
             ${String.fromCodePoint(0x1F382)} Felicitar
