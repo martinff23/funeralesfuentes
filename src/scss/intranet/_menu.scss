@@ -7,30 +7,48 @@
     }
     &__title{
         font-size: 2.5rem;
-        margin: 5rem 0 0 0;
+        margin: 2.5rem 0;
     }
-    &__date{
+    &__date {
         display: block;
-        justify-content: space-around;
         font-weight: var.$bold;
         font-size: 1.8rem;
-        @include mix.tablet{
+        text-align: center;
+
+        & > span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+      
+        @include mix.tablet {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 1rem;
             padding: 0.5rem 1rem;
+            text-align: initial;
+          
+            & > span {
+                display: inline;
+                margin-bottom: 0;
+            }
         }
     }
-    &__title-text{
-        font-size: 2rem;
-        margin-top: 5rem;
-    }
+      
     &__left-info{
-        text-align: right;
+        text-align: center;
+        @include mix.tablet{
+            text-align: right;
+        }
     }
     &__right-info{
-        text-align: left;
+        text-align: center;
+        @include mix.tablet{
+            text-align: left;
+        }
+    }
+    &__birthdays-container{
+        @include mix.container;
     }
     &__birthdays{
         margin: 0 auto;
@@ -48,13 +66,19 @@
         border: none;
         padding: 0.8rem;
         text-align: left;
-        font-size: 1.8rem;
+        font-size: 1.2rem;
+        @include mix.tablet{
+            font-size: 1.8rem;
+        }
     }
     &__birthdays td{
         border: none;
         padding: 0.8rem;
         text-align: left;
-        font-size: 1.8rem;
+        font-size: 1.2rem;
+        @include mix.tablet{
+            font-size: 1.8rem;
+        }
         &:last-child {
             text-align: right;
         }
@@ -79,6 +103,9 @@
         @include mix.tablet{
             font-size: 1.8rem;
         }
+    }
+    &__banner-container{
+        @include mix.container;
     }
     &__news-banner{
         width: 100%;
@@ -110,10 +137,10 @@
 }
 
 .intranet-options{
+    @include mix.container;
     margin-top: 1rem;
     &__grid{
         margin: 0 auto;
-        @include mix.container;
         @include mix.grid(1,0);
         align-items: center;
         @include mix.tablet{

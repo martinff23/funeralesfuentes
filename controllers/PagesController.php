@@ -2,11 +2,15 @@
 
 namespace Controllers;
 
+use DateTime;
+use Model\Branch;
 use Model\Category;
 use Model\Cemetery;
 use Model\Chapel;
 use Model\Crematory;
 use Model\Hearse;
+use Model\Jobs;
+use Model\JobsArchive;
 use Model\Package;
 use Model\Product;
 use Model\Service;
@@ -23,22 +27,50 @@ class PagesController {
             header('Location: /dashboard/start');
         }
 
+        $totalBranches = Branch::countRecords() * 1;
+        $totalEmployees = User::countRecords('isEmployee', '1');
+        
+        $ownSubtypes = Category::allWhere('subtype','own');
+        if($ownSubtypes || count($ownSubtypes) > 0){
+            foreach($ownSubtypes as $ownSubtype){
+                if('chapel'===$ownSubtype->type || 'cemetery'===$ownSubtype->type || 'crematory'===$ownSubtype->type || 'hearse'===$ownSubtype->type){
+                    $totalBranches = $totalBranches + Cemetery::countRecords('category_id', $ownSubtype->id) * 1;
+                    $totalBranches = $totalBranches + Crematory::countRecords('category_id', $ownSubtype->id) * 1;
+                    $totalBranches = $totalBranches + Chapel::countRecords('category_id', $ownSubtype->id) * 1;
+                    $totalBranches = $totalBranches + Hearse::countRecords('category_id', $ownSubtype->id) * 1;
+                }
+            }
+        }
+
+        $oldestDate = new DateTime(Branch::selectOldestDate('open_date'));
+        $today = new DateTime();
+        $yearsOfExperience = ($oldestDate->diff($today))->y;
+
+        $totalJobs = Jobs::countRecords('job_status', 'COMPLETED') * 1;
+        $totalJobs = $totalJobs + JobsArchive::countRecords() * 1;
+
         if(!empty($_SESSION)){
             $user = User::find($_SESSION['id']);
 
             if($user){
                 $router->render('pages/index',[
                     'title' => 'Inicio',
+                    'totalBranches' => $totalBranches,
+                    'totalEmployees' => $totalEmployees,
+                    'yearsOfExperience' => $yearsOfExperience,
+                    'totalJobs' => $totalJobs,
                     'user' => $user
                 ]);
             } else{
-                $router->render('pages/index',[
-                    'title' => 'Inicio'
-                ]);
+                // Page 404
             }
         } else{
             $router->render('pages/index',[
-                'title' => 'Inicio'
+                'title' => 'Inicio',
+                'totalBranches' => $totalBranches,
+                'totalEmployees' => $totalEmployees,
+                'yearsOfExperience' => $yearsOfExperience,
+                'totalJobs' => $totalJobs
             ]);
         }
     }
@@ -56,16 +88,16 @@ class PagesController {
             if($user){
                 $router->render('pages/about',[
                     'title' => 'Sobre Funerales Fuentes',
+                    'start' => false,
                     'user' => $user
                 ]);
             } else{
-                $router->render('pages/about',[
-                    'title' => 'Sobre Funerales Fuentes'
-                ]);
+                // Page 404
             }
         } else{
             $router->render('pages/about',[
-                'title' => 'Sobre Funerales Fuentes'
+                'title' => 'Sobre Funerales Fuentes',
+                'start' => false
             ]);
         }
     }
@@ -88,10 +120,7 @@ class PagesController {
                     'user' => $user
                 ]);
             } else{
-                $router->render('pages/packages',[
-                    'title' => 'Paquetes de servicios funerarios',
-                    'packages' => $packages
-                ]);
+                // Page 404
             }
         } else{
             $router->render('pages/packages',[
@@ -115,19 +144,16 @@ class PagesController {
 
             if($user){
                 $router->render('pages/products',[
-                    'title' => 'Nuestros productos',
+                    'title' => 'Productos funerarios',
                     'products' => $formatedProducts,
                     'user' => $user
                 ]);
             } else{
-                $router->render('pages/products',[
-                    'title' => 'Nuestros productos',
-                    'products' => $formatedProducts
-                ]);
+                // Page 404
             }
         } else{
             $router->render('pages/products',[
-                'title' => 'Nuestros productos',
+                'title' => 'Productos funerarios',
                 'products' => $formatedProducts
             ]);
         }
@@ -147,19 +173,16 @@ class PagesController {
 
             if($user){
                 $router->render('pages/services',[
-                    'title' => 'Nuestros servicios',
+                    'title' => 'Servicios funerarios',
                     'services' => $groupedServices,
                     'user' => $user
                 ]);
             } else{
-                $router->render('pages/services',[
-                    'title' => 'Nuestros servicios',
-                    'services' => $groupedServices
-                ]);
+                // Page 404
             }
         } else{
             $router->render('pages/services',[
-                'title' => 'Nuestros servicios',
+                'title' => 'Servicios funerarios',
                 'services' => $groupedServices
             ]);
         }
@@ -181,18 +204,17 @@ class PagesController {
                 $router->render('pages/chapels',[
                     'title' => 'Capillas de velación',
                     'chapels' => $groupedChapels,
+                    'start' => false,
                     'user' => $user
                 ]);
             } else{
-                $router->render('pages/chapels',[
-                    'title' => 'Capillas de velación',
-                    'chapels' => $groupedChapels
-                ]);
+                // Page 404
             }
         } else{
             $router->render('pages/chapels',[
                 'title' => 'Capillas de velación',
-                'chapels' => $groupedChapels
+                'chapels' => $groupedChapels,
+                'start' => false
             ]);
         }
     }
@@ -213,18 +235,17 @@ class PagesController {
                 $router->render('pages/hearses',[
                     'title' => 'Carrozas',
                     'hearses' => $groupedHearses,
+                    'start' => false,
                     'user' => $user
                 ]);
             } else{
-                $router->render('pages/hearses',[
-                    'title' => 'Carrozas',
-                    'hearses' => $groupedHearses
-                ]);
+                // Page 404
             }
         } else{
             $router->render('pages/hearses',[
                 'title' => 'Carrozas',
-                'hearses' => $groupedHearses
+                'hearses' => $groupedHearses,
+                'start' => false
             ]);
         }
     }
@@ -245,18 +266,17 @@ class PagesController {
                 $router->render('pages/cemeteries',[
                     'title' => 'Cementerios',
                     'cemeteries' => $groupedCemeteries,
+                    'start' => false,
                     'user' => $user
                 ]);
             } else{
-                $router->render('pages/cemeteries',[
-                    'title' => 'Cementerios',
-                    'cemeteries' => $groupedCemeteries
-                ]);
+                // Page 404
             }
         } else{
             $router->render('pages/cemeteries',[
                 'title' => 'Cementerios',
-                'cemeteries' => $groupedCemeteries
+                'cemeteries' => $groupedCemeteries,
+                'start' => false
             ]);
         }
     }
@@ -277,18 +297,17 @@ class PagesController {
                 $router->render('pages/crematories',[
                     'title' => 'Crematorios',
                     'crematories' => $groupedCrematories,
+                    'start' => false,
                     'user' => $user
                 ]);
             } else{
-                $router->render('pages/crematories',[
-                    'title' => 'Crematorios',
-                    'crematories' => $groupedCrematories
-                ]);
+                // Page 404
             }
         } else{
             $router->render('pages/crematories',[
                 'title' => 'Crematorios',
-                'crematories' => $groupedCrematories
+                'crematories' => $groupedCrematories,
+                'start' => false
             ]);
         }
     }
@@ -309,9 +328,7 @@ class PagesController {
                     'user' => $user
                 ]);
             } else{
-                $router->render('pages/cotization',[
-                    'title' => 'Nuestros servicios'
-                ]);
+                // Page 404
             }
         } else{
             $router->render('pages/cotization',[

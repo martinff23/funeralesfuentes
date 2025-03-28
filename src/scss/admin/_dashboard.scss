@@ -12,6 +12,8 @@
     &__header-grid{
         display: flex;
         flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
         @include mix.tablet{
             flex-direction: row;
             justify-content: space-between;

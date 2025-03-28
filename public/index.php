@@ -9,6 +9,7 @@ use Controllers\APIComplementsController;
 use Controllers\APICrematoriesController;
 use Controllers\APIHearsesController;
 use Controllers\APIInventoryController;
+use Controllers\APILocationsController;
 use Controllers\APIProductsController;
 use Controllers\APIServicesController;
 use MVC\Router;
@@ -127,6 +128,7 @@ $router->get('/api/hearses', [APIHearsesController::class, 'index']);
 $router->get('/api/cemeteries', [APICemeteriesController::class, 'index']);
 $router->get('/api/crematories', [APICrematoriesController::class, 'index']);
 $router->get('/api/birthdays', [APIBirthdaysController::class, 'index']);
+$router->get('/api/locations', [APILocationsController::class, 'locations']);
 
 
 // Public areas

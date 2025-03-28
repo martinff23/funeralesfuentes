@@ -4,7 +4,7 @@ namespace Model;
 
 class Hearse extends ActiveRecord{
     protected static $table = 'hearses';
-    protected static $databaseColumns = ['id', 'category_id', 'hearse_name', 'hearse_description', 'hearse_cost', 'hearse_price', 'hearse_inventory', 'image', 'tags', 'hearse_networks'];
+    protected static $databaseColumns = ['id', 'category_id', 'hearse_name', 'hearse_description', 'hearse_cost', 'hearse_price', 'hearse_inventory', 'hearse_brand', 'hearse_model', 'image', 'tags', 'hearse_networks'];
 
     public $id;
     public $category_id;
@@ -13,6 +13,8 @@ class Hearse extends ActiveRecord{
     public $hearse_cost;
     public $hearse_price;
     public $hearse_inventory;
+    public $hearse_brand;
+    public $hearse_model;
     public $image;
     public $tags;
     public $hearse_networks;
@@ -27,6 +29,8 @@ class Hearse extends ActiveRecord{
         $this->hearse_cost = $args['hearse_cost'] ?? 0.0;
         $this->hearse_price = $args['hearse_price'] ?? 0.0;
         $this->hearse_inventory = $args['hearse_inventory'] ?? 0;
+        $this->hearse_brand = $args['hearse_brand'] ?? '';
+        $this->hearse_model = $args['hearse_model'] ?? '';
         $this->image = $args['image'] ?? '';
         $this->tags = $args['tags'] ?? '';
         $this->hearse_networks = $args['hearse_networks'] ?? '';
@@ -47,6 +51,12 @@ class Hearse extends ActiveRecord{
         }
         if(!$this->hearse_price) {
             self::$alerts['error'][] = 'El precio es obligatorio';
+        }
+        if(!$this->hearse_brand) {
+            self::$alerts['error'][] = 'La marca es obligatoria';
+        }
+        if(!$this->hearse_model) {
+            self::$alerts['error'][] = 'El modelo es obligatorio';
         }
         if(!$this->image) {
             self::$alerts['error'][] = 'La imagen es obligatoria';

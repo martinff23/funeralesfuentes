@@ -15,8 +15,8 @@
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin="" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <audio id="birthday-sound" src="https://www.myinstants.com/media/sounds/birthday.mp3" preload="auto"></audio>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" /> -->
 </head>
 <body>
     <?php 
@@ -24,6 +24,7 @@
         echo $content;
         include_once __DIR__ .'/templates/footer.php'; 
     ?>
+    <!-- <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script> -->
     <script type="module" src="/build/js/main.min.js" defer></script>
 </body>
 </html>

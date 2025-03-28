@@ -149,8 +149,19 @@ class ActiveRecord {
     }
 
     // Count total records
-    public static function countRecords(){
+    public static function countRecords($column = '', $value = ''){
         $query = "SELECT COUNT(*) FROM " . static::$table;
+        if($column){
+            $query .= " WHERE ".$column." = '".$value."'";
+        }
+        $result = self::$db->query($query);
+        $total = $result->fetch_array();
+        return array_shift($total);
+    }
+
+    // Select the oldest date
+    public static function selectOldestDate($column){
+        $query = "SELECT MIN(".$column.") FROM " . static::$table .";";
         $result = self::$db->query($query);
         $total = $result->fetch_array();
         return array_shift($total);

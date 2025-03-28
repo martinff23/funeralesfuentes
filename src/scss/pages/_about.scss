@@ -6,8 +6,25 @@
         @include mix.container;
         @include mix.grid(1,3rem);
         @include mix.tablet{
-            @include mix.grid(2,5rem);
+            @include mix.grid(2,2rem);
             align-items: center;
+        }
+    }
+    &__image{
+        width: 100%;
+        margin: auto;
+        @include mix.tablet{
+            width: 33rem;
+        }
+        @include mix.desktop{
+            width: 45rem;
+        }
+    }
+    &__title{
+        font-size: 1.5rem;
+        font-weight: var.$bold;
+        @include mix.desktop{
+            font-size: 1.8rem;
         }
     }
     &__text{

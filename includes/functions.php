@@ -196,3 +196,9 @@ function groupCrematoriesByCategory($crematories = [], $categoriesIds = []){
 
     return $formatedCrematories;
 }
+
+function aos_animations() {
+    $effects = ['fade-up', 'fade-down', 'fade-left', 'fade-right', 'flip-left', 'flip-right', 'zoom-in', 'zoom-in-up', 'zoom-in-down', 'zoom-out'];
+    $effect = array_rand($effects, 1);
+    return ' data-aos="' . $effects[$effect] . '" ';
+}

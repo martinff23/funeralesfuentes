@@ -1,0 +1,34 @@
+@use 'base/mixins' as mix;
+@use 'base/variables' as var;
+
+.summary{
+    min-height: 30rem;
+    background-image: url(../img/info_start.png);
+    background-image: -webkit-image-set(url(../img/info_start.avif) 1x, url(../img/info_start.webp) 1x);
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 12rem 0;
+    margin: 8rem 0 0 0;
+    &__grid{
+        @include mix.container;
+        @include mix.grid(1, 5rem);
+        @include mix.tablet{
+            @include mix.grid(2, 5rem);
+        }
+    }
+    &__segment{
+        text-align: center;
+        color: var.$c_light-gray;
+    }
+    &__text{
+        font-weight: var.$bold;
+        line-height: 1;
+        margin: 0;
+        font-size: 2.5rem;
+        text-transform: uppercase;
+        &--number{
+            @extend .summary__text;
+            font-size: 8rem;
+        }
+    }
+}

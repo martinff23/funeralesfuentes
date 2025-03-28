@@ -4,7 +4,7 @@ namespace Model;
 
 class Crematory extends ActiveRecord{
     protected static $table = 'crematories';
-    protected static $databaseColumns = ['id', 'category_id', 'crematory_name', 'crematory_description', 'crematory_cost', 'crematory_price', 'crematory_inventory', 'image', 'tags', 'crematory_networks'];
+    protected static $databaseColumns = ['id', 'category_id', 'crematory_name', 'crematory_description', 'crematory_cost', 'crematory_price', 'crematory_inventory', 'image', 'tags', 'crematory_networks', 'latitude', 'longitude', 'address', 'open_date'];
 
     public $id;
     public $category_id;
@@ -16,6 +16,10 @@ class Crematory extends ActiveRecord{
     public $image;
     public $tags;
     public $crematory_networks;
+    public $latitude;
+    public $longitude;
+    public $address;
+    public $open_date;
     
     public $currentImage;
 
@@ -30,6 +34,10 @@ class Crematory extends ActiveRecord{
         $this->image = $args['image'] ?? '';
         $this->tags = $args['tags'] ?? '';
         $this->crematory_networks = $args['crematory_networks'] ?? '';
+        $this->latitude = $args['latitude'] ?? '';
+        $this->longitude = $args['longitude'] ?? '';
+        $this->address = $args['address'] ?? '';
+        $this->open_date = $args['open_date'] ?? '';
     }
 
     public function validate() {
@@ -53,6 +61,9 @@ class Crematory extends ActiveRecord{
         }
         if(!$this->tags) {
             self::$alerts['error'][] = 'Al menos una característica es obligatoria';
+        }
+        if(!$this->open_date) {
+            self::$alerts['error'][] = 'La fecha de apertura es obligatoria';
         }
     
         return self::$alerts;

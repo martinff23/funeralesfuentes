@@ -1,0 +1,87 @@
+@use 'base/mixins' as mix;
+@use 'base/variables' as var;
+// .map{
+//     margin: 5rem 0;
+//     height: 45rem;
+// }
+
+.map-container {
+    display: flex;
+    align-items: flex-start;
+    margin: 5rem 0;
+    gap: 0;
+    @include mix.tablet{
+        gap: 1rem;
+    }
+}
+
+.map {
+    flex: 1;
+    height: 45rem;
+}
+
+.map-legend {
+    width: 8rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    font-size: 0.9rem;
+    @include mix.tablet{
+        font-size: 1.4rem;
+        width: 18rem;
+    }
+}
+
+.map-legend h4 {
+    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+    @include mix.tablet{
+        font-size: 1.8rem;
+    }
+}
+
+.map-legend h4 {
+    font-size: 1.2rem;
+    @include mix.tablet{
+        font-size: 1.6rem;
+    }
+}
+
+.map-legend ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.map-legend li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.map-legend img {
+    width: 16px;
+    height: 26px;
+    margin-right: 0.5rem;
+}
+
+.leaflet-popup-content {
+    font-size: 1rem;
+    text-align: center;
+    @include mix.tablet{
+        font-size: 1.4rem;
+    }
+    line-height: 1.4;
+    max-width: 250px;   // Limita el ancho del popup
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    padding: 0.75rem;
+}
+
+.leaflet-popup-tip {
+    background: white;
+}

@@ -49,9 +49,9 @@
 
 @mixin container{
     width: min(95%,140rem);
-    @include tablet(){
-        width: min(100%,140rem);
-    }
+    // @include tablet(){
+    //     width: min(100%,140rem);
+    // }
     margin: 0 auto;
 }
 

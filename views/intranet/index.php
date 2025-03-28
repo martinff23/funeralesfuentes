@@ -2,31 +2,34 @@
 <h3 class="intranet-menu__date" id="date-info"></h3>
 <h1 class="intranet-menu__heading" id="user-greeting"><?php echo 'Hola, '.$user->name.'!';?></h1>
 
-    <h3 class="intranet-menu__title-text">Anuncios</h3>
-
-    <div class="intranet-menu__news-banner" id="news-banner">
-        <div class="intranet-menu__news-content">
-            🔔 Aviso: El próximo lunes habrá junta general. | 🎉 ¡Felicidades a todos los cumpleañeros de esta semana! | 📢 Recuerda actualizar tu información en el sistema.
+    <div class="intranet-menu__banner-container">
+    <h3 class="intranet-menu__title">Anuncios</h3>
+        <div class="intranet-menu__news-banner" id="news-banner">
+            <div class="intranet-menu__news-content">
+                🔔 Aviso: El próximo lunes habrá junta general. | 🎉 ¡Felicidades a todos los cumpleañeros de esta semana! | 📢 Recuerda actualizar tu información en el sistema.
+            </div>
         </div>
     </div>
 
-    <h3 class="intranet-menu__title-text">Próximos cumpleaños</h3>
+    <div class="intranet-menu__birthdays-container">
+    <h3 class="intranet-menu__title">Próximos cumpleaños</h3>
+        <table class="intranet-menu__birthdays" id="birthdays-table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Fecha</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Se llenará dinámicamente -->
+            </tbody>
+        </table>
+    </div>
 
-    <table class="intranet-menu__birthdays" id="birthdays-table">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Fecha</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Se llenará dinámicamente -->
-        </tbody>
-    </table>
-
-    <p class="intranet-menu__title">Recursos humanos</p>
     <div class="intranet-options">
+    <h3 class="intranet-menu__title">Enlaces útiles</h3>
+    <p class="intranet-menu__title-text">Recursos humanos</p>
         <div class="intranet-options__grid">
             <a href="/dashboard/intranet/hr/attendance" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/hr/attendance');?>">
                 <i class="fa-solid fa-clipboard-user intranet-options__icon"></i>
@@ -71,8 +74,8 @@
         </div>
     </div>
 
-    <p class="intranet-menu__title">Gestión documental</p>
     <div class="intranet-options">
+    <p class="intranet-menu__title-text">Gestión documental</p>
         <div class="intranet-options__grid">
             <a href="/dashboard/intranet/docs/contract" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/docs/contract');?>">
                 <i class="fa-solid fa-file-signature intranet-options__icon"></i>
@@ -97,8 +100,8 @@
         </div>
     </div>
 
-    <p class="intranet-menu__title">Tareas y proyectos</p>
     <div class="intranet-options">
+    <p class="intranet-menu__title-text">Tareas y proyectos</p>
         <div class="intranet-options__grid">
             <a href="/dashboard/intranet/tasks/internal" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/tasks/internal');?>">
                 <i class="fa-solid fa-list-check intranet-options__icon"></i>
@@ -111,8 +114,8 @@
         </div>
     </div>
 
-    <p class="intranet-menu__title">Solicitudes y servicios</p>
     <div class="intranet-options">
+    <p class="intranet-menu__title-text">Solicitudes y servicios</p>
         <div class="intranet-options__grid">
             <a href="/dashboard/intranet/requests/it" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/requests/it');?>">
                 <i class="fa-solid fa-headset intranet-options__icon"></i>
@@ -137,8 +140,8 @@
         </div>
     </div>
 
-    <p class="intranet-menu__title">Capacitación y desarrollo</p>
     <div class="intranet-options">
+    <p class="intranet-menu__title-text">Capacitación y desarrollo</p>
         <div class="intranet-options__grid">
             <a href="/dashboard/intranet/training/evaluation" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/training/evaluation');?>">
                 <i class="fa-solid fa-people-arrows intranet-options__icon"></i>
@@ -163,8 +166,8 @@
         </div>
     </div>
 
-    <p class="intranet-menu__title">Comunidad interna</p>
     <div class="intranet-options">
+    <p class="intranet-menu__title-text">Comunidad interna</p>
         <div class="intranet-options__grid">
             <a href="/dashboard/intranet/comunity/latest" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/comunity/latest');?>">
                 <i class="fa-solid fa-volume-high intranet-options__icon"></i>
@@ -189,8 +192,8 @@
         </div>
     </div>
 
-    <p class="intranet-menu__title">Administración del perfil</p>
     <div class="intranet-options">
+    <p class="intranet-menu__title-text">Administración del perfil</p>
         <div class="intranet-options__grid">
             <a href="/dashboard/intranet/admin/adjust" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/admin/adjust');?>">
                 <i class="fa-solid fa-gear intranet-options__icon"></i>
