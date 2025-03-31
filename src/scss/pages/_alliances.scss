@@ -1,7 +1,7 @@
 @use 'base/mixins' as mix;
 @use 'base/variables' as var;
 
-.service{
+.alliance{
     &__name{
         margin: 0 0 1rem 0;
         font-size: 2.5rem;
@@ -19,14 +19,17 @@
         overflow: hidden;
     }
     &__information{
-        padding: 2rem;
+        padding: 1rem;
         // border-radius: 1rem;
         background-color: var.$c_blue;
+        border: 1px solid var.$c_blue;
         color: var.$c_golden;
+        // color: var.$c_blue;
         transition: 300ms background-color ease;
         &:hover{
             cursor: pointer;
             background-color: darken(var.$c_blue, 10%);
+            color: var.$c_golden;
         }
     }
     &__information-details{
@@ -41,6 +44,7 @@
     }
     &__description{
         color: var.$c_golden;
+        // color: var.$c_blue;
         margin: 2rem 0 0 0;
         align-items: center;
         text-align: justify;
@@ -56,11 +60,8 @@
         font-weight: var.$black;
         font-size: 2.5rem;
         color: var.$c_golden;
+        // color: var.$c_blue;
         align-items: center;
         text-align: center;
     }
-}
-
-.services.slider.swiper {
-    background-color: transparent !important;
 }

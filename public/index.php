@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../includes/app.php';
 
+use Controllers\AlliancesController;
 use Controllers\APIBirthdaysController;
 use Controllers\APICemeteriesController;
 use Controllers\APIChapelsController;
@@ -110,6 +111,13 @@ $router->post('/dashboard/packages/create', [PackagesController::class, 'create'
 $router->get('/dashboard/packages/edit', [PackagesController::class, 'edit']);
 $router->post('/dashboard/packages/edit', [PackagesController::class, 'edit']);
 $router->post('/dashboard/packages/delete', [PackagesController::class, 'delete']);
+
+$router->get('/dashboard/alliances', [AlliancesController::class, 'dashboard']);
+$router->get('/dashboard/alliances/create', [AlliancesController::class, 'create']);
+$router->post('/dashboard/alliances/create', [AlliancesController::class, 'create']);
+$router->get('/dashboard/alliances/edit', [AlliancesController::class, 'edit']);
+$router->post('/dashboard/alliances/edit', [AlliancesController::class, 'edit']);
+$router->post('/dashboard/alliances/delete', [AlliancesController::class, 'delete']);
 
 $router->get('/dashboard/cotization', [CotizationsController::class, 'dashboard']);
 

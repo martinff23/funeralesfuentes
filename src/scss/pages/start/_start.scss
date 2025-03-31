@@ -32,3 +32,36 @@
         }
     }
 }
+
+.alliances-slider {
+    @include mix.container;
+    overflow: hidden;
+    position: relative;
+    background: #fff;
+    padding: 20px 0;
+  }
+  
+  .alliances-track {
+    display: flex;
+    transition: transform 0s linear;
+  }
+  
+  .alliances-logos {
+    display: flex;
+  }
+  
+  .alliances-logos img {
+    height: 12rem;
+    width: 12rem;
+    margin: 0 40px;
+    object-fit: contain;
+    filter: grayscale(100%);
+    flex-shrink: 0;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .alliances-logos img:hover {
+    transform: scale(1.1);
+    filter: none;
+  }  

@@ -1,5 +1,6 @@
 <?php
 
+use Model\Alliance;
 use Model\Category;
 use Model\Cemetery;
 use Model\Chapel;
@@ -98,6 +99,44 @@ use Model\Package;
         include_once __DIR__.'/crematories.php';
     }
 ?>
+
+<h2 class="page-main__heading">Nuestras alianzas estratégicas</h2>
+
+<?php $alliances = Alliance::allWhere('status', 'ACTIVE');?>
+
+<div class="alliances-slider">
+  <div class="alliances-track" id="alliancesTrack">
+    <div class="alliances-logos">
+      <?php foreach($alliances as $alliance){ ?>
+        <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
+      <?php } ?>
+      <?php foreach($alliances as $alliance){ ?>
+        <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
+      <?php } ?>
+      <?php foreach($alliances as $alliance){ ?>
+        <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
+      <?php } ?>
+      <?php foreach($alliances as $alliance){ ?>
+        <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
+      <?php } ?>
+      <?php foreach($alliances as $alliance){ ?>
+        <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
+      <?php } ?>
+      <?php foreach($alliances as $alliance){ ?>
+        <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
+      <?php } ?>
+      <?php foreach($alliances as $alliance){ ?>
+        <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
+      <?php } ?>
+      <?php foreach($alliances as $alliance){ ?>
+        <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
+      <?php } ?>
+      <?php foreach($alliances as $alliance){ ?>
+        <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
+      <?php } ?>
+    </div>
+  </div>
+</div>
 
 <h2 class="page-main__heading">Ubicaciones</h2>
 

@@ -37,6 +37,10 @@
                 <i class="fa-solid fa-box-open dashboard__icon"></i>
                 <span class="dashboard__menu-text">Paquetes</span>
             </a>
+            <a href="/dashboard/alliances" class="dashboard__link <?php echo currentPage('/alliances');?>">
+                <i class="fa-solid fa-handshake dashboard__icon"></i>
+                <span class="dashboard__menu-text">Alianzas</span>
+            </a>
         <?php }?>
         <?php if(isAuth() && !isAdmin()){ ?>
             <a href="/dashboard/cotization" class="dashboard__link <?php echo currentPage('/cotization');?>">
