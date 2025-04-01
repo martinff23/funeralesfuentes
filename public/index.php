@@ -15,6 +15,7 @@ use Controllers\APIProductsController;
 use Controllers\APIServicesController;
 use MVC\Router;
 use Controllers\AuthController;
+use Controllers\BranchesController;
 use Controllers\CemeteriesController;
 use Controllers\ChapelsController;
 use Controllers\ComplementsController;
@@ -76,6 +77,13 @@ $router->post('/dashboard/complements/create', [ComplementsController::class, 'c
 $router->get('/dashboard/complements/edit', [ComplementsController::class, 'edit']);
 $router->post('/dashboard/complements/edit', [ComplementsController::class, 'edit']);
 $router->post('/dashboard/complements/delete', [ComplementsController::class, 'delete']);
+
+$router->get('/dashboard/branches', [BranchesController::class, 'dashboard']);
+$router->get('/dashboard/branches/create', [BranchesController::class, 'create']);
+$router->post('/dashboard/branches/create', [BranchesController::class, 'create']);
+$router->get('/dashboard/branches/edit', [BranchesController::class, 'edit']);
+$router->post('/dashboard/branches/edit', [BranchesController::class, 'edit']);
+$router->post('/dashboard/branches/delete', [BranchesController::class, 'delete']);
 
 $router->get('/dashboard/chapels', [ChapelsController::class, 'dashboard']);
 $router->get('/dashboard/chapels/create', [ChapelsController::class, 'create']);

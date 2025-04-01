@@ -13,14 +13,23 @@
                 <div class="services slider swiper">
                     <div class="swiper-wrapper">
                         <?php foreach($service as $keySS => $subservice){ ?>
+                            <?php
+                                $imageToShow = "";
+                                $differentImages = explode(",", $subservice->image);
+                                foreach($differentImages as $differentImage){
+                                    if(!str_contains($differentImage, "_")){
+                                        $imageToShow = $differentImage;
+                                    }
+                                }    
+                            ?>
                             <div class="service swiper-slide">
                                 <div class="service__information">
                                 <p class="service__name"><?php echo $subservice->service_name; ?></p>
                                     <div class="service__information-details">
                                         <picture>
-                                            <source srcset="<?php echo $_ENV['HOST'].'/build/img/services/'.$subservice->image.'.webp'; ?>" type="image/webp">
-                                            <source srcset="<?php echo $_ENV['HOST'].'/build/img/services/'.$subservice->image.'.png'; ?>" type="image/png">
-                                            <img class="service__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/services/'.$subservice->image.'.png'; ?>" alt="Imagen del servicio">
+                                            <source srcset="<?php echo $_ENV['HOST'].'/build/img/services/'.$imageToShow.'.webp'; ?>" type="image/webp">
+                                            <source srcset="<?php echo $_ENV['HOST'].'/build/img/services/'.$imageToShow.'.png'; ?>" type="image/png">
+                                            <img class="service__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/services/'.$imageToShow.'.png'; ?>" alt="Imagen del servicio">
                                         </picture>
                                         <p class="service__description"><?php echo $subservice->service_description; ?></p>
                                         <p class="service__price">Precio: $<?php echo number_format($subservice->service_price); ?> MXN</p>

@@ -62,12 +62,53 @@ class ServicesController {
 
             // Read image
             $imageName=md5(uniqid(rand(),true));
-            if(!empty(trim($_FILES['service_image']['tmp_name']))){
+            // if(!empty(trim($_FILES['service_image']['tmp_name']))){
+            //     $manager = new ImageManager(new Driver());
+            //     $pngImage=$manager->read(trim($_FILES['service_image']['tmp_name']))->cover(800,600)->encode(new PngEncoder(80));
+            //     $webpImage=$manager->read(trim($_FILES['service_image']['tmp_name']))->cover(800,600)->encode(new WebpEncoder(80));
+            //     $_POST['image']=$imageName;
+            //     $savePicture=true;
+            // }
+
+            if (!empty($_FILES['service_image']['tmp_name'][0])) {
                 $manager = new ImageManager(new Driver());
-                $pngImage=$manager->read(trim($_FILES['service_image']['tmp_name']))->cover(800,600)->encode(new PngEncoder(80));
-                $webpImage=$manager->read(trim($_FILES['service_image']['tmp_name']))->cover(800,600)->encode(new WebpEncoder(80));
-                $_POST['image']=$imageName;
-                $savePicture=true;
+                $tmpNameFiles = $_FILES['service_image']['tmp_name'];
+                $nameFiles = $_FILES['service_image']['name'];
+                $imagesToSave = [];
+                $imageNames = [];
+            
+                foreach ($tmpNameFiles as $key => $tmpNameFile) {
+                    $tmpNameFile = trim($tmpNameFile);
+            
+                    if (empty($tmpNameFile)) {
+                        continue;
+                    }
+            
+                    $image = $manager->read($tmpNameFile)->cover(800, 600);
+                    $pngImage = $image->encode(new PngEncoder(80));
+                    $webpImage = $image->encode(new WebpEncoder(80));
+            
+                    // Generar nombre
+                    $realName = strtoupper(pathinfo($nameFiles[$key], PATHINFO_FILENAME));
+                    $suffix = '';
+                    if (str_contains($realName, "_")) {
+                        [$prefix, $suffix] = explode("_", $realName, 2);
+                    }
+            
+                    $newImageName = $suffix ? "{$imageName}_{$suffix}" : $imageName;
+            
+                    // Guardar en array temporal
+                    $imagesToSave[] = [
+                        'name' => $newImageName,
+                        'png'  => $pngImage,
+                        'webp' => $webpImage
+                    ];
+            
+                    $imageNames[] = $newImageName;
+                }
+            
+                $_POST['image'] = implode(',', $imageNames);
+                $savePicture = true;
             }
             
             $_POST['service_price']=ceil(($_POST['service_cost']*1.2)/10)*10;
@@ -76,6 +117,20 @@ class ServicesController {
             $alerts = $service->validate();
 
             if(empty($alerts)){
+                // if($savePicture){
+                //     // Create folder if does not exist
+                //     if(!is_dir(trim($imageFolder))){
+                //         mkdir(trim($imageFolder),0777,true);
+                //     }
+
+                //     // Make the foldar ALWAYS writable
+                //     chmod($imageFolder, 0777);
+
+                //     // Put image on server
+                //     $pngImage->save(trim($imageFolder.$imageName).'.png');
+                //     $webpImage->save(trim($imageFolder.$imageName).'.webp');
+                // }
+
                 if($savePicture){
                     // Create folder if does not exist
                     if(!is_dir(trim($imageFolder))){
@@ -86,8 +141,12 @@ class ServicesController {
                     chmod($imageFolder, 0777);
 
                     // Put image on server
-                    $pngImage->save(trim($imageFolder.$imageName).'.png');
-                    $webpImage->save(trim($imageFolder.$imageName).'.webp');
+                    foreach($imagesToSave as $imageToSave){
+                        $currentPngImage = $imageToSave['png'];
+                        $currentWebpImage = $imageToSave['webp'];
+                        $currentPngImage->save(trim($imageFolder.$imageToSave['name']).'.png');
+                        $currentWebpImage->save(trim($imageFolder.$imageToSave['name']).'.webp');
+                    }
                 }
 
                 $result=$service->saveElement();
@@ -112,10 +171,13 @@ class ServicesController {
             header('Location: /login');
         }
         
-        $alerts=[];
-        $categories=Category::allWhere('type','service');
-        $id=$_GET['id'];
-        $id=filter_var($id,FILTER_VALIDATE_INT);
+        $alerts = [];
+        $flag = false;
+        $differentImages = [];
+        $categories = Category::allWhere('type','service');
+        $id = $_GET['id'];
+        $id = filter_var($id,FILTER_VALIDATE_INT);
+        
         if(!$id){
             header('Location: /dashboard/services');
         }
@@ -125,30 +187,98 @@ class ServicesController {
         if(!$service||!$service instanceof Service){
             header('Location: /dashboard/services');
         } else{
-            $service->currentImage=$service->image;
+            if(str_contains($service->image, ",")){
+                $flag = true; // true if multiple images, false if only one
+                $differentImages = explode(",", $service->image);
+                foreach($differentImages as $differentImage){
+                    if(!str_contains($differentImage, "_")){
+                        $service->currentImage=$differentImage;
+                    }
+                } // Para usar en el swiper
+            } else{
+                $service->currentImage=$service->image;
+            }
 
             if('POST'===$_SERVER['REQUEST_METHOD']){
                 $imageFolder='../public/build/img/services/';
                 $savePicture=false;
+                $imagesToSave = [];
+                $imageName=md5(uniqid(rand(),true));
 
                 // Read image
-                $imageName=md5(uniqid(rand(),true));
-                if(!empty(trim($_FILES['service_image']['tmp_name']))){
+                // if(!empty(trim($_FILES['service_image']['tmp_name']))){
+                //     $manager = new ImageManager(new Driver());
+                //     $pngImage=$manager->read(trim($_FILES['service_image']['tmp_name']))->cover(800,600)->encode(new PngEncoder(80));
+                //     $webpImage=$manager->read(trim($_FILES['service_image']['tmp_name']))->cover(800,600)->encode(new WebpEncoder(80));
+                //     $_POST['image']=$imageName;
+                //     $savePicture=true;
+                // } else{
+                //     $_POST['image']=$service->currentImage;
+                // }
+
+                if (!empty($_FILES['service_image']['tmp_name'][0])) {
                     $manager = new ImageManager(new Driver());
-                    $pngImage=$manager->read(trim($_FILES['service_image']['tmp_name']))->cover(800,600)->encode(new PngEncoder(80));
-                    $webpImage=$manager->read(trim($_FILES['service_image']['tmp_name']))->cover(800,600)->encode(new WebpEncoder(80));
-                    $_POST['image']=$imageName;
-                    $savePicture=true;
-                } else{
-                    $_POST['image']=$service->currentImage;
+                    $tmpNameFiles = $_FILES['service_image']['tmp_name'];
+                    $nameFiles = $_FILES['service_image']['name'];
+                    $imagesToSave = [];
+                    $imageNames = [];
+                
+                    foreach ($tmpNameFiles as $key => $tmpNameFile) {
+                        $tmpNameFile = trim($tmpNameFile);
+                
+                        if (empty($tmpNameFile)) {
+                            continue;
+                        }
+                
+                        $image = $manager->read($tmpNameFile)->cover(800, 600);
+                        $pngImage = $image->encode(new PngEncoder(80));
+                        $webpImage = $image->encode(new WebpEncoder(80));
+                
+                        // Generar nombre
+                        $realName = strtoupper(pathinfo($nameFiles[$key], PATHINFO_FILENAME));
+                        $suffix = '';
+                        if (str_contains($realName, "_")) {
+                            [$prefix, $suffix] = explode("_", $realName, 2);
+                        }
+                
+                        $newImageName = $suffix ? "{$imageName}_{$suffix}" : $imageName;
+                
+                        // Guardar en array temporal
+                        $imagesToSave[] = [
+                            'name' => $newImageName,
+                            'png'  => $pngImage,
+                            'webp' => $webpImage
+                        ];
+                
+                        $imageNames[] = $newImageName;
+                    }
+                
+                    $_POST['image'] = implode(',', $imageNames);
+                    $savePicture = true;
+                } else {
+                    $_POST['image'] = $service->image;
                 }
 
-                $_POST['service_price']=ceil(($_POST['service_cost']*1.2)/10)*10;
-                $_POST['category_id']=$_POST['category_id'];
+                $_POST['service_price'] = ceil(($_POST['service_cost']*1.2)/10)*10;
+                $_POST['category_id'] = $_POST['category_id'];
                 $service->sincronize($_POST);
-                $alerts=$service->validate();
+                $alerts = $service->validate();
 
                 if(empty($alerts)){
+                    // if($savePicture){
+                    //     // Create folder if does not exist
+                    //     if(!is_dir(trim($imageFolder))){
+                    //         mkdir(trim($imageFolder),0777,true);
+                    //     }
+    
+                    //     // Make the foldar ALWAYS writable
+                    //     chmod($imageFolder, 0777);
+    
+                    //     // Put image on server
+                    //     $pngImage->save(trim($imageFolder.$imageName).'.png');
+                    //     $webpImage->save(trim($imageFolder.$imageName).'.webp');
+                    // }
+
                     if($savePicture){
                         // Create folder if does not exist
                         if(!is_dir(trim($imageFolder))){
@@ -157,10 +287,29 @@ class ServicesController {
     
                         // Make the foldar ALWAYS writable
                         chmod($imageFolder, 0777);
+
+                        // Delete previous images before saving the new ones
+                        if (isset($flag) && $flag && !empty($differentImages)) {
+                            foreach ($differentImages as $oldImageName) {
+                                $oldPngPath  = $imageFolder . $oldImageName . '.png';
+                                $oldWebpPath = $imageFolder . $oldImageName . '.webp';
+                    
+                                if (file_exists($oldPngPath)) {
+                                    unlink($oldPngPath);
+                                }
+                                if (file_exists($oldWebpPath)) {
+                                    unlink($oldWebpPath);
+                                }
+                            }
+                        }
     
                         // Put image on server
-                        $pngImage->save(trim($imageFolder.$imageName).'.png');
-                        $webpImage->save(trim($imageFolder.$imageName).'.webp');
+                        foreach($imagesToSave as $imageToSave){
+                            $currentPngImage = $imageToSave['png'];
+                            $currentWebpImage = $imageToSave['webp'];
+                            $currentPngImage->save(trim($imageFolder.$imageToSave['name']).'.png');
+                            $currentWebpImage->save(trim($imageFolder.$imageToSave['name']).'.webp');
+                        }
                     }
     
                     $result=$service->saveElement();

@@ -9,14 +9,23 @@
             <div class="cemeteries slider swiper">
                 <div class="swiper-wrapper">
                     <?php foreach($cemeteries as $cemetery){ ?>
+                        <?php
+                            $imageToShow = "";
+                            $differentImages = explode(",", $cemetery->image);
+                            foreach($differentImages as $differentImage){
+                                if(!str_contains($differentImage, "_")){
+                                    $imageToShow = $differentImage;
+                                }
+                            }    
+                        ?>
                         <div class="cemetery swiper-slide">
                             <div class="cemetery__information">
                                 <p class="cemetery__name"><?php echo $cemetery->cemetery_name; ?></p>
                                 <div class="cemetery__information-details">
                                     <picture>
-                                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/cemeteries/'.$cemetery->image.'.webp'; ?>" type="image/webp">
-                                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/cemeteries/'.$cemetery->image.'.png'; ?>" type="image/png">
-                                        <img class="cemetery__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/cemeteries/'.$cemetery->image.'.png'; ?>" alt="Imagen de la capilla">
+                                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/cemeteries/'.$imageToShow.'.webp'; ?>" type="image/webp">
+                                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/cemeteries/'.$imageToShow.'.png'; ?>" type="image/png">
+                                        <img class="cemetery__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/cemeteries/'.$imageToShow.'.png'; ?>" alt="Imagen de la capilla">
                                     </picture>
                                     <p class="cemetery__description"><?php echo $cemetery->cemetery_description; ?></p>
                                     <p class="cemetery__price">Precio: $<?php echo number_format($cemetery->cemetery_price); ?> MXN</p>
@@ -42,14 +51,23 @@
                     <div class="cemeteries slider swiper">
                         <div class="swiper-wrapper">
                             <?php foreach($cemetery as $keySS => $subcemetery){ ?>
+                                <?php
+                                    $imageToShow = "";
+                                    $differentImages = explode(",", $subcemetery->image);
+                                    foreach($differentImages as $differentImage){
+                                        if(!str_contains($differentImage, "_")){
+                                            $imageToShow = $differentImage;
+                                        }
+                                    }    
+                                ?>
                                 <div class="cemetery swiper-slide">
                                     <div class="cemetery__information">
                                     <p class="cemetery__name"><?php echo $subcemetery->cemetery_name; ?></p>
                                         <div class="cemetery__information-details">
                                             <picture>
-                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/cemeteries/'.$subcemetery->image.'.webp'; ?>" type="image/webp">
-                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/cemeteries/'.$subcemetery->image.'.png'; ?>" type="image/png">
-                                                <img class="cemetery__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/cemeteries/'.$subcemetery->image.'.png'; ?>" alt="Imagen del cementerio">
+                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/cemeteries/'.$imageToShow.'.webp'; ?>" type="image/webp">
+                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/cemeteries/'.$imageToShow.'.png'; ?>" type="image/png">
+                                                <img class="cemetery__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/cemeteries/'.$imageToShow.'.png'; ?>" alt="Imagen del cementerio">
                                             </picture>
                                             <p class="cemetery__description"><?php echo $subcemetery->cemetery_description; ?></p>
                                             <p class="cemetery__price">Precio: $<?php echo number_format($subcemetery->cemetery_price); ?> MXN</p>

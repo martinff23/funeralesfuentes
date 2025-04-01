@@ -52,31 +52,87 @@ class ComplementsController {
             header('Location: /login');
         }
         
-        $alerts=[];
-        $categories=Category::allWhere('type','complement');
+        $alerts = [];
+        $categories = Category::allWhere('type','complement');
         $complement = new Complement;
 
-        if('POST'===$_SERVER['REQUEST_METHOD']){
-            $imageFolder='../public/build/img/complements/';
-            $savePicture=false;
+        if('POST' === $_SERVER['REQUEST_METHOD']){
+            $imageFolder = '../public/build/img/complements/';
+            $savePicture = false;
+            $imagesToSave = [];
+            $imageName=md5(uniqid(rand(),true));
 
             // Read image
-            $imageName=md5(uniqid(rand(),true));
-            if(!empty(trim($_FILES['complement_image']['tmp_name']))){
+            // if(!empty(trim($_FILES['complement_image']['tmp_name']))){
+            //     $manager = new ImageManager(new Driver());
+            //     $pngImage=$manager->read(trim($_FILES['complement_image']['tmp_name']))->cover(800,600)->encode(new PngEncoder(80));
+            //     $webpImage=$manager->read(trim($_FILES['complement_image']['tmp_name']))->cover(800,600)->encode(new WebpEncoder(80));
+            //     $_POST['image']=$imageName;
+            //     $savePicture=true;
+            // }
+
+            if (!empty($_FILES['complement_image']['tmp_name'][0])) {
                 $manager = new ImageManager(new Driver());
-                $pngImage=$manager->read(trim($_FILES['complement_image']['tmp_name']))->cover(800,600)->encode(new PngEncoder(80));
-                $webpImage=$manager->read(trim($_FILES['complement_image']['tmp_name']))->cover(800,600)->encode(new WebpEncoder(80));
-                $_POST['image']=$imageName;
-                $savePicture=true;
+                $tmpNameFiles = $_FILES['complement_image']['tmp_name'];
+                $nameFiles = $_FILES['complement_image']['name'];
+                $imagesToSave = [];
+                $imageNames = [];
+            
+                foreach ($tmpNameFiles as $key => $tmpNameFile) {
+                    $tmpNameFile = trim($tmpNameFile);
+            
+                    if (empty($tmpNameFile)) {
+                        continue;
+                    }
+            
+                    $image = $manager->read($tmpNameFile)->cover(800, 600);
+                    $pngImage = $image->encode(new PngEncoder(80));
+                    $webpImage = $image->encode(new WebpEncoder(80));
+            
+                    // Generar nombre
+                    $realName = strtoupper(pathinfo($nameFiles[$key], PATHINFO_FILENAME));
+                    $suffix = '';
+                    if (str_contains($realName, "_")) {
+                        [$prefix, $suffix] = explode("_", $realName, 2);
+                    }
+            
+                    $newImageName = $suffix ? "{$imageName}_{$suffix}" : $imageName;
+            
+                    // Guardar en array temporal
+                    $imagesToSave[] = [
+                        'name' => $newImageName,
+                        'png'  => $pngImage,
+                        'webp' => $webpImage
+                    ];
+            
+                    $imageNames[] = $newImageName;
+                }
+            
+                $_POST['image'] = implode(',', $imageNames);
+                $savePicture = true;
             }
             
-            $_POST['complement_networks']=json_encode($_POST['complement_networks'], JSON_UNESCAPED_SLASHES);
-            $_POST['complement_price']=ceil(($_POST['complement_cost']*1.2)/10)*10;
-            $_POST['category']=$_POST['category_id'];
+            $_POST['complement_networks'] = json_encode($_POST['complement_networks'], JSON_UNESCAPED_SLASHES);
+            $_POST['complement_price'] = ceil(($_POST['complement_cost']*1.2)/10)*10;
+            $_POST['category'] = $_POST['category_id'];
             $complement->sincronize($_POST);
             $alerts = $complement->validate();
 
             if(empty($alerts)){
+                // if($savePicture){
+                //     // Create folder if does not exist
+                //     if(!is_dir(trim($imageFolder))){
+                //         mkdir(trim($imageFolder),0777,true);
+                //     }
+
+                //     // Make the foldar ALWAYS writable
+                //     chmod($imageFolder, 0777);
+
+                //     // Put image on server
+                //     $pngImage->save(trim($imageFolder.$imageName).'.png');
+                //     $webpImage->save(trim($imageFolder.$imageName).'.webp');
+                // }
+
                 if($savePicture){
                     // Create folder if does not exist
                     if(!is_dir(trim($imageFolder))){
@@ -87,8 +143,12 @@ class ComplementsController {
                     chmod($imageFolder, 0777);
 
                     // Put image on server
-                    $pngImage->save(trim($imageFolder.$imageName).'.png');
-                    $webpImage->save(trim($imageFolder.$imageName).'.webp');
+                    foreach($imagesToSave as $imageToSave){
+                        $currentPngImage = $imageToSave['png'];
+                        $currentWebpImage = $imageToSave['webp'];
+                        $currentPngImage->save(trim($imageFolder.$imageToSave['name']).'.png');
+                        $currentWebpImage->save(trim($imageFolder.$imageToSave['name']).'.webp');
+                    }
                 }
 
                 $result=$complement->saveElement();
@@ -114,10 +174,13 @@ class ComplementsController {
             header('Location: /login');
         }
         
-        $alerts=[];
-        $categories=Category::allWhere('type','complement');
-        $id=$_GET['id'];
-        $id=filter_var($id,FILTER_VALIDATE_INT);
+        $alerts = [];
+        $flag = false;
+        $differentImages = [];
+        $categories = Category::allWhere('type','complement');
+        $id = $_GET['id'];
+        $id = filter_var($id,FILTER_VALIDATE_INT);
+        
         if(!$id){
             header('Location: /dashboard/complements');
         }
@@ -127,31 +190,99 @@ class ComplementsController {
         if(!$complement||!$complement instanceof Complement){
             header('Location: /dashboard/complements');
         } else{
-            $complement->currentImage=$complement->image;
+            if(str_contains($complement->image, ",")){
+                $flag = true; // true if multiple images, false if only one
+                $differentImages = explode(",", $complement->image);
+                foreach($differentImages as $differentImage){
+                    if(!str_contains($differentImage, "_")){
+                        $complement->currentImage=$differentImage;
+                    }
+                } // Para usar en el swiper
+            } else{
+                $complement->currentImage=$complement->image;
+            }
 
             if('POST'===$_SERVER['REQUEST_METHOD']){
-                $imageFolder='../public/build/img/complements/';
-                $savePicture=false;
+                $imageFolder = '../public/build/img/complements/';
+                $savePicture = false;
+                $imagesToSave = [];
+                $imageName = md5(uniqid(rand(),true));
 
                 // Read image
-                $imageName=md5(uniqid(rand(),true));
-                if(!empty(trim($_FILES['complement_image']['tmp_name']))){
+                // if(!empty(trim($_FILES['complement_image']['tmp_name']))){
+                //     $manager = new ImageManager(new Driver());
+                //     $pngImage=$manager->read(trim($_FILES['complement_image']['tmp_name']))->cover(800,600)->encode(new PngEncoder(80));
+                //     $webpImage=$manager->read(trim($_FILES['complement_image']['tmp_name']))->cover(800,600)->encode(new WebpEncoder(80));
+                //     $_POST['image']=$imageName;
+                //     $savePicture=true;
+                // } else{
+                //     $_POST['image']=$complement->currentImage;
+                // }
+
+                if (!empty($_FILES['complement_image']['tmp_name'][0])) {
                     $manager = new ImageManager(new Driver());
-                    $pngImage=$manager->read(trim($_FILES['complement_image']['tmp_name']))->cover(800,600)->encode(new PngEncoder(80));
-                    $webpImage=$manager->read(trim($_FILES['complement_image']['tmp_name']))->cover(800,600)->encode(new WebpEncoder(80));
-                    $_POST['image']=$imageName;
-                    $savePicture=true;
-                } else{
-                    $_POST['image']=$complement->currentImage;
+                    $tmpNameFiles = $_FILES['complement_image']['tmp_name'];
+                    $nameFiles = $_FILES['complement_image']['name'];
+                    $imagesToSave = [];
+                    $imageNames = [];
+                
+                    foreach ($tmpNameFiles as $key => $tmpNameFile) {
+                        $tmpNameFile = trim($tmpNameFile);
+                
+                        if (empty($tmpNameFile)) {
+                            continue;
+                        }
+                
+                        $image = $manager->read($tmpNameFile)->cover(800, 600);
+                        $pngImage = $image->encode(new PngEncoder(80));
+                        $webpImage = $image->encode(new WebpEncoder(80));
+                
+                        // Generar nombre
+                        $realName = strtoupper(pathinfo($nameFiles[$key], PATHINFO_FILENAME));
+                        $suffix = '';
+                        if (str_contains($realName, "_")) {
+                            [$prefix, $suffix] = explode("_", $realName, 2);
+                        }
+                
+                        $newImageName = $suffix ? "{$imageName}_{$suffix}" : $imageName;
+                
+                        // Guardar en array temporal
+                        $imagesToSave[] = [
+                            'name' => $newImageName,
+                            'png'  => $pngImage,
+                            'webp' => $webpImage
+                        ];
+                
+                        $imageNames[] = $newImageName;
+                    }
+                
+                    $_POST['image'] = implode(',', $imageNames);
+                    $savePicture = true;
+                } else {
+                    $_POST['image'] = $complement->image;
                 }
 
-                $_POST['complement_networks']=json_encode($_POST['complement_networks'], JSON_UNESCAPED_SLASHES);
-                $_POST['complement_price']=ceil(($_POST['complement_cost']*1.2)/10)*10;
-                $_POST['category']=$_POST['category_id'];
+                $_POST['complement_networks'] = json_encode($_POST['complement_networks'], JSON_UNESCAPED_SLASHES);
+                $_POST['complement_price'] = ceil(($_POST['complement_cost']*1.2)/10)*10;
+                $_POST['category'] = $_POST['category_id'];
                 $complement->sincronize($_POST);
-                $alerts=$complement->validate();
+                $alerts = $complement->validate();
 
                 if(empty($alerts)){
+                    // if($savePicture){
+                    //     // Create folder if does not exist
+                    //     if(!is_dir(trim($imageFolder))){
+                    //         mkdir(trim($imageFolder),0777,true);
+                    //     }
+    
+                    //     // Make the foldar ALWAYS writable
+                    //     chmod($imageFolder, 0777);
+    
+                    //     // Put image on server
+                    //     $pngImage->save(trim($imageFolder.$imageName).'.png');
+                    //     $webpImage->save(trim($imageFolder.$imageName).'.webp');
+                    // }
+
                     if($savePicture){
                         // Create folder if does not exist
                         if(!is_dir(trim($imageFolder))){
@@ -160,10 +291,29 @@ class ComplementsController {
     
                         // Make the foldar ALWAYS writable
                         chmod($imageFolder, 0777);
+
+                        // Delete previous images before saving the new ones
+                        if (isset($flag) && $flag && !empty($differentImages)) {
+                            foreach ($differentImages as $oldImageName) {
+                                $oldPngPath  = $imageFolder . $oldImageName . '.png';
+                                $oldWebpPath = $imageFolder . $oldImageName . '.webp';
+                    
+                                if (file_exists($oldPngPath)) {
+                                    unlink($oldPngPath);
+                                }
+                                if (file_exists($oldWebpPath)) {
+                                    unlink($oldWebpPath);
+                                }
+                            }
+                        }
     
                         // Put image on server
-                        $pngImage->save(trim($imageFolder.$imageName).'.png');
-                        $webpImage->save(trim($imageFolder.$imageName).'.webp');
+                        foreach($imagesToSave as $imageToSave){
+                            $currentPngImage = $imageToSave['png'];
+                            $currentWebpImage = $imageToSave['webp'];
+                            $currentPngImage->save(trim($imageFolder.$imageToSave['name']).'.png');
+                            $currentWebpImage->save(trim($imageFolder.$imageToSave['name']).'.webp');
+                        }
                     }
     
                     $result=$complement->saveElement();
@@ -174,11 +324,13 @@ class ComplementsController {
             }
 
             $router->render('admin/complements/edit',[
-                'title'=>'Editar extra ofrecido',
-                'alerts'=>$alerts,
-                'complement'=>$complement??null,
-                'categories'=>$categories,
-                'networks'=>json_decode($complement->complement_networks)
+                'title' => 'Editar extra ofrecido',
+                'alerts' => $alerts,
+                'complement' => $complement??null,
+                'categories' => $categories,
+                'networks' => json_decode($complement->complement_networks),
+                'flag' => $flag,
+                'differentImages' => $differentImages
             ]);
         }
     }
@@ -190,14 +342,14 @@ class ComplementsController {
             header('Location: /login');
         }
         
-        if('POST'===$_SERVER['REQUEST_METHOD']){
-            $id=$_POST['id'];
-            $complement=Complement::find($id);
-            if(!isset($complement)||!$complement instanceof Complement){
+        if('POST' === $_SERVER['REQUEST_METHOD']){
+            $id = $_POST['id'];
+            $complement = Complement::find($id);
+            if(!isset($complement) || !$complement instanceof Complement){
                 header('Location: /dashboard/complements');
             }
             
-            $result=$complement->deleteElement();
+            $result = $complement->deleteElement();
             if($result){
                 header('Location: /dashboard/complements');
             }

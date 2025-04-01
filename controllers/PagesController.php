@@ -8,9 +8,9 @@ use Model\Category;
 use Model\Cemetery;
 use Model\Chapel;
 use Model\Crematory;
+use Model\Funerals;
+use Model\FuneralsArchive;
 use Model\Hearse;
-use Model\Jobs;
-use Model\JobsArchive;
 use Model\Package;
 use Model\Product;
 use Model\Service;
@@ -46,8 +46,8 @@ class PagesController {
         $today = new DateTime();
         $yearsOfExperience = ($oldestDate->diff($today))->y;
 
-        $totalJobs = Jobs::countRecords('job_status', 'COMPLETED') * 1;
-        $totalJobs = $totalJobs + JobsArchive::countRecords() * 1;
+        $totalJobs = Funerals::countRecords('job_status', 'COMPLETED') * 1;
+        $totalJobs = $totalJobs + FuneralsArchive::countRecords() * 1;
 
         if(!empty($_SESSION)){
             $user = User::find($_SESSION['id']);

@@ -4,7 +4,7 @@ namespace Model;
 
 class Product extends ActiveRecord{
     protected static $table = 'products';
-    protected static $databaseColumns = ['id', 'category_id', 'product_name', 'product_description', 'product_cost', 'product_price', 'product_inventory', 'image', 'tags', 'product_networks'];
+    protected static $databaseColumns = ['id', 'category_id', 'product_name', 'product_description', 'product_cost', 'product_price', 'product_inventory', 'image', 'tags', 'product_networks', 'SKU'];
 
     public $id;
     public $category_id;
@@ -16,6 +16,7 @@ class Product extends ActiveRecord{
     public $image;
     public $tags;
     public $product_networks;
+    public $SKU;
     
     public $currentImage;
     public $category;
@@ -31,6 +32,7 @@ class Product extends ActiveRecord{
         $this->image = $args['image'] ?? '';
         $this->tags = $args['tags'] ?? '';
         $this->product_networks = $args['product_networks'] ?? '';
+        $this->SKU = $args['SKU'] ?? '';
     }
 
     public function validate() {
@@ -57,6 +59,9 @@ class Product extends ActiveRecord{
         }
         if(!$this->tags) {
             self::$alerts['error'][] = 'Al menos una característica es obligatoria';
+        }
+        if(!$this->SKU) {
+            self::$alerts['error'][] = 'El SKU es obligatorio';
         }
     
         return self::$alerts;

@@ -2,8 +2,8 @@
 
 namespace Model;
 
-class Jobs extends ActiveRecord{
-    protected static $table = 'jobs';
+class Funerals extends ActiveRecord{
+    protected static $table = 'funerals';
     protected static $databaseColumns = ['id', 'package_id', 'coffins', 'urns', 'services', 'complements', 'chapels', 'hearses', 'cemeteries', 'crematories', 'job_price', 'job_cost', 'job_date', 'job_receiver_name', 'job_receiver_birthday', 'job_receiver_cause_of_death', 'job_receiver_death_date', 'job_receiver_photograph', 'job_contractor_id', 'job_notes', 'job_status'];
 
     public $id;

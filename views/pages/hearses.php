@@ -9,14 +9,23 @@
             <div class="hearses slider swiper">
                 <div class="swiper-wrapper">
                     <?php foreach($hearses as $hearse){ ?>
+                        <?php
+                            $imageToShow = "";
+                            $differentImages = explode(",", $hearse->image);
+                            foreach($differentImages as $differentImage){
+                                if(!str_contains($differentImage, "_")){
+                                    $imageToShow = $differentImage;
+                                }
+                            }    
+                        ?>
                         <div class="hearse swiper-slide">
                             <div class="hearse__information">
                                 <p class="hearse__name"><?php echo $hearse->hearse_name; ?></p>
                                 <div class="hearse__information-details">
                                     <picture>
-                                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$hearse->image.'.webp'; ?>" type="image/webp">
-                                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$hearse->image.'.png'; ?>" type="image/png">
-                                        <img class="hearse__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$hearse->image.'.png'; ?>" alt="Imagen de la capilla">
+                                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$imageToShow.'.webp'; ?>" type="image/webp">
+                                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$imageToShow.'.png'; ?>" type="image/png">
+                                        <img class="hearse__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$imageToShow.'.png'; ?>" alt="Imagen de la capilla">
                                     </picture>
                                     <p class="hearse__description"><?php echo $hearse->hearse_description; ?></p>
                                     <p class="hearse__price">Precio: $<?php echo number_format($hearse->hearse_price); ?> MXN</p>
@@ -42,14 +51,23 @@
                     <div class="hearses slider swiper">
                         <div class="swiper-wrapper">
                             <?php foreach($hearse as $keySS => $subhearse){ ?>
+                                <?php
+                                    $imageToShow = "";
+                                    $differentImages = explode(",", $subhearse->image);
+                                    foreach($differentImages as $differentImage){
+                                        if(!str_contains($differentImage, "_")){
+                                            $imageToShow = $differentImage;
+                                        }
+                                    }    
+                                ?>
                                 <div class="hearse swiper-slide">
                                     <div class="hearse__information">
                                     <p class="hearse__name"><?php echo $subhearse->hearse_name; ?></p>
                                         <div class="hearse__information-details">
                                             <picture>
-                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$subhearse->image.'.webp'; ?>" type="image/webp">
-                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$subhearse->image.'.png'; ?>" type="image/png">
-                                                <img class="hearse__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$subhearse->image.'.png'; ?>" alt="Imagen de la carroza">
+                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$imageToShow.'.webp'; ?>" type="image/webp">
+                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$imageToShow.'.png'; ?>" type="image/png">
+                                                <img class="hearse__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$imageToShow.'.png'; ?>" alt="Imagen de la carroza">
                                             </picture>
                                             <p class="hearse__description"><?php echo $subhearse->hearse_description; ?></p>
                                             <p class="hearse__price">Precio: $<?php echo number_format($subhearse->hearse_price); ?> MXN</p>

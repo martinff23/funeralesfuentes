@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeTagsInput("#hearse_tags");
     initializeTagsInput("#product_tags");
     initializeTagsInput("#service_tags");
+    initializeTagsInput("#branch_tags");
 });
 
 (function () {

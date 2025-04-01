@@ -14,17 +14,28 @@
     </div>
     <div class="form__field">
         <label for="complement_image" class="form__label">Imagen</label>
-        <input type="file" class="form__input form__input--file" id="complement_image" name="complement_image">
+        <input type="file" class="form__input form__input--file" id="complement_image" name="complement_image[]" multiple accept="image/*">
+        <!-- <input type="file" class="form__input form__input--file" id="complement_image" name="complement_image"> -->
     </div>
 
     <?php if(isset($complement->currentImage)) {?>
         <p class="form__text">Imagen actual:</p>
         <div class="form__image">
-            <picture>
-                <source srcset="<?php echo $_ENV['HOST'].'/build/img/complements/'.$complement->currentImage.'.webp'; ?>" type="image/webp">
-                <source srcset="<?php echo $_ENV['HOST'].'/build/img/complements/'.$complement->currentImage.'.png'; ?>" type="image/png">
-                <img src="<?php echo $_ENV['HOST'].'/build/img/complements/'.$complement->currentImage.'.png'; ?>" alt="Imagen del extra">
-            </picture>
+            <?php if($flag){ ?>
+                <?php foreach($differentImages as $differentImage){ ?>
+                    <picture>
+                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/complements/'.$differentImage.'.webp'; ?>" type="image/webp">
+                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/complements/'.$differentImage.'.png'; ?>" type="image/png">
+                        <img src="<?php echo $_ENV['HOST'].'/build/img/complements/'.$differentImage.'.png'; ?>" alt="Imagen del extra">
+                    </picture>
+                <?php } ?>
+            <?php } else{ ?>
+                <picture>
+                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/complements/'.$complement->currentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/complements/'.$complement->currentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/build/img/complements/'.$complement->currentImage.'.png'; ?>" alt="Imagen del extra">
+                </picture>
+            <?php } ?>
         </div>
     <?php }?>
 
@@ -37,7 +48,7 @@
         <select class="form__select" id="category" name="category_id">
             <option value="">- Seleccionar -</option>
             <?php foreach($categories as $category){ ?>
-                <option value="<?php echo $category->id;?>" <?php echo ($category->id===$complement->category) ? 'selected' : ''; ?>><?php echo $category->visible_name;?></option>
+                <option value="<?php echo $category->id;?>" <?php echo ($category->id===$complement->category_id) ? 'selected' : ''; ?>><?php echo $category->visible_name;?></option>
             <?php }?>
         </select>
     </div>

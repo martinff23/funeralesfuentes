@@ -14,17 +14,28 @@
     </div>
     <div class="form__field">
         <label for="hearse_image" class="form__label">Imagen</label>
-        <input type="file" class="form__input form__input--file" id="hearse_image" name="hearse_image">
+        <input type="file" class="form__input form__input--file" id="hearse_image" name="hearse_image[]" multiple accept="image/*">
+        <!-- <input type="file" class="form__input form__input--file" id="hearse_image" name="hearse_image"> -->
     </div>
 
     <?php if(isset($hearse->currentImage)) {?>
         <p class="form__text">Imagen actual:</p>
         <div class="form__image">
-            <picture>
-                <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$hearse->currentImage.'.webp'; ?>" type="image/webp">
-                <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$hearse->currentImage.'.png'; ?>" type="image/png">
-                <img src="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$hearse->currentImage.'.png'; ?>" alt="Imagen de la carroza">
-            </picture>
+            <?php if($flag){ ?>
+                <?php foreach($differentImages as $differentImage){ ?>
+                    <picture>
+                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$differentImage.'.webp'; ?>" type="image/webp">
+                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$differentImage.'.png'; ?>" type="image/png">
+                        <img src="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$differentImage.'.png'; ?>" alt="Imagen de la carroza">
+                    </picture>
+                <?php } ?>
+            <?php } else{ ?>
+                <picture>
+                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$hearse->currentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$hearse->currentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$hearse->currentImage.'.png'; ?>" alt="Imagen de la carroza">
+                </picture>
+            <?php } ?>
         </div>
     <?php }?>
 
@@ -37,7 +48,7 @@
         <select class="form__select" id="category" name="category_id">
             <option value="">- Seleccionar -</option>
             <?php foreach($categories as $category){ ?>
-                <option value="<?php echo $category->id;?>" <?php echo ($category->id===$hearse->category) ? 'selected' : ''; ?>><?php echo $category->visible_name;?></option>
+                <option value="<?php echo $category->id;?>" <?php echo ($category->id===$hearse->category_id) ? 'selected' : ''; ?>><?php echo $category->visible_name;?></option>
             <?php }?>
         </select>
     </div>

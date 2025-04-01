@@ -1303,8 +1303,9 @@ h3 {
   margin-top: 3rem;
 }
 .form__image {
-  max-width: 20rem;
-  margin: 2rem 0;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
 }
 .form__list {
   margin: 0;

@@ -9,14 +9,23 @@
             <div class="chapels slider swiper">
                 <div class="swiper-wrapper">
                     <?php foreach($chapels as $chapel){ ?>
+                        <?php
+                            $imageToShow = "";
+                            $differentImages = explode(",", $chapel->image);
+                            foreach($differentImages as $differentImage){
+                                if(!str_contains($differentImage, "_")){
+                                    $imageToShow = $differentImage;
+                                }
+                            }    
+                        ?>
                         <div class="chapel swiper-slide">
                             <div class="chapel__information">
                                 <p class="chapel__name"><?php echo $chapel->chapel_name; ?></p>
                                 <div class="chapel__information-details">
                                     <picture>
-                                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$chapel->image.'.webp'; ?>" type="image/webp">
-                                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$chapel->image.'.png'; ?>" type="image/png">
-                                        <img class="chapel__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$chapel->image.'.png'; ?>" alt="Imagen de la capilla">
+                                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$imageToShow.'.webp'; ?>" type="image/webp">
+                                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$imageToShow.'.png'; ?>" type="image/png">
+                                        <img class="chapel__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$imageToShow.'.png'; ?>" alt="Imagen de la capilla">
                                     </picture>
                                     <p class="chapel__description"><?php echo $chapel->chapel_description; ?></p>
                                     <p class="chapel__price">Precio: $<?php echo number_format($chapel->chapel_price); ?> MXN</p>
@@ -42,14 +51,23 @@
                     <div class="chapels slider swiper">
                         <div class="swiper-wrapper">
                             <?php foreach($chapel as $keySS => $subchapel){ ?>
+                                <?php
+                                    $imageToShow = "";
+                                    $differentImages = explode(",", $subchapel->image);
+                                    foreach($differentImages as $differentImage){
+                                        if(!str_contains($differentImage, "_")){
+                                            $imageToShow = $differentImage;
+                                        }
+                                    }    
+                                ?>
                                 <div class="chapel swiper-slide">
                                     <div class="chapel__information">
                                     <p class="chapel__name"><?php echo $subchapel->chapel_name; ?></p>
                                         <div class="chapel__information-details">
                                             <picture>
-                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$subchapel->image.'.webp'; ?>" type="image/webp">
-                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$subchapel->image.'.png'; ?>" type="image/png">
-                                                <img class="chapel__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$subchapel->image.'.png'; ?>" alt="Imagen de la capilla">
+                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$imageToShow.'.webp'; ?>" type="image/webp">
+                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$imageToShow.'.png'; ?>" type="image/png">
+                                                <img class="chapel__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$imageToShow.'.png'; ?>" alt="Imagen de la capilla">
                                             </picture>
                                             <p class="chapel__description"><?php echo $subchapel->chapel_description; ?></p>
                                             <p class="chapel__price">Precio: $<?php echo number_format($subchapel->chapel_price); ?> MXN</p>

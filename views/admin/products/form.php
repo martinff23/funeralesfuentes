@@ -13,22 +13,37 @@
         <input type="text" class="form__input" id="product_cost" name="product_cost" placeholder="Costo del producto" value="<?php echo $product->product_cost??'';?>">
     </div>
     <div class="form__field">
+        <label for="SKU" class="form__label">SKU</label>
+        <input type="text" class="form__input" id="SKU" name="SKU" placeholder="SKU" value="<?php echo $product->SKU??'';?>">
+    </div>
+    <div class="form__field">
         <label for="product_inventory" class="form__label">Inventario</label>
         <input type="text" class="form__input" id="product_inventory" name="product_inventory" placeholder="Cantidad de productos" value="<?php echo $product->product_inventory??'';?>">
     </div>
     <div class="form__field">
         <label for="product_image" class="form__label">Imagen</label>
-        <input type="file" class="form__input form__input--file" id="product_image" name="product_image">
+        <input type="file" class="form__input form__input--file" id="product_image" name="product_image[]" multiple accept="image/*">
+        <!-- <input type="file" class="form__input form__input--file" id="product_image" name="product_image"> -->
     </div>
 
     <?php if(isset($product->currentImage)) {?>
         <p class="form__text">Imagen actual:</p>
         <div class="form__image">
-            <picture>
-                <source srcset="<?php echo $_ENV['HOST'].'/build/img/products/'.$product->currentImage.'.webp'; ?>" type="image/webp">
-                <source srcset="<?php echo $_ENV['HOST'].'/build/img/products/'.$product->currentImage.'.png'; ?>" type="image/png">
-                <img src="<?php echo $_ENV['HOST'].'/build/img/products/'.$product->currentImage.'.png'; ?>" alt="Imagen del producto">
-            </picture>
+            <?php if($flag){ ?>
+                <?php foreach($differentImages as $differentImage){ ?>
+                    <picture>
+                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/products/'.$differentImage.'.webp'; ?>" type="image/webp">
+                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/products/'.$differentImage.'.png'; ?>" type="image/png">
+                        <img src="<?php echo $_ENV['HOST'].'/build/img/products/'.$differentImage.'.png'; ?>" alt="Imagen del producto">
+                    </picture>
+                <?php } ?>
+            <?php } else{ ?>
+                <picture>
+                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/products/'.$product->currentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/products/'.$product->currentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/build/img/products/'.$product->currentImage.'.png'; ?>" alt="Imagen del producto">
+                </picture>
+            <?php } ?>
         </div>
     <?php }?>
 
@@ -41,7 +56,7 @@
         <select class="form__select" id="category" name="category_id">
             <option value="">- Seleccionar -</option>
             <?php foreach($categories as $category){ ?>
-                <option value="<?php echo $category->id;?>" <?php echo ($category->id===$product->category) ? 'selected' : ''; ?>><?php echo $category->visible_name;?></option>
+                <option value="<?php echo $category->id;?>" <?php echo ($category->id===$product->category_id) ? 'selected' : ''; ?>><?php echo $category->visible_name;?></option>
             <?php }?>
         </select>
     </div>

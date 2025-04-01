@@ -17,6 +17,10 @@
                 <i class="fa-solid fa-square-plus dashboard__icon"></i>
                 <span class="dashboard__menu-text">Extras</span>
             </a>
+            <a href="/dashboard/branches" class="dashboard__link <?php echo currentPage('/branches');?>">
+                <i class="fa-solid fa-store dashboard__icon"></i>
+                <span class="dashboard__menu-text">Sucursales</span>
+            </a>
             <a href="/dashboard/chapels" class="dashboard__link <?php echo currentPage('/chapels');?>">
                 <i class="fa-solid fa-hands-praying dashboard__icon"></i>
                 <span class="dashboard__menu-text">Capillas</span>

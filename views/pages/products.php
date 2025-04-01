@@ -16,14 +16,23 @@
                     <div class="products slider swiper">
                         <div class="swiper-wrapper">
                             <?php foreach($subproduct as $keySSP => $subsubproduct){ ?>
+                                <?php
+                                    $imageToShow = "";
+                                    $differentImages = explode(",", $subsubproduct->image);
+                                    foreach($differentImages as $differentImage){
+                                        if(!str_contains($differentImage, "_")){
+                                            $imageToShow = $differentImage;
+                                        }
+                                    }    
+                                ?>
                                 <div class="product swiper-slide">
                                     <div class="product__information">
                                     <p class="product__name"><?php echo $subsubproduct->product_name; ?></p>
                                         <div class="product__information-details">
                                             <picture>
-                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/products/'.$subsubproduct->image.'.webp'; ?>" type="image/webp">
-                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/products/'.$subsubproduct->image.'.png'; ?>" type="image/png">
-                                                <img class="product__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/products/'.$subsubproduct->image.'.png'; ?>" alt="Imagen del producto">
+                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/products/'.$imageToShow.'.webp'; ?>" type="image/webp">
+                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/products/'.$imageToShow.'.png'; ?>" type="image/png">
+                                                <img class="product__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/products/'.$imageToShow.'.png'; ?>" alt="Imagen del producto">
                                             </picture>
                                             <p class="product__description"><?php echo $subsubproduct->product_description; ?></p>
                                             <p class="product__price">Precio: $<?php echo number_format($subsubproduct->product_price); ?> MXN</p>

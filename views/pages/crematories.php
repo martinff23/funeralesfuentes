@@ -9,14 +9,23 @@
             <div class="crematories slider swiper">
                 <div class="swiper-wrapper">
                     <?php foreach($crematories as $crematory){ ?>
+                        <?php
+                            $imageToShow = "";
+                            $differentImages = explode(",", $crematory->image);
+                            foreach($differentImages as $differentImage){
+                                if(!str_contains($differentImage, "_")){
+                                    $imageToShow = $differentImage;
+                                }
+                            }    
+                        ?>
                         <div class="crematory swiper-slide">
                             <div class="crematory__information">
                                 <p class="crematory__name"><?php echo $crematory->crematory_name; ?></p>
                                 <div class="crematory__information-details">
                                     <picture>
-                                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$crematory->image.'.webp'; ?>" type="image/webp">
-                                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$crematory->image.'.png'; ?>" type="image/png">
-                                        <img class="crematory__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$crematory->image.'.png'; ?>" alt="Imagen de la capilla">
+                                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$imageToShow.'.webp'; ?>" type="image/webp">
+                                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$imageToShow.'.png'; ?>" type="image/png">
+                                        <img class="crematory__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$imageToShow.'.png'; ?>" alt="Imagen de la capilla">
                                     </picture>
                                     <p class="crematory__description"><?php echo $crematory->crematory_description; ?></p>
                                     <p class="crematory__price">Precio: $<?php echo number_format($crematory->crematory_price); ?> MXN</p>
@@ -42,14 +51,23 @@
                     <div class="crematories slider swiper">
                         <div class="swiper-wrapper">
                             <?php foreach($crematory as $keySS => $subcrematory){ ?>
+                                <?php
+                                    $imageToShow = "";
+                                    $differentImages = explode(",", $subcrematory->image);
+                                    foreach($differentImages as $differentImage){
+                                        if(!str_contains($differentImage, "_")){
+                                            $imageToShow = $differentImage;
+                                        }
+                                    }    
+                                ?>
                                 <div class="crematory swiper-slide">
                                     <div class="crematory__information">
                                     <p class="crematory__name"><?php echo $subcrematory->crematory_name; ?></p>
                                         <div class="crematory__information-details">
                                             <picture>
-                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$subcrematory->image.'.webp'; ?>" type="image/webp">
-                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$subcrematory->image.'.png'; ?>" type="image/png">
-                                                <img class="crematory__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$subcrematory->image.'.png'; ?>" alt="Imagen del crematorio">
+                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$imageToShow.'.webp'; ?>" type="image/webp">
+                                                <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$imageToShow.'.png'; ?>" type="image/png">
+                                                <img class="crematory__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$imageToShow.'.png'; ?>" alt="Imagen del crematorio">
                                             </picture>
                                             <p class="crematory__description"><?php echo $subcrematory->crematory_description; ?></p>
                                             <p class="crematory__price">Precio: $<?php echo number_format($subcrematory->crematory_price); ?> MXN</p>

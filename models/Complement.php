@@ -4,10 +4,10 @@ namespace Model;
 
 class Complement extends ActiveRecord{
     protected static $table = 'complements';
-    protected static $databaseColumns = ['id', 'category', 'complement_name', 'complement_description', 'complement_cost', 'complement_price', 'image', 'tags', 'complement_networks'];
+    protected static $databaseColumns = ['id', 'category_id', 'complement_name', 'complement_description', 'complement_cost', 'complement_price', 'image', 'tags', 'complement_networks'];
 
     public $id;
-    public $category;
+    public $category_id;
     public $complement_name;
     public $complement_description;
     public $complement_cost;
@@ -20,7 +20,7 @@ class Complement extends ActiveRecord{
 
     public function __construct($args = []){
         $this->id = $args['id'] ?? null;
-        $this->category = $args['category'] ?? 0;
+        $this->category_id = $args['category_id'] ?? 0;
         $this->complement_name = $args['complement_name'] ?? '';
         $this->complement_description = $args['complement_description'] ?? '';
         $this->complement_cost = $args['complement_cost'] ?? 0.0;
@@ -34,7 +34,7 @@ class Complement extends ActiveRecord{
         if(!$this->complement_name) {
             self::$alerts['error'][] = 'El nombre es obligatorio';
         }
-        if(!$this->category) {
+        if(!$this->category_id) {
             self::$alerts['error'][] = 'La categoría es obligatoria';
         }
         if(!$this->complement_description) {

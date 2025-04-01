@@ -62,8 +62,9 @@
         margin-top: 3rem;
     }
     &__image{
-        max-width: 20rem;
-        margin: 2rem 0;
+        // max-width: 20rem;
+        // margin: 2rem 0;
+        @include mix.grid(3, 1rem);
     }
     &__list{
         @include mix.tags;

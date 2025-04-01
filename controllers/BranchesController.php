@@ -8,10 +8,11 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\Encoders\PngEncoder;
 use Intervention\Image\Encoders\WebpEncoder;
+use Model\Branch;
 use Model\Category;
-use Model\Crematory;
+use Model\Cemetery;
 
-class CrematoriesController {
+class BranchesController {
 
     public static function dashboard(Router $router){
         session_start();
@@ -24,24 +25,24 @@ class CrematoriesController {
         $currentPage = filter_var($currentPage, FILTER_VALIDATE_INT);
 
         if(!$currentPage || $currentPage < 1){
-            header('Location: /dashboard/crematories?page=1');
+            header('Location: /dashboard/branches?page=1');
         }
 
-        $totalRecords = Crematory::countRecords();
+        $totalRecords = Branch::countRecords();
         $recordsPerPage = $_ENV['ITEMS_PER_PAGE']; // Ajustar a 10
         
         $pagination = new Pagination($currentPage,$recordsPerPage,$totalRecords);
 
         if('0' !== $totalRecords && $pagination->totalPages() < $currentPage){
-            header('Location: /dashboard/crematories?page=1');
+            header('Location: /dashboard/branches?page=1');
         }
 
-        $crematories=Crematory::paginate($recordsPerPage,$pagination->calculateOffset());
+        $branches = Branch::paginate($recordsPerPage,$pagination->calculateOffset());
 
-        $router->render('admin/crematories/index',[
-            'title'=>'Crematorios ofrecidos',
-            'crematories'=>$crematories,
-            'pagination'=>$pagination->pagination()
+        $router->render('admin/branches/index',[
+            'title' => 'Sucursales',
+            'branches' => $branches,
+            'pagination' => $pagination->pagination()
         ]);
     }
 
@@ -53,28 +54,19 @@ class CrematoriesController {
         }
         
         $alerts = [];
-        $categories = Category::allWhere('type','crematory');
-        $crematory = new Crematory();
+        $categories = Category::allWhere('type','branch');
+        $branch = new Branch();
 
         if('POST'===$_SERVER['REQUEST_METHOD']){
-            $imageFolder = '../public/build/img/crematories/';
+            $imageFolder = '../public/build/img/branches/';
             $savePicture = false;
             $imagesToSave = [];
             $imageName = md5(uniqid(rand(),true));
 
-            // Read image
-            // if(!empty(trim($_FILES['crematory_image']['tmp_name']))){
-            //     $manager = new ImageManager(new Driver());
-            //     $pngImage=$manager->read(trim($_FILES['crematory_image']['tmp_name']))->cover(800,600)->encode(new PngEncoder(80));
-            //     $webpImage=$manager->read(trim($_FILES['crematory_image']['tmp_name']))->cover(800,600)->encode(new WebpEncoder(80));
-            //     $_POST['image']=$imageName;
-            //     $savePicture=true;
-            // }
-
-            if (!empty($_FILES['crematory_image']['tmp_name'][0])) {
+            if (!empty($_FILES['branch_image']['tmp_name'][0])) {
                 $manager = new ImageManager(new Driver());
-                $tmpNameFiles = $_FILES['crematory_image']['tmp_name'];
-                $nameFiles = $_FILES['crematory_image']['name'];
+                $tmpNameFiles = $_FILES['branch_image']['tmp_name'];
+                $nameFiles = $_FILES['branch_image']['name'];
                 $imagesToSave = [];
                 $imageNames = [];
             
@@ -112,26 +104,13 @@ class CrematoriesController {
                 $savePicture = true;
             }
             
-            $_POST['crematory_networks'] = json_encode($_POST['crematory_networks'], JSON_UNESCAPED_SLASHES);
-            $_POST['crematory_price'] = ceil(($_POST['crematory_cost']*1.2)/10)*10;
+            $_POST['branch_networks'] = json_encode($_POST['branch_networks'], JSON_UNESCAPED_SLASHES);
+            $_POST['branch_price'] = ceil(($_POST['branch_cost']*1.2)/10)*10;
             $_POST['category'] = $_POST['category_id'];
-            $crematory->sincronize($_POST);
-            $alerts = $crematory->validate();
+            $branch->sincronize($_POST);
+            $alerts = $branch->validate();
 
             if(empty($alerts)){
-                // if($savePicture){
-                //     // Create folder if does not exist
-                //     if(!is_dir(trim($imageFolder))){
-                //         mkdir(trim($imageFolder),0777,true);
-                //     }
-
-                //     // Make the foldar ALWAYS writable
-                //     chmod($imageFolder, 0777);
-
-                //     // Put image on server
-                //     $pngImage->save(trim($imageFolder.$imageName).'.png');
-                //     $webpImage->save(trim($imageFolder.$imageName).'.webp');
-                // }
 
                 if($savePicture){
                     // Create folder if does not exist
@@ -151,19 +130,19 @@ class CrematoriesController {
                     }
                 }
 
-                $result = $crematory->saveElement();
+                $result = $branch->saveElement();
                 if($result){
-                    header('Location: /dashboard/crematories');
+                    header('Location: /dashboard/branches');
                 }
             }
         }
 
-        $router->render('admin/crematories/create',[
-            'title'=>'Registrar crematorio',
-            'alerts'=>$alerts,
-            'crematory'=>$crematory,
-            'categories'=>$categories,
-            'networks'=>json_decode($crematory->crematory_networks)
+        $router->render('admin/branches/create',[
+            'title' => 'Registrar sucursal',
+            'alerts' => $alerts,
+            'branch' => $branch,
+            'categories' => $categories,
+            'networks' => json_decode($branch->branch_networks)
         ]);
     }
 
@@ -177,52 +156,41 @@ class CrematoriesController {
         $alerts = [];
         $flag = false;
         $differentImages = [];
-        $categories = Category::allWhere('type','crematory');
+        $categories = Category::allWhere('type','branch');
         $id = $_GET['id'];
         $id = filter_var($id,FILTER_VALIDATE_INT);
 
         if(!$id){
-            header('Location: /dashboard/crematories');
+            header('Location: /dashboard/branches');
         }
 
-        $crematory = Crematory::find($id);
+        $branch = Branch::find($id);
 
-        if(!$crematory||!$crematory instanceof Crematory){
-            header('Location: /dashboard/crematories');
+        if(!$branch || !$branch instanceof Branch){
+            header('Location: /dashboard/branches');
         } else{
-            if(str_contains($crematory->image, ",")){
+            if(str_contains($branch->image, ",")){
                 $flag = true; // true if multiple images, false if only one
-                $differentImages = explode(",", $crematory->image);
+                $differentImages = explode(",", $branch->image);
                 foreach($differentImages as $differentImage){
                     if(!str_contains($differentImage, "_")){
-                        $crematory->currentImage=$differentImage;
+                        $branch->currentImage=$differentImage;
                     }
                 } // Para usar en el swiper
             } else{
-                $crematory->currentImage=$crematory->image;
+                $branch->currentImage=$branch->image;
             }
 
             if('POST'===$_SERVER['REQUEST_METHOD']){
-                $imageFolder = '../public/build/img/crematories/';
+                $imageFolder = '../public/build/img/branches/';
                 $savePicture = false;
                 $imagesToSave = [];
                 $imageName = md5(uniqid(rand(),true));
 
-                // Read image
-                // if(!empty(trim($_FILES['crematory_image']['tmp_name']))){
-                //     $manager = new ImageManager(new Driver());
-                //     $pngImage=$manager->read(trim($_FILES['crematory_image']['tmp_name']))->cover(800,600)->encode(new PngEncoder(80));
-                //     $webpImage=$manager->read(trim($_FILES['crematory_image']['tmp_name']))->cover(800,600)->encode(new WebpEncoder(80));
-                //     $_POST['image']=$imageName;
-                //     $savePicture=true;
-                // } else{
-                //     $_POST['image']=$crematory->currentImage;
-                // }
-
-                if (!empty($_FILES['crematory_image']['tmp_name'][0])) {
+                if (!empty($_FILES['branch_image']['tmp_name'][0])) {
                     $manager = new ImageManager(new Driver());
-                    $tmpNameFiles = $_FILES['crematory_image']['tmp_name'];
-                    $nameFiles = $_FILES['crematory_image']['name'];
+                    $tmpNameFiles = $_FILES['branch_image']['tmp_name'];
+                    $nameFiles = $_FILES['branch_image']['name'];
                     $imagesToSave = [];
                     $imageNames = [];
                 
@@ -259,29 +227,16 @@ class CrematoriesController {
                     $_POST['image'] = implode(',', $imageNames);
                     $savePicture = true;
                 } else {
-                    $_POST['image'] = $crematory->image;
+                    $_POST['image'] = $branch->image;
                 }
 
-                $_POST['crematory_networks'] = json_encode($_POST['crematory_networks'], JSON_UNESCAPED_SLASHES);
-                $_POST['crematory_price'] = ceil(($_POST['crematory_cost']*1.2)/10)*10;
+                $_POST['branch_networks'] = json_encode($_POST['branch_networks'], JSON_UNESCAPED_SLASHES);
+                $_POST['branch_price'] = ceil(($_POST['branch_cost']*1.2)/10)*10;
                 $_POST['category'] = $_POST['category_id'];
-                $crematory->sincronize($_POST);
-                $alerts = $crematory->validate();
+                $branch->sincronize($_POST);
+                $alerts = $branch->validate();
 
                 if(empty($alerts)){
-                    // if($savePicture){
-                    //     // Create folder if does not exist
-                    //     if(!is_dir(trim($imageFolder))){
-                    //         mkdir(trim($imageFolder),0777,true);
-                    //     }
-    
-                    //     // Make the foldar ALWAYS writable
-                    //     chmod($imageFolder, 0777);
-    
-                    //     // Put image on server
-                    //     $pngImage->save(trim($imageFolder.$imageName).'.png');
-                    //     $webpImage->save(trim($imageFolder.$imageName).'.webp');
-                    // }
 
                     if($savePicture){
                         // Create folder if does not exist
@@ -316,19 +271,19 @@ class CrematoriesController {
                         }
                     }
     
-                    $result=$crematory->saveElement();
+                    $result = $branch->saveElement();
                     if($result){
-                        header('Location: /dashboard/crematories');
+                        header('Location: /dashboard/branches');
                     }
                 }
             }
 
-            $router->render('admin/crematories/edit',[
-                'title'=>'Editar crematorio',
-                'alerts'=>$alerts,
-                'crematory'=>$crematory??null,
-                'categories'=>$categories,
-                'networks'=>json_decode($crematory->crematory_networks),
+            $router->render('admin/branches/edit',[
+                'title' => 'Editar sucursal',
+                'alerts' => $alerts,
+                'branch' => $branch ?? null,
+                'categories' => $categories,
+                'networks' => json_decode($branch->branch_networks),
                 'flag' => $flag,
                 'differentImages' => $differentImages
             ]);
@@ -342,16 +297,16 @@ class CrematoriesController {
             header('Location: /login');
         }
         
-        if('POST'===$_SERVER['REQUEST_METHOD']){
-            $id=$_POST['id'];
-            $crematory=Crematory::find($id);
-            if(!isset($crematory)||!$crematory instanceof Crematory){
-                header('Location: /dashboard/crematories');
+        if('POST' === $_SERVER['REQUEST_METHOD']){
+            $id = $_POST['id'];
+            $branch = Branch::find($id);
+            if(!isset($branch) || !$branch instanceof Branch){
+                header('Location: /dashboard/branches');
             }
             
-            $result=$crematory->deleteElement();
+            $result = $branch->deleteElement();
             if($result){
-                header('Location: /dashboard/crematories');
+                header('Location: /dashboard/branches');
             }
         }
     }
