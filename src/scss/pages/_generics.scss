@@ -39,4 +39,21 @@
     .swiper-button-prev{
         color: rgba(var.$c_golden, .85);
     }
+
+    .slider.swiper {
+        background-color: transparent !important;
+        height: auto;
+    
+        .swiper-wrapper {
+            display: flex;
+            align-items: stretch;
+        }
+    
+        .swiper-slide {
+            flex-shrink: 0;
+            width: auto;
+            height: auto;
+            display: flex;
+        }
+    }
 }

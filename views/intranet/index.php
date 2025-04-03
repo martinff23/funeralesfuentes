@@ -43,13 +43,9 @@
                 <i class="fa-solid fa-list-ol intranet-options__icon"></i>
                 <span class="intranet-options__menu-text">Actividades</span>
             </a>
-            <a href="/dashboard/intranet/hr/vacations" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/hr/vacations');?>">
-                <i class="fa-solid fa-umbrella-beach intranet-options__icon"></i>
-                <span class="intranet-options__menu-text">Menú vacaciones</span>
-            </a>
             <a href="/dashboard/intranet/hr/permises" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/hr/permises');?>">
                 <i class="fa-solid fa-hand intranet-options__icon"></i>
-                <span class="intranet-options__menu-text">Menú permisos</span>
+                <span class="intranet-options__menu-text">Permisos</span>
             </a>
             <a href="/dashboard/intranet/hr/slips" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/hr/slips');?>">
                 <i class="fa-solid fa-money-check-dollar intranet-options__icon"></i>
@@ -69,7 +65,11 @@
             </a>
             <a href="/dashboard/intranet/hr/directory" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/hr/directory');?>">
                 <i class="fa-solid fa-sitemap intranet-options__icon"></i>
-                <span class="intranet-options__menu-text">Directorio de empleados</span>
+                <span class="intranet-options__menu-text">Directorio</span>
+            </a>
+            <a href="/dashboard/intranet/hr/jobs" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/hr/jobs');?>">
+                <i class="fa-solid fa-briefcase intranet-options__icon"></i>
+                <span class="intranet-options__menu-text">Vacantes</span>
             </a>
         </div>
     </div>
@@ -119,15 +119,15 @@
         <div class="intranet-options__grid">
             <a href="/dashboard/intranet/requests/it" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/requests/it');?>">
                 <i class="fa-solid fa-headset intranet-options__icon"></i>
-                <span class="intranet-options__menu-text">Solicitud de IT</span>
+                <span class="intranet-options__menu-text">Servicios IT</span>
             </a>
             <a href="/dashboard/intranet/requests/software" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/requests/software');?>">
                 <i class="fa-solid fa-floppy-disk intranet-options__icon"></i>
-                <span class="intranet-options__menu-text">Solicitud de software</span>
+                <span class="intranet-options__menu-text">Software</span>
             </a>
             <a href="/dashboard/intranet/requests/extras" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/requests/extras');?>">
                 <i class="fa-solid fa-pencil intranet-options__icon"></i>
-                <span class="intranet-options__menu-text">Solicitud de material</span>
+                <span class="intranet-options__menu-text">Materiales</span>
             </a>
             <a href="/dashboard/intranet/requests/internal" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/requests/internal');?>">
                 <i class="fa-solid fa-screwdriver-wrench intranet-options__icon"></i>
@@ -135,7 +135,7 @@
             </a>
             <a href="/dashboard/intranet/requests/trip" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/requests/trip');?>">
                 <i class="fa-solid fa-plane-departure intranet-options__icon"></i>
-                <span class="intranet-options__menu-text">Solicitud de viaje</span>
+                <span class="intranet-options__menu-text">Viajes</span>
             </a>
         </div>
     </div>

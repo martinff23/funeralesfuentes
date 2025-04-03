@@ -7,6 +7,7 @@ use Controllers\APIBirthdaysController;
 use Controllers\APICemeteriesController;
 use Controllers\APIChapelsController;
 use Controllers\APIComplementsController;
+use Controllers\APIContactController;
 use Controllers\APICrematoriesController;
 use Controllers\APIHearsesController;
 use Controllers\APIInventoryController;
@@ -145,14 +146,17 @@ $router->get('/api/cemeteries', [APICemeteriesController::class, 'index']);
 $router->get('/api/crematories', [APICrematoriesController::class, 'index']);
 $router->get('/api/birthdays', [APIBirthdaysController::class, 'index']);
 $router->get('/api/locations', [APILocationsController::class, 'locations']);
-
+$router->get('/api/contact', [APIContactController::class, 'contact']);
+$router->post('/api/contact', [APIContactController::class, 'contact']);
 
 // Public areas
 $router->get('/', [PagesController::class, 'index']);
+$router->post('/', [PagesController::class, 'index']);
 $router->get('/about', [PagesController::class, 'about']);
 $router->get('/packages', [PagesController::class, 'packages']);
 $router->get('/products', [PagesController::class, 'products']);
 $router->get('/services', [PagesController::class, 'services']);
+$router->get('/branches', [PagesController::class, 'branches']);
 $router->get('/chapels', [PagesController::class, 'chapels']);
 $router->get('/hearses', [PagesController::class, 'hearses']);
 $router->get('/cemeteries', [PagesController::class, 'cemeteries']);

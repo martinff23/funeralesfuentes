@@ -9,6 +9,14 @@
         <input type="text" class="form__input" id="hearse_description" name="hearse_description" placeholder="Descripción de la carroza" value="<?php echo $hearse->hearse_description??'';?>">
     </div>
     <div class="form__field">
+        <label for="hearse_brand" class="form__label">Marca</label>
+        <input type="text" class="form__input" id="hearse_brand" name="hearse_brand" placeholder="Marca de la carroza" value="<?php echo $hearse->hearse_brand??'';?>">
+    </div>
+    <div class="form__field">
+        <label for="hearse_model" class="form__label">Modelo</label>
+        <input type="text" class="form__input" id="hearse_model" name="hearse_model" placeholder="Modelo de la carroza" value="<?php echo $hearse->hearse_model??'';?>">
+    </div>
+    <div class="form__field">
         <label for="hearse_cost" class="form__label">Costo</label>
         <input type="text" class="form__input" id="hearse_cost" name="hearse_cost" placeholder="Costo de la carroza" value="<?php echo $hearse->hearse_cost??'';?>">
     </div>

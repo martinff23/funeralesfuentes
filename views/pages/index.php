@@ -1,6 +1,7 @@
 <?php
 
 use Model\Alliance;
+use Model\Branch;
 use Model\Category;
 use Model\Cemetery;
 use Model\Chapel;
@@ -45,7 +46,16 @@ use Model\Package;
 <?php
     $title = 'Paquetes de servicios funerarios';
     $packages = Package::all();
-    include_once __DIR__.'/packages.php';
+    if(count($packages) > 0){
+        include_once __DIR__.'/packages.php';
+    }
+    
+    $title = 'Nuestras sucursales y puntos de venta';
+    $start = true;
+    $branches = groupBranchesByCategory(Branch::all(), groupCategories(Category::allWhere('type','branch')));
+    if(count($branches) > 0){
+        include_once __DIR__.'/branches.php';
+    }
     
     $title = 'Nuestras capillas de velación';
     $chapels = [];
@@ -108,30 +118,39 @@ use Model\Package;
   <div class="alliances-track" id="alliancesTrack">
     <div class="alliances-logos">
       <?php foreach($alliances as $alliance){ ?>
+        <?php /** @var \Model\Alliance $alliance */ ?>
         <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
       <?php } ?>
       <?php foreach($alliances as $alliance){ ?>
+        <?php /** @var \Model\Alliance $alliance */ ?>
         <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
       <?php } ?>
       <?php foreach($alliances as $alliance){ ?>
+        <?php /** @var \Model\Alliance $alliance */ ?>
         <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
       <?php } ?>
       <?php foreach($alliances as $alliance){ ?>
+        <?php /** @var \Model\Alliance $alliance */ ?>
         <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
       <?php } ?>
       <?php foreach($alliances as $alliance){ ?>
+        <?php /** @var \Model\Alliance $alliance */ ?>
         <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
       <?php } ?>
       <?php foreach($alliances as $alliance){ ?>
+        <?php /** @var \Model\Alliance $alliance */ ?>
         <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
       <?php } ?>
       <?php foreach($alliances as $alliance){ ?>
+        <?php /** @var \Model\Alliance $alliance */ ?>
         <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
       <?php } ?>
       <?php foreach($alliances as $alliance){ ?>
+        <?php /** @var \Model\Alliance $alliance */ ?>
         <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
       <?php } ?>
       <?php foreach($alliances as $alliance){ ?>
+        <?php /** @var \Model\Alliance $alliance */ ?>
         <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
       <?php } ?>
     </div>
@@ -161,22 +180,26 @@ use Model\Package;
 
 <?php $title = "¿Quieres saber más de Funerales Fuentes?"; ?>
 
-<main class="auth">
+<?php if(!$user){ ?>
+    <main class="auth">
     <h2 class="page-main__heading"><?php echo $title;?></h2>
     <p class="auth__text">Déjanos tus datos para contactarte</p>
 
     <?php
         require_once __DIR__.'/../templates/alerts.php';    
     ?>
-
-    <form method="POST" class="form">
+    <form id="form_contact" class="form" method="POST" enctype="multipart/form-data">
         <div class="form__field">
-            <label class="form__label" for="email">Correo electrónico</label>
-            <input type="email" class="form__input" placeholder="Tu correo electrónico" id="email" name="email">
+            <label class="form__label" for="name">Nombre</label>
+            <input type="text" class="form__input" placeholder="Tu nombre" id="name" name="name">
         </div>
         <div class="form__field">
             <label class="form__label" for="telephone">Teléfono celular (WhatsApp)</label>
             <input type="telephone" class="form__input" placeholder="Tu teléfono celular" id="telephone" name="telephone">
+        </div>
+        <div class="form__field">
+            <label class="form__label" for="email">Correo electrónico</label>
+            <input type="email" class="form__input" placeholder="Tu correo electrónico" id="email" name="email">
         </div>
         <input type="submit" class="form__submit" value="Contactarme">
     </form>
@@ -184,4 +207,5 @@ use Model\Package;
         <a href="/register" class="actions__link">¿Quieres crear una cuenta? Click aquí</a>
         <a href="/login" class="actions__link">¿Ya tienes una cuenta? Inicia sesión</a>
     </div>
-</main>
+    </main>
+<?php } ?>

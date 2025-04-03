@@ -9,6 +9,10 @@
         <input type="text" class="form__input" id="chapel_description" name="chapel_description" placeholder="Descripción de la capilla" value="<?php echo $chapel->chapel_description??'';?>">
     </div>
     <div class="form__field">
+        <label for="open_date" class="form__label">Fecha de apertura</label>
+        <input type="date" class="form__input" id="open_date" name="open_date" placeholder="Fecha de apertura de la capilla" value="<?php echo $chapel->open_date??'';?>">
+    </div>
+    <div class="form__field">
         <label for="chapel_cost" class="form__label">Costo</label>
         <input type="text" class="form__input" id="chapel_cost" name="chapel_cost" placeholder="Costo de la capilla" value="<?php echo $chapel->chapel_cost??'';?>">
     </div>

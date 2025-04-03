@@ -72,20 +72,40 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Swiper sliders (productos, capillas, etc)
-  if (document.querySelector('.slider')) {
-    Swiper.use([Navigation]);
-    new Swiper('.slider', {
+  // if (document.querySelector('.slider')) {
+  //   Swiper.use([Navigation]);
+  //   new Swiper('.slider', {
+  //     slidesPerView: 1,
+  //     spaceBetween: 15,
+  //     freeMode: true,
+  //     navigation: {
+  //       nextEl: '.swiper-button-next',
+  //       prevEl: '.swiper-button-prev'
+  //     },
+  //     breakpoints: {
+  //       768: { slidesPerView: 2 },
+  //       1024: { slidesPerView: 3 }
+  //     }
+  //   });
+  // }
+
+  Swiper.use([Navigation]);
+  document.querySelectorAll('.slider').forEach(slider => {
+    const next = slider.querySelector('.swiper-button-next');
+    const prev = slider.querySelector('.swiper-button-prev');
+  
+    new Swiper(slider, {
       slidesPerView: 1,
       spaceBetween: 15,
-      freeMode: true,
+      freeMode: false,
       navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev'
+        nextEl: next,
+        prevEl: prev
       },
       breakpoints: {
         768: { slidesPerView: 2 },
         1024: { slidesPerView: 3 }
       }
     });
-  }
+  });
 });

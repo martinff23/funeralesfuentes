@@ -75,6 +75,12 @@ function groupCategories($categories = []){
         if(false !== strpos(strtolower($category->subtype), 'external')){
             $categoriesIds['external'][] = $category->id;
         }
+        if(false !== strpos(strtolower($category->subtype), 'fix')){
+            $categoriesIds['fix'][] = $category->id;
+        }
+        if(false !== strpos(strtolower($category->subtype), 'pos')){
+            $categoriesIds['pos'][] = $category->id;
+        }
     }
     
     return $categoriesIds;
@@ -127,6 +133,23 @@ function groupServicesByCategory($services = [], $categoriesIds = []){
     }
 
     return $formatedServices;
+}
+
+function groupBranchesByCategory($branches = [], $categoriesIds = []){
+    $formatedBranches = [];
+
+    foreach($branches as $branch){
+        $branch->category = Category::find($branch->category_id);
+
+        if(in_array($branch->category_id, $categoriesIds["fix"])){
+            $formatedBranches['fix'][] = $branch;
+        }
+        if(in_array($branch->category_id, $categoriesIds["pos"])){
+            $formatedBranches['pos'][] = $branch;
+        }
+    }
+
+    return $formatedBranches;
 }
 
 function groupChapelsByCategory($chapels = [], $categoriesIds = []){

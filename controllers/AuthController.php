@@ -44,8 +44,10 @@ class AuthController {
                             //Redirection
                             if($user->isAdmin){
                                 header('Location: /dashboard/start');
+                            } else if($user->isEmployee){
+                                header('Location: /dashboard/start');
                             } else{
-                                header('Location: /user');
+                                header('Location: /');
                             }
                             
                         } else {

@@ -28,7 +28,7 @@
             <input type="password" class="form__input" placeholder="Repetir contraseña" id="password2" name="password2">
         </div>
         <div class="form__field">
-            <label for="user_image" class="form__label">Imagen</label>
+            <label for="user_image" class="form__label">Fotografía</label>
             <input type="file" class="form__input form__input--file" id="user_image" name="user_image">
         </div>
         <input type="submit" class="form__submit" value="Crear cuenta">

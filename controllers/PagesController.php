@@ -7,6 +7,7 @@ use Model\Branch;
 use Model\Category;
 use Model\Cemetery;
 use Model\Chapel;
+use Model\Contact;
 use Model\Crematory;
 use Model\Funerals;
 use Model\FuneralsArchive;
@@ -27,12 +28,15 @@ class PagesController {
             header('Location: /dashboard/start');
         }
 
+        $alerts = [];
         $totalBranches = Branch::countRecords() * 1;
         $totalEmployees = User::countRecords('isEmployee', '1');
         
         $ownSubtypes = Category::allWhere('subtype','own');
         if($ownSubtypes || count($ownSubtypes) > 0){
             foreach($ownSubtypes as $ownSubtype){
+                
+                /** @var \Model\Category $ownSubtype */
                 if('chapel'===$ownSubtype->type || 'cemetery'===$ownSubtype->type || 'crematory'===$ownSubtype->type || 'hearse'===$ownSubtype->type){
                     $totalBranches = $totalBranches + Cemetery::countRecords('category_id', $ownSubtype->id) * 1;
                     $totalBranches = $totalBranches + Crematory::countRecords('category_id', $ownSubtype->id) * 1;
@@ -65,6 +69,7 @@ class PagesController {
                 // Page 404
             }
         } else{
+
             $router->render('pages/index',[
                 'title' => 'Inicio',
                 'totalBranches' => $totalBranches,
@@ -184,6 +189,37 @@ class PagesController {
             $router->render('pages/services',[
                 'title' => 'Servicios funerarios',
                 'services' => $groupedServices
+            ]);
+        }
+    }
+    
+    public static function branches(Router $router){
+        session_start();
+
+        if(isAuth() && isAdmin()){
+            header('Location: /dashboard/start');
+        }
+
+        $groupedBranches = groupBranchesByCategory(Branch::all(), groupCategories(Category::allWhere('type','branch')));
+
+        if(!empty($_SESSION)){
+            $user = User::find($_SESSION['id']);
+
+            if($user){
+                $router->render('pages/branches',[
+                    'title' => 'Sucursales y puntos de venta',
+                    'branches' => $groupedBranches,
+                    'start' => false,
+                    'user' => $user
+                ]);
+            } else{
+                // Page 404
+            }
+        } else{
+            $router->render('pages/branches',[
+                'title' => 'Sucursales y puntos de venta',
+                'branches' => $groupedBranches,
+                'start' => false
             ]);
         }
     }

@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const spinner = createSpinner();
     let birthdays = [];
   
-    if (!dateInfoEl || !birthdaysTable) return;
+    if (!dateInfoEl && !birthdaysTable) return; // Only if the two elements are not present, erase them. Before it was an OR
   
     showLoading(dateInfoEl, spinner);
     updateGreeting();

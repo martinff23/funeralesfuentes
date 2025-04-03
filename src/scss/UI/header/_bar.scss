@@ -16,5 +16,18 @@
     &__logo{
         @include mix.logo;
         @include mix.fluid-text(2rem,3rem);
+        @include mix.tablet{
+            @include mix.fluid-text(1rem,2rem);
+            margin: 1.5rem 0;
+        }
+        @include mix.desktop{
+            @include mix.fluid-text(2rem,3rem);
+            margin: 0;
+        }
+    }
+    &__logo-login{
+        @include mix.logo;
+        @include mix.fluid-text(2rem,3rem);
+        margin: 2rem 0;
     }
 }

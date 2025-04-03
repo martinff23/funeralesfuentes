@@ -1,7 +1,7 @@
 @use 'base/variables' as var;
 
 .actions{
-    margin-top: 3rem;
+    margin: 3rem 0;
     display: flex;
     justify-content: space-between;
     &--center{
@@ -9,6 +9,7 @@
         justify-content: center;
     }
     &__link{
+        margin-bottom: 5rem;
         color: var.$c_black;
         font-size: 1.4rem;
         font-weight: var.$light;

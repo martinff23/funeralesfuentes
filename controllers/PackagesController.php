@@ -17,14 +17,33 @@ use Model\Hearse;
 use Model\Package;
 use Model\Product;
 use Model\Service;
+use Model\User;
 
+/**
+ * Class PackagesController
+ *
+ * Handles the logic for viewing, creating, editing, and deleting funeral packages.
+ */
 class PackagesController {
 
+    /**
+     * Renders the dashboard view for packages.
+     *
+     * @param Router $router MVC Router instance
+     * @return void
+     */
     public static function dashboard(Router $router){
         session_start();
 
         if(isAuth() && !isAdmin()){
             header('Location: /login');
+        }
+
+        if(isset($_SESSION['id'])){
+            $user =  User::find($_SESSION['id']);
+            
+        } else{
+            // Page 404
         }
 
         $currentPage = $_GET['page'];
@@ -48,15 +67,30 @@ class PackagesController {
         $router->render('admin/packages/index',[
             'title'=>'Paquetes ofrecidos',
             'packages'=>$packages,
-            'pagination'=>$pagination->pagination()
+            'pagination'=>$pagination->pagination(),
+            'user' => $user
         ]);
     }
 
+    /**
+     * Handles creation of a new funeral package.
+     * Loads necessary data and processes form submissions.
+     *
+     * @param Router $router MVC Router instance
+     * @return void
+     */
     public static function create(Router $router){
         session_start();
 
         if(isAuth() && !isAdmin()){
             header('Location: /login');
+        }
+
+        if(isset($_SESSION['id'])){
+            $user =  User::find($_SESSION['id']);
+            
+        } else{
+            // Page 404
         }
         
         $alerts=[];
@@ -84,24 +118,24 @@ class PackagesController {
                 $savePicture = true;
             }
             
-            // $_POST['products']=$_POST['products_tags'];
-            // $_POST['products_ids']=$_POST['products_tags_ids'];
-            $_POST['coffin']=$_POST['coffin_search'];
-            $_POST['coffin_id']=$_POST['coffin_id'];
-            $_POST['urn']=$_POST['urn_search'];
-            $_POST['urn_id']=$_POST['urn_id'];
-            $_POST['services']=$_POST['services_tags'];
-            $_POST['services_ids']=$_POST['services_tags_ids'];
-            $_POST['complements']=$_POST['complements_tags'];
-            $_POST['complements_ids']=$_POST['complements_tags_ids'];
-            $_POST['chapel']=$_POST['chapels_tags'];
-            $_POST['chapel_id']=$_POST['chapels_tags_ids'];
-            $_POST['hearse']=$_POST['hearses_tags'];
-            $_POST['hearse_id']=$_POST['hearses_tags_ids'];
-            $_POST['cemetery']=$_POST['cemeteries_tags'];
-            $_POST['cemetery_id']=$_POST['cemeteries_tags_ids'];
-            $_POST['crematory']=$_POST['crematories_tags'];
-            $_POST['crematory_id']=$_POST['crematories_tags_ids'];
+            // $_POST['products'] = $_POST['products_tags'];
+            // $_POST['products_ids'] = $_POST['products_tags_ids'];
+            $_POST['coffin'] = $_POST['coffin_search'];
+            $_POST['coffin_id'] = $_POST['coffin_id'];
+            $_POST['urn'] = $_POST['urn_search'];
+            $_POST['urn_id'] = $_POST['urn_id'];
+            $_POST['services'] = $_POST['services_tags'];
+            $_POST['services_ids'] = $_POST['services_tags_ids'];
+            $_POST['complements'] = $_POST['complements_tags'];
+            $_POST['complements_ids'] = $_POST['complements_tags_ids'];
+            $_POST['chapel'] = $_POST['chapels_tags'];
+            $_POST['chapel_id'] = $_POST['chapels_tags_ids'];
+            $_POST['hearse'] = $_POST['hearses_tags'];
+            $_POST['hearse_id'] = $_POST['hearses_tags_ids'];
+            $_POST['cemetery'] = $_POST['cemeteries_tags'];
+            $_POST['cemetery_id'] = $_POST['cemeteries_tags_ids'];
+            $_POST['crematory'] = $_POST['crematories_tags'];
+            $_POST['crematory_id'] = $_POST['crematories_tags_ids'];
 
             $productsCost = 0.0;
             $productsPrice = 0.0;
@@ -119,6 +153,8 @@ class PackagesController {
             $crematoriesPrice = 0.0;
 
             $indexCoff = array_search($_POST['coffin_id'], array_column($coffins, "id"));
+
+            /** @var \Model\Product $cf */
             $cf = $coffins[$indexCoff];
             $cfCost = floatval($cf->product_cost);
             $cfPrice = floatval($cf->product_price);
@@ -126,6 +162,8 @@ class PackagesController {
             $productsPrice += $cfPrice;
 
             $indexUrn = array_search($_POST['urn_id'], array_column($urns, "id"));
+            
+            /** @var \Model\Product $ur */
             $ur = $urns[$indexUrn];
             $urCost = floatval($ur->product_cost);
             $urPrice = floatval($ur->product_price);
@@ -135,6 +173,9 @@ class PackagesController {
             $servicesList=explode(",",$_POST['services_ids']);
             foreach($servicesList as $serviceItem){
                 $index = array_search($serviceItem, array_column($services, "id"));
+                
+            
+                /** @var \Model\Service $sv */
                 $sv = $services[$index];
                 $svCost = floatval($sv->service_cost);
                 $svPrice = floatval($sv->service_price);
@@ -145,6 +186,9 @@ class PackagesController {
             $complementsList=explode(",",$_POST['complements_ids']);
             foreach($complementsList as $complementItem){
                 $index = array_search($complementItem, array_column($complements, "id"));
+                
+            
+                /** @var \Model\Complement $cm */
                 $cm = $complements[$index];
                 $cmCost = floatval($cm->complement_cost);
                 $cmPrice = floatval($cm->complement_price);
@@ -155,6 +199,8 @@ class PackagesController {
             $chapelsList=explode(",",$_POST['chapel_id']);
             foreach($chapelsList as $chapelItem){
                 $index = array_search($chapelItem, array_column($chapels, "id"));
+                
+                /** @var \Model\Chapel $ch */
                 $ch = $chapels[$index];
                 $chCost = floatval($ch->chapel_cost);
                 $chPrice = floatval($ch->chapel_price);
@@ -165,6 +211,8 @@ class PackagesController {
             $hearsesList=explode(",",$_POST['hearse_id']);
             foreach($hearsesList as $hearseItem){
                 $index = array_search($hearseItem, array_column($hearses, "id"));
+                
+                /** @var \Model\Hearse $hs */
                 $hs = $hearses[$index];
                 $hsCost = floatval($hs->hearse_cost);
                 $hsPrice = floatval($hs->hearse_price);
@@ -175,6 +223,8 @@ class PackagesController {
             $cemeteriesList=explode(",",$_POST['cemetery_id']);
             foreach($cemeteriesList as $cemeteryItem){
                 $index = array_search($cemeteryItem, array_column($cemeteries, "id"));
+                
+                /** @var \Model\Cemetery $cm */
                 $cm = $cemeteries[$index];
                 $cmCost = floatval($cm->cemetery_cost);
                 $cmPrice = floatval($cm->cemetery_price);
@@ -185,6 +235,8 @@ class PackagesController {
             $crematoriesList=explode(",",$_POST['crematory_id']);
             foreach($crematoriesList as $crematoryItem){
                 $index = array_search($crematoryItem, array_column($crematories, "id"));
+                
+                /** @var \Model\Crematory $cm */
                 $cm = $crematories[$index];
                 $cmCost = floatval($cm->crematory_cost);
                 $cmPrice = floatval($cm->crematory_price);
@@ -234,15 +286,30 @@ class PackagesController {
             'chapels'=>$chapels,
             'hearses'=>$hearses,
             'cemeteries'=>$cemeteries,
-            'crematories'=>$crematories
+            'crematories'=>$crematories,
+            'user' => $user
         ]);
     }
 
+    /**
+     * Handles editing of an existing funeral package.
+     * Loads existing package data and updates it if needed.
+     *
+     * @param Router $router MVC Router instance
+     * @return void
+     */
     public static function edit(Router $router){
         session_start();
 
         if(isAuth() && !isAdmin()){
             header('Location: /login');
+        }
+
+        if(isset($_SESSION['id'])){
+            $user =  User::find($_SESSION['id']);
+            
+        } else{
+            // Page 404
         }
         
         $alerts=[];
@@ -255,10 +322,10 @@ class PackagesController {
 
         $coffins = Product::allWhere('tags','Ata');
         $urns = Product::allWhere('tags','Urn');
-        $services=Service::all();
-        $complements=Complement::all();
-        $chapels=Chapel::all();
-        $hearses=Hearse::all();
+        $services = Service::all();
+        $complements = Complement::all();
+        $chapels = Chapel::all();
+        $hearses = Hearse::all();
         $cemeteries = Cemetery::all();
         $crematories = Crematory::all();
         $package = Package::find($id);
@@ -319,6 +386,8 @@ class PackagesController {
                 $crematoriesPrice = 0.0;
 
                 $indexCoff = array_search($_POST['coffin_id'], array_column($coffins, "id"));
+                
+                /** @var \Model\Product $cf */
                 $cf = $coffins[$indexCoff];
                 $cfCost = floatval($cf->product_cost);
                 $cfPrice = floatval($cf->product_price);
@@ -326,6 +395,8 @@ class PackagesController {
                 $productsPrice += $cfPrice;
 
                 $indexUrn = array_search($_POST['urn_id'], array_column($urns, "id"));
+                
+                /** @var \Model\Product $ur */
                 $ur = $urns[$indexUrn];
                 $urCost = floatval($ur->product_cost);
                 $urPrice = floatval($ur->product_price);
@@ -335,6 +406,8 @@ class PackagesController {
                 $servicesList=explode(",",$_POST['services_ids']);
                 foreach($servicesList as $serviceItem){
                     $index = array_search($serviceItem, array_column($services, "id"));
+                    
+                    /** @var \Model\Service $sv */
                     $sv = $services[$index];
                     $svCost = floatval($sv->service_cost);
                     $svPrice = floatval($sv->service_price);
@@ -345,6 +418,8 @@ class PackagesController {
                 $complementsList=explode(",",$_POST['complements_ids']);
                 foreach($complementsList as $complementItem){
                     $index = array_search($complementItem, array_column($complements, "id"));
+                    
+                    /** @var \Model\Complement $cm */
                     $cm = $complements[$index];
                     $cmCost = floatval($cm->complement_cost);
                     $cmPrice = floatval($cm->complement_price);
@@ -355,6 +430,8 @@ class PackagesController {
                 $chapelsList=explode(",",$_POST['chapel_id']);
                 foreach($chapelsList as $chapelItem){
                     $index = array_search($chapelItem, array_column($chapels, "id"));
+                    
+                    /** @var \Model\Chapel $ch */
                     $ch = $chapels[$index];
                     $chCost = floatval($ch->chapel_cost);
                     $chPrice = floatval($ch->chapel_price);
@@ -365,6 +442,8 @@ class PackagesController {
                 $hearsesList=explode(",",$_POST['hearse_id']);
                 foreach($hearsesList as $hearseItem){
                     $index = array_search($hearseItem, array_column($hearses, "id"));
+                    
+                    /** @var \Model\Hearse $hs */
                     $hs = $hearses[$index];
                     $hsCost = floatval($hs->hearse_cost);
                     $hsPrice = floatval($hs->hearse_price);
@@ -375,6 +454,8 @@ class PackagesController {
                 $cemeteriesList=explode(",",$_POST['cemetery_id']);
                 foreach($cemeteriesList as $cemeteryItem){
                     $index = array_search($cemeteryItem, array_column($cemeteries, "id"));
+                    
+                    /** @var \Model\Cemetery $cm */
                     $cm = $cemeteries[$index];
                     $cmCost = floatval($cm->cemetery_cost);
                     $cmPrice = floatval($cm->cemetery_price);
@@ -385,6 +466,8 @@ class PackagesController {
                 $crematoriesList=explode(",",$_POST['crematory_id']);
                 foreach($crematoriesList as $crematoryItem){
                     $index = array_search($crematoryItem, array_column($crematories, "id"));
+                    
+                    /** @var \Model\Crematory $cm */
                     $cm = $crematories[$index];
                     $cmCost = floatval($cm->crematory_cost);
                     $cmPrice = floatval($cm->crematory_price);
@@ -435,11 +518,18 @@ class PackagesController {
                 'hearses'=>$hearses,
                 'categories'=>$categories,
                 'cemeteries'=>$cemeteries,
-                'crematories'=>$crematories
+                'crematories'=>$crematories,
+                'user' => $user
             ]);
         }
     }
 
+    /**
+     * Handles deletion of a funeral package.
+     *
+     * @param Router $router MVC Router instance
+     * @return void
+     */
     public static function delete(Router $router){
         session_start();
 

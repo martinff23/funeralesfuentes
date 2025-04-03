@@ -48,6 +48,8 @@ class Router{
 
         if(str_contains($currentURL,'/dashboard')){
             include_once __DIR__ . '/views/adminLayout.php';
+        } else if(str_contains($currentURL,'/login') || str_contains($currentURL,'/register') || str_contains($currentURL,'/forgot')){
+            include_once __DIR__ . '/views/loginLayout.php';
         } else{
             include_once __DIR__ . '/views/layout.php';
         }

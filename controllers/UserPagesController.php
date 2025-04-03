@@ -58,7 +58,8 @@ class UserPagesController {
                 if('POST'===$_SERVER['REQUEST_METHOD']){
                     $_POST['id'] = $_SESSION['id'];
                     $info->sincronize($_POST);
-
+                    
+                    /** @var \Model\Info $info */
                     $alerts = $info->validateInfo();
 
                     if(empty($alerts)){
@@ -146,6 +147,7 @@ class UserPagesController {
         $user = new User;
 
         if(!empty($_SESSION)){
+            /** @var \Model\User $user */
             $user = $user->find($_SESSION['id']);
 
             if($user){
@@ -198,6 +200,7 @@ class UserPagesController {
         $photograph = new Photograph;
 
         if(!empty($_SESSION)){
+            /** @var \Model\User $user */
             $user = $user->find($_SESSION['id']);
 
             if($user){
