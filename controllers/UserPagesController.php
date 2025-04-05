@@ -10,6 +10,7 @@ use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\Encoders\PngEncoder;
 use Intervention\Image\Encoders\WebpEncoder;
 use Model\Email;
+use Model\Funerals;
 use Model\Info;
 use Model\Password;
 use Model\Subscription;
@@ -313,6 +314,78 @@ class UserPagesController {
                     'user' => $user,
                     'subscription' => $subscription,
                     'alerts' => $alerts
+                ]);
+            } else{
+                // Pagina 404
+            }
+        } else{
+            // Pagina 404
+        }
+    }
+
+    public static function plans(Router $router){
+        session_start();
+
+        if(isAuth() && isAdmin()){
+            header('Location: /dashboard/start');
+        }
+
+        if(!empty($_SESSION)){
+            $user = User::find($_SESSION['id']);
+
+            if($user){
+                $router->render('pages/user/plans',[
+                    'title' => 'Planes de servicios funerarios del usuario',
+                    'user' => $user
+                ]);
+            } else{
+                // Pagina 404
+            }
+        } else{
+            // Pagina 404
+        }
+    }
+
+    public static function digitickets(Router $router){
+        session_start();
+
+        if(isAuth() && isAdmin()){
+            header('Location: /dashboard/start');
+        }
+
+        if(!empty($_SESSION)){
+            $user = User::find($_SESSION['id']);
+
+            if($user){
+                $router->render('pages/user/digitickets',[
+                    'title' => 'Boletos digitales de cotizaciones del usuario',
+                    'user' => $user
+                ]);
+            } else{
+                // Pagina 404
+            }
+        } else{
+            // Pagina 404
+        }
+    }
+
+    public static function history(Router $router){
+        session_start();
+
+        if(isAuth() && isAdmin()){
+            header('Location: /dashboard/start');
+        }
+
+        if(!empty($_SESSION)){
+            $user = User::find($_SESSION['id']);
+
+            if($user){
+                $funerals = Funerals::allWhereOrderBy('funeral_contractor_id', $user->id, 'funeral_date', 'DESC');
+
+                $router->render('pages/user/history',[
+                    'title' => 'Boletos digitales de cotizaciones del usuario',
+                    'user' => $user,
+                    'funerals' => $funerals
                 ]);
             } else{
                 // Pagina 404

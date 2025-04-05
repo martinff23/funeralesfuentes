@@ -103,9 +103,9 @@
                 </li>
 
                 <!-- Cotiza -->
-                <li class="nav__item">
+                <!-- <li class="nav__item">
                     <a href="/cotization" class="nav__toggle <?php echo currentPageBool('/cotization') ? 'nav__link--current' : ''; ?>">Cotiza</a>
-                </li>
+                </li> -->
 
                 <!-- Crea cuenta -->
                 <?php if(!isAuth()){ ?>

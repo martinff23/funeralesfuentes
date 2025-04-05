@@ -17,7 +17,7 @@
         <input type="file" class="form__input form__input--file" id="alliance_image" name="alliance_image">
     </div>
 
-    <?php if(isset($alliance->currentImage)) {?>
+    <?php if(isset($alliance->currentImage) && !empty($alliance->currentImage)){ ?>
         <p class="form__text">Imagen actual:</p>
         <div class="form__image">
             <picture>

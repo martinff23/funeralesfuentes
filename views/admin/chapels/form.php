@@ -9,8 +9,16 @@
         <input type="text" class="form__input" id="chapel_description" name="chapel_description" placeholder="Descripción de la capilla" value="<?php echo $chapel->chapel_description??'';?>">
     </div>
     <div class="form__field">
-        <label for="open_date" class="form__label">Fecha de apertura</label>
-        <input type="date" class="form__input" id="open_date" name="open_date" placeholder="Fecha de apertura de la capilla" value="<?php echo $chapel->open_date??'';?>">
+        <label for="open_date" class="form__label">Fecha apertura</label>
+        <input type="date" class="form__input" id="open_date" name="open_date" placeholder="Longitud" value="<?php echo $chapel->open_date??'';?>">
+    </div>
+    <div class="form__field">
+        <label for="status" class="form__label">Estado</label>
+        <select class="form__input" id="status" name="status">
+            <option value="NONE" <?php echo empty($chapel->status) ? 'selected' : '';?>>- SELECCIONA UN ESTADO -</option>
+            <option value="ACTIVE" <?php echo 'ACTIVE' === strtoupper($chapel->status) ? 'selected' : '';?>>ACTIVA</option>
+            <option value="INACTIVE" <?php echo 'INACTIVE' === strtoupper($chapel->status) ? 'selected' : '';?>>INACTIVA</option>
+        </select>
     </div>
     <div class="form__field">
         <label for="chapel_cost" class="form__label">Costo</label>
@@ -22,26 +30,31 @@
         <!-- <input type="file" class="form__input form__input--file" id="chapel_image" name="chapel_image"> -->
     </div>
 
-    <?php if(isset($chapel->currentImage)) {?>
-        <p class="form__text">Imagen actual:</p>
-        <div class="form__image">
-            <?php if($flag){ ?>
-                <?php foreach($differentImages as $differentImage){ ?>
-                    <picture>
-                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$differentImage.'.webp'; ?>" type="image/webp">
-                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$differentImage.'.png'; ?>" type="image/png">
-                        <img src="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$differentImage.'.png'; ?>" alt="Imagen de la capilla">
-                    </picture>
-                <?php } ?>
-            <?php } else{ ?>
+    <?php if($flag){ ?>
+        <?php if(0 !== count($differentImages)){ ?>
+            <p class="form__text">Imágenes actuales:</p>
+            <div class="form__image">
+            <?php foreach($differentImages as $differentImage){ ?>
+                <picture>
+                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$differentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$differentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$differentImage.'.png'; ?>" alt="Imagen de la capilla">
+                </picture>
+            <?php } ?>
+            </div>
+        <?php }?>
+    <?php } else{ ?>
+        <?php if(isset($chapel->currentImage) && !empty($chapel->currentImage)){ ?>
+            <p class="form__text">Imagen actual:</p>
+            <div class="form__image">
                 <picture>
                     <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$chapel->currentImage.'.webp'; ?>" type="image/webp">
                     <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$chapel->currentImage.'.png'; ?>" type="image/png">
                     <img src="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$chapel->currentImage.'.png'; ?>" alt="Imagen de la capilla">
                 </picture>
-            <?php } ?>
-        </div>
-    <?php }?>
+            </div>
+        <?php }?>
+    <?php } ?>
 
 </fieldset>
 

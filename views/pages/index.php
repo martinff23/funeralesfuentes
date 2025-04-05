@@ -110,9 +110,11 @@ use Model\Package;
     }
 ?>
 
-<h2 class="page-main__heading">Nuestras alianzas estratégicas</h2>
-
 <?php $alliances = Alliance::allWhere('status', 'ACTIVE');?>
+
+<?php if(count($alliances) > 0){ ?>
+
+<h2 class="page-main__heading">Nuestras alianzas estratégicas</h2>
 
 <div class="alliances-slider">
   <div class="alliances-track" id="alliancesTrack">
@@ -156,6 +158,8 @@ use Model\Package;
     </div>
   </div>
 </div>
+
+<?php } ?>
 
 <h2 class="page-main__heading">Ubicaciones</h2>
 

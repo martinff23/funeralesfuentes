@@ -4,7 +4,7 @@ namespace Model;
 
 class User extends ActiveRecord {
     protected static $table = 'users';
-    protected static $databaseColumns = ['id', 'name', 'f_name', 'email', 'password', 'image', 'confirmed', 'token', 'isAdmin', 'isEmployee', 'acceptsMarketing', 'acceptsPromos'];
+    protected static $databaseColumns = ['id', 'name', 'f_name', 'email', 'password', 'image', 'confirmed', 'token', 'isAdmin', 'isEmployee', 'acceptsMarketing', 'acceptsPromos', 'status'];
 
     public $id;
     public $name;
@@ -19,6 +19,7 @@ class User extends ActiveRecord {
     public $isEmployee;
     public $acceptsMarketing;
     public $acceptsPromos;
+    public $status;
 
     public $currentPassword;
     public $currentImage;
@@ -39,6 +40,7 @@ class User extends ActiveRecord {
         $this->isEmployee = $args['isEmployee'] ?? 0;
         $this->acceptsMarketing = $args['acceptsMarketing'] ?? 0;
         $this->acceptsPromos = $args['acceptsPromos'] ?? 0;
+        $this->status = $args['status'] ?? '';
     }
 
     // Validar el Login de Usuarios
@@ -81,17 +83,34 @@ class User extends ActiveRecord {
         if(!$this->email) {
             self::$alerts['error'][] = 'El correo electrónico es obligatorio';
         }
-        if(!$this->image) {
-            self::$alerts['error'][] = 'La imagen no puede ir vacia';
+        if (!$this->password) {
+            self::$alerts['error'][] = 'La contraseña es obligatoria';
+            return;
         }
-        if(!$this->password) {
-            self::$alerts['error'][] = 'La contraseña no puede ir vacia';
+    
+        // Minimum length
+        if (strlen($this->password) < $_ENV['PASSWORD_LENGTH']) {
+            self::$alerts['error'][] = 'La contraseña debe tener al menos 8 caracteres';
         }
-        if(strlen($this->password) < 6) {
-            self::$alerts['error'][] = 'La contraseña debe contener al menos 6 caracteres';
+    
+        // At least one capital letter
+        if (!preg_match('/[A-Z]/', $this->password)) {
+            self::$alerts['error'][] = 'La contraseña debe contener al menos una letra mayúscula';
         }
-        if($this->password !== $this->password2) {
-            self::$alerts['error'][] = 'Las contraseñas son diferentes';
+    
+        // At least one normal letter
+        if (!preg_match('/[a-z]/', $this->password)) {
+            self::$alerts['error'][] = 'La contraseña debe contener al menos una letra minúscula';
+        }
+    
+        // At least one number
+        if (!preg_match('/[0-9]/', $this->password)) {
+            self::$alerts['error'][] = 'La contraseña debe contener al menos un número';
+        }
+    
+        // Password confirmation
+        if ($this->password2 && $this->password !== $this->password2) {
+            self::$alerts['error'][] = 'Las contraseñas no coinciden';
         }
         return self::$alerts;
     }
@@ -109,11 +128,29 @@ class User extends ActiveRecord {
 
     // Valida el Password 
     public function validatePasswordRecovery() {
-        if(!$this->password) {
-            self::$alerts['error'][] = 'La contraseña no puede ir vacia';
+        // Minimum length
+        if (strlen($this->password) < $_ENV['PASSWORD_LENGTH']) {
+            self::$alerts['error'][] = 'La contraseña debe tener al menos 8 caracteres';
         }
-        if(strlen($this->password) < 6) {
-            self::$alerts['error'][] = 'La contraseña debe contener al menos 6 caracteres';
+    
+        // At least one capital letter
+        if (!preg_match('/[A-Z]/', $this->password)) {
+            self::$alerts['error'][] = 'La contraseña debe contener al menos una letra mayúscula';
+        }
+    
+        // At least one normal letter
+        if (!preg_match('/[a-z]/', $this->password)) {
+            self::$alerts['error'][] = 'La contraseña debe contener al menos una letra minúscula';
+        }
+    
+        // At least one number
+        if (!preg_match('/[0-9]/', $this->password)) {
+            self::$alerts['error'][] = 'La contraseña debe contener al menos un número';
+        }
+    
+        // Password confirmation
+        if ($this->password2 && $this->password !== $this->password2) {
+            self::$alerts['error'][] = 'Las contraseñas no coinciden';
         }
         return self::$alerts;
     }

@@ -15,15 +15,30 @@
     <form method="POST" class="form" enctype="multipart/form-data">
         <div class="form__field">
             <label class="form__label" for="current_password">Contraseña actual</label>
-            <input type="password" class="form__input" placeholder="Tu contraseña actual" id="current_password" name="current_password">
+            <div class="password-wrapper">
+                <input type="password" class="form__input" placeholder="Tu contraseña actual" id="current_password" name="current_password">
+                <button type="button" class="toggle-password">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
         </div>
         <div class="form__field">
             <label class="form__label" for="password">Nueva contraseña</label>
+            <div class="password-wrapper">
             <input type="password" class="form__input" placeholder="Nueva contraseña" id="password" name="password">
+                <button type="button" class="toggle-password">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
         </div>
         <div class="form__field">
             <label class="form__label" for="password2">Repetir nueva contraseña</label>
+            <div class="password-wrapper">
             <input type="password" class="form__input" placeholder="Repetir nueva contraseña" id="password2" name="password2">
+                <button type="button" class="toggle-password">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
         </div>
         <input type="submit" class="form__submit" value="Cambiar contraseña">
     </form>

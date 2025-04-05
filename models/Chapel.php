@@ -4,7 +4,7 @@ namespace Model;
 
 class Chapel extends ActiveRecord{
     protected static $table = 'chapels';
-    protected static $databaseColumns = ['id', 'category_id', 'chapel_name', 'chapel_description', 'chapel_cost', 'chapel_price', 'chapel_inventory', 'image', 'tags', 'chapel_networks', 'latitude', 'longitude', 'address', 'open_date'];
+    protected static $databaseColumns = ['id', 'category_id', 'chapel_name', 'chapel_description', 'chapel_cost', 'chapel_price', 'chapel_inventory', 'image', 'tags', 'chapel_networks', 'latitude', 'longitude', 'address', 'open_date', 'status'];
 
     public $id;
     public $category_id;
@@ -20,6 +20,7 @@ class Chapel extends ActiveRecord{
     public $longitude;
     public $address;
     public $open_date;
+    public $status;
     
     public $currentImage;
 
@@ -38,6 +39,7 @@ class Chapel extends ActiveRecord{
         $this->longitude = $args['longitude'] ?? '';
         $this->address = $args['address'] ?? '';
         $this->open_date = $args['open_date'] ?? '';
+        $this->status = $args['status'] ?? '';
     }
 
     public function validate() {
@@ -64,6 +66,9 @@ class Chapel extends ActiveRecord{
         }
         if(!$this->open_date) {
             self::$alerts['error'][] = 'La fecha de apertura es obligatoria';
+        }
+        if("NONE" === strtoupper($this->status)) {
+            self::$alerts['error'][] = 'El estado es obligatorio';
         }
     
         return self::$alerts;

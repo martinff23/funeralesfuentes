@@ -4,7 +4,7 @@ namespace Model;
 
 class Hearse extends ActiveRecord{
     protected static $table = 'hearses';
-    protected static $databaseColumns = ['id', 'category_id', 'hearse_name', 'hearse_description', 'hearse_cost', 'hearse_price', 'hearse_inventory', 'hearse_brand', 'hearse_model', 'image', 'tags', 'hearse_networks'];
+    protected static $databaseColumns = ['id', 'category_id', 'hearse_name', 'hearse_description', 'hearse_cost', 'hearse_price', 'hearse_inventory', 'hearse_brand', 'hearse_model', 'image', 'tags', 'hearse_networks', 'status', 'purchase_date'];
 
     public $id;
     public $category_id;
@@ -18,6 +18,8 @@ class Hearse extends ActiveRecord{
     public $image;
     public $tags;
     public $hearse_networks;
+    public $status;
+    public $purchase_date;
     
     public $currentImage;
 
@@ -34,6 +36,8 @@ class Hearse extends ActiveRecord{
         $this->image = $args['image'] ?? '';
         $this->tags = $args['tags'] ?? '';
         $this->hearse_networks = $args['hearse_networks'] ?? '';
+        $this->purchase_date = $args['purchase_date'] ?? '';
+        $this->status = $args['status'] ?? '';
     }
 
     public function validate() {
@@ -63,6 +67,12 @@ class Hearse extends ActiveRecord{
         }
         if(!$this->tags) {
             self::$alerts['error'][] = 'Al menos una característica es obligatoria';
+        }
+        if(!$this->purchase_date) {
+            self::$alerts['error'][] = 'La fecha de compra es obligatoria';
+        }
+        if("NONE" === strtoupper($this->status)) {
+            self::$alerts['error'][] = 'El estado es obligatorio';
         }
     
         return self::$alerts;

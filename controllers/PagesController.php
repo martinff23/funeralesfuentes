@@ -50,8 +50,8 @@ class PagesController {
         $today = new DateTime();
         $yearsOfExperience = ($oldestDate->diff($today))->y;
 
-        $totalJobs = Funerals::countRecords('job_status', 'COMPLETED') * 1;
-        $totalJobs = $totalJobs + FuneralsArchive::countRecords() * 1;
+        $totalFunerals = Funerals::countRecords('funeral_status', 'COMPLETED') * 1;
+        $totalFunerals = $totalFunerals + FuneralsArchive::countRecords() * 1;
 
         if(!empty($_SESSION)){
             $user = User::find($_SESSION['id']);
@@ -62,7 +62,7 @@ class PagesController {
                     'totalBranches' => $totalBranches,
                     'totalEmployees' => $totalEmployees,
                     'yearsOfExperience' => $yearsOfExperience,
-                    'totalJobs' => $totalJobs,
+                    'totalFunerals' => $totalFunerals,
                     'user' => $user
                 ]);
             } else{
@@ -75,7 +75,7 @@ class PagesController {
                 'totalBranches' => $totalBranches,
                 'totalEmployees' => $totalEmployees,
                 'yearsOfExperience' => $yearsOfExperience,
-                'totalJobs' => $totalJobs
+                'totalFunerals' => $totalFunerals
             ]);
         }
     }

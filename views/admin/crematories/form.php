@@ -13,31 +13,48 @@
         <input type="text" class="form__input" id="crematory_cost" name="crematory_cost" placeholder="Costo del crematorio" value="<?php echo $crematory->crematory_cost??'';?>">
     </div>
     <div class="form__field">
+        <label for="open_date" class="form__label">Fecha apertura</label>
+        <input type="date" class="form__input" id="open_date" name="open_date" placeholder="Longitud" value="<?php echo $crematory->open_date??'';?>">
+    </div>
+    <div class="form__field">
+        <label for="status" class="form__label">Estado</label>
+        <select class="form__input" id="status" name="status">
+            <option value="NONE" <?php echo empty($crematory->status) ? 'selected' : '';?>>- SELECCIONA UN ESTADO -</option>
+            <option value="ACTIVE" <?php echo 'ACTIVE' === strtoupper($crematory->status) ? 'selected' : '';?>>ACTIVO</option>
+            <option value="INACTIVE" <?php echo 'INACTIVE' === strtoupper($crematory->status) ? 'selected' : '';?>>INACTIVO</option>
+        </select>
+    </div>
+    <div class="form__field">
         <label for="crematory_image" class="form__label">Imagen</label>
         <input type="file" class="form__input form__input--file" id="crematory_image" name="crematory_image[]" multiple accept="image/*">
         <!-- <input type="file" class="form__input form__input--file" id="crematory_image" name="crematory_image"> -->
     </div>
 
-    <?php if(isset($crematory->currentImage)) {?>
-        <p class="form__text">Imagen actual:</p>
-        <div class="form__image">
-            <?php if($flag){ ?>
-                <?php foreach($differentImages as $differentImage){ ?>
-                    <picture>
-                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$differentImage.'.webp'; ?>" type="image/webp">
-                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$differentImage.'.png'; ?>" type="image/png">
-                        <img src="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$differentImage.'.png'; ?>" alt="Imagen del crematorio">
-                    </picture>
-                <?php } ?>
-            <?php } else{ ?>
+    <?php if($flag){ ?>
+        <?php if(0 !== count($differentImages)){ ?>
+            <p class="form__text">Imágenes actuales:</p>
+            <div class="form__image">
+            <?php foreach($differentImages as $differentImage){ ?>
+                <picture>
+                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$differentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$differentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$differentImage.'.png'; ?>" alt="Imagen del crematorio">
+                </picture>
+            <?php } ?>
+            </div>
+        <?php }?>
+    <?php } else{ ?>
+        <?php if(isset($crematory->currentImage) && !empty($crematory->currentImage)){ ?>
+            <p class="form__text">Imagen actual:</p>
+            <div class="form__image">
                 <picture>
                     <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$crematory->currentImage.'.webp'; ?>" type="image/webp">
                     <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$crematory->currentImage.'.png'; ?>" type="image/png">
                     <img src="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$crematory->currentImage.'.png'; ?>" alt="Imagen del crematorio">
                 </picture>
-            <?php } ?>
-        </div>
-    <?php }?>
+            </div>
+        <?php }?>
+    <?php } ?>
 
 </fieldset>
 

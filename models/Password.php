@@ -6,7 +6,7 @@ class Password extends ActiveRecord {
     protected static $table = 'users';
     protected static $databaseColumns = ['id', 'password'];
 
-    public $id;
+    // public $id;
     public $password;
     
     public $password2;
@@ -25,7 +25,7 @@ class Password extends ActiveRecord {
         }
     
         // Longitud mínima
-        if (strlen($this->password) < 8) {
+        if (strlen($this->password) < $_ENV['PASSWORD_LENGTH']) {
             self::$alerts['error'][] = 'La contraseña debe tener al menos 8 caracteres';
         }
     

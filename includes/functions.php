@@ -51,6 +51,9 @@ function groupCategories($categories = []){
         if(false !== strpos(strtolower($category->subtype), 'urn') && false !== strpos(strtolower($category->name), 'ecological')){
             $categoriesIds['ecological_urns'][] = $category->id;
         }
+        if(false !== strpos(strtolower($category->subtype), 'urn') && false !== strpos(strtolower($category->name), 'marble')){
+            $categoriesIds['marble_urns'][] = $category->id;
+        }
         if(false !== strpos(strtolower($category->subtype), 'coffin') && false !== strpos(strtolower($category->name), 'wooden')){
             $categoriesIds['wooden_coffins'][] = $category->id;
         }
@@ -109,6 +112,9 @@ function groupProductsByCategory($products = [], $categoriesIds = []){
         }
         if(in_array($product->category_id, $categoriesIds["ecological_urns"])){
             $formatedProducts['urns']['ecological'][] = $product;
+        }
+        if(in_array($product->category_id, $categoriesIds["marble_urns"])){
+            $formatedProducts['urns']['marble'][] = $product;
         }
     }
 
@@ -224,4 +230,53 @@ function aos_animations() {
     $effects = ['fade-up', 'fade-down', 'fade-left', 'fade-right', 'flip-left', 'flip-right', 'zoom-in', 'zoom-in-up', 'zoom-in-down', 'zoom-out'];
     $effect = array_rand($effects, 1);
     return ' data-aos="' . $effects[$effect] . '" ';
+}
+
+function create_mail_header(){
+    $header  = '<table width="100%" cellpadding="0" cellspacing="0" style="background-color: #0A1433;">';
+    $header .= '<tr>';
+    $header .= '<td align="center" style="padding: 15px 0;">';
+    $header .= '<a href="https://www.funeralesfuentes.com" target="_blank">';
+    $header .= '<img src="' . $_ENV['HOST'] . '/build/img/title.png" alt="Logo Funerales Fuentes" width="175" height="50" style="display: block;">';
+    $header .= '</a>';
+    $header .= '</td>';
+    $header .= '</tr>';
+    $header .= '<tr>';
+    $header .= '<td align="center" style="padding-bottom: 15px;">';
+    $header .= '<p style="font-family: \'Charter\', Georgia, serif; font-size: 15px; font-weight: bold; color: white; margin: 0; text-transform: uppercase;">Conmemoramos la vida<br>dignificando la muerte</p>';
+    $header .= '</td>';
+    $header .= '</tr>';
+    $header .= '</table>';
+
+    return $header;
+}
+
+function create_mail_sign($author, $author_mail, $author_phones){
+    $sign = '<table cellpadding="0" cellspacing="0" style="font-family: \'Charter\', Georgia, serif; font-size: 12px; color: #333; margin-top: 30px;">';
+    $sign .= '<tr>';
+    $sign .= '<td style="padding-right: 15px;">';
+    $sign .= '<a href="https://www.funeralesfuentes.com" target="_blank">';
+    $sign .= '<img src="' . $_ENV['HOST'] . '/build/img/firma.png" alt="Logo Funerales Fuentes" width="80" style="border-radius: 4px;">';
+    $sign .= '</a>';
+    $sign .= '</td>';
+    $sign .= '<td>';
+    $sign .= '<strong style="font-size: 12px;">'.$author.'</strong><br>';
+    $sign .= 'Director General<br>';
+    $sign .= '<span style="color: #555;">Funerales Fuentes</span><br>';
+    $sign .= '<a href="mailto:'.$author_mail.'" style="color: #0066cc; text-decoration: none;">';
+    $sign .= $author_mail.'</a><br>';
+    $i = 1;
+    foreach($author_phones as $author_phone){
+        $sign .= '<span style="color: #333;">Teléfono '.$i.': '.$author_phone.'</span><br>';
+    }
+    $sign .= '<table cellpadding="0" cellspacing="0" style="margin-top: 10px;"><tr>';
+    $sign .= '<td><a href="https://facebook.com/oficialfuneralesfuentes" target="_blank" style="margin-right: 8px;"><img src="' . $_ENV['HOST'] . '/build/img/facebook.png" alt="Facebook" width="18" height="18" style="border: none;"></a></td>';
+    $sign .= '<td><a href="https://x.com/funefuentes" target="_blank" style="margin-right: 8px;"><img src="' . $_ENV['HOST'] . '/build/img/x.png" alt="X" width="18" height="18" style="border: none;"></a></td>';
+    $sign .= '<td><a href="https://youtube.com/@funeralesfuentes" target="_blank" style="margin-right: 8px;"><img src="' . $_ENV['HOST'] . '/build/img/youtube.png" alt="YouTube" width="18" height="18" style="border: none;"></a></td>';
+    $sign .= '<td><a href="https://instagram.com/_funeralesfuentes" target="_blank" style="margin-right: 8px;"><img src="' . $_ENV['HOST'] . '/build/img/instagram.png" alt="Instagram" width="18" height="18" style="border: none;"></a></td>';
+    $sign .= '<td><a href="https://linkedin.com/company/funeralesfuentes" target="_blank"><img src="' . $_ENV['HOST'] . '/build/img/linkedin.png" alt="LinkedIn" width="18" height="18" style="border: none;"></a></td>';
+    $sign .= '</tr></table>';
+    $sign .= '</td></tr></table>';
+
+    return $sign;
 }

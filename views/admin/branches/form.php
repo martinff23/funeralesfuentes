@@ -46,26 +46,31 @@
         <!-- <input type="file" class="form__input form__input--file" id="branch_image" name="branch_image"> -->
     </div>
 
-    <?php if(isset($branch->currentImage)) {?>
-        <p class="form__text">Imagen actual:</p>
-        <div class="form__image">
-            <?php if($flag){ ?>
-                <?php foreach($differentImages as $differentImage){ ?>
-                    <picture>
-                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/branches/'.$differentImage.'.webp'; ?>" type="image/webp">
-                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/branches/'.$differentImage.'.png'; ?>" type="image/png">
-                        <img src="<?php echo $_ENV['HOST'].'/build/img/branches/'.$differentImage.'.png'; ?>" alt="Imagen del producto">
-                    </picture>
-                <?php } ?>
-            <?php } else{ ?>
+    <?php if($flag){ ?>
+        <?php if(0 !== count($differentImages)){ ?>
+            <p class="form__text">Imágenes actuales:</p>
+            <div class="form__image">
+            <?php foreach($differentImages as $differentImage){ ?>
+                <picture>
+                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/branches/'.$differentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/branches/'.$differentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/build/img/branches/'.$differentImage.'.png'; ?>" alt="Imagen de la sucursal o punto de venta">
+                </picture>
+            <?php } ?>
+            </div>
+        <?php }?>
+    <?php } else{ ?>
+        <?php if(isset($branch->currentImage) && !empty($branch->currentImage)){ ?>
+            <p class="form__text">Imagen actual:</p>
+            <div class="form__image">
                 <picture>
                     <source srcset="<?php echo $_ENV['HOST'].'/build/img/branches/'.$branch->currentImage.'.webp'; ?>" type="image/webp">
                     <source srcset="<?php echo $_ENV['HOST'].'/build/img/branches/'.$branch->currentImage.'.png'; ?>" type="image/png">
-                    <img src="<?php echo $_ENV['HOST'].'/build/img/branches/'.$branch->currentImage.'.png'; ?>" alt="Imagen del producto">
+                    <img src="<?php echo $_ENV['HOST'].'/build/img/branches/'.$branch->currentImage.'.png'; ?>" alt="Imagen de la sucursal o punto de venta">
                 </picture>
-            <?php } ?>
-        </div>
-    <?php }?>
+            </div>
+        <?php }?>
+    <?php } ?>
 
 </fieldset>
 

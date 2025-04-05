@@ -120,6 +120,13 @@ class ActiveRecord {
         return $result;
     }
 
+    // Obtener todos los Registros vinculados a una palabra
+    public static function allWhereOrderBy($columnName, $columnValue, $orderColumn, $orderType) {
+        $query = "SELECT * FROM " . static::$table . " WHERE ".$columnName." LIKE '%" .$columnValue. "%' ORDER BY ".$orderColumn." ".$orderType;
+        $result = self::querySQL($query);
+        return $result;
+    }
+
     // Busca un registro por su id
     public static function find($id) {
         $query = "SELECT * FROM " . static::$table . " WHERE id = " . $id ;
@@ -221,7 +228,15 @@ class ActiveRecord {
     // Eliminar un Registro por su ID
     public function deleteElement() {
         $query = "DELETE FROM "  . static::$table . " WHERE id = " . static::$db->escape_string($this->id) . " LIMIT 1";
-        $result = self::$db->query($query);
+        $result = static::$db->query($query);
+        return $result;
+    }
+
+    // Eliminar un Registro por su ID - cambia status solamente
+    public function deleteNElement() {
+        $query = "UPDATE "  . static::$table . " SET status = 'INACTIVE' WHERE id = " . static::$db->escape_string($this->id);
+        error_log('INPUT: ' . print_r($query, true));
+        $result = static::$db->query($query);
         return $result;
     }
 }

@@ -5,3 +5,6 @@ import './intranet.js';
 import './map.js';
 import './start.js';
 import './nav.js';
+import './swiperElement.js';
+import './userMenu.js';
+import './password.js';

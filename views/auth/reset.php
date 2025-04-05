@@ -7,13 +7,23 @@
     ?>
 
     <form method="POST" class="form">
-    <div class="form__field">
-            <label class="form__label" for="password">Nueva contraseña</label>
+        <div class="form__field">
+        <label class="form__label" for="password">Nueva contraseña</label>
+            <div class="password-wrapper">
             <input type="password" class="form__input" placeholder="Tu nueva contraseña" id="password" name="password">
+                <button type="button" class="toggle-password">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
         </div>
         <div class="form__field">
-            <label class="form__label" for="password2">Repetir nueva contraseña</label>
+            <label class="form__label" for="password">Repetir nueva contraseña</label>
+            <div class="password-wrapper">
             <input type="password" class="form__input" placeholder="Repetir nueva contraseña" id="password2" name="password2">
+                <button type="button" class="toggle-password">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
         </div>
         <input type="submit" class="form__submit" value="Actualizar contraseña">
     </form>

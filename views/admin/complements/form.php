@@ -18,26 +18,31 @@
         <!-- <input type="file" class="form__input form__input--file" id="complement_image" name="complement_image"> -->
     </div>
 
-    <?php if(isset($complement->currentImage)) {?>
-        <p class="form__text">Imagen actual:</p>
-        <div class="form__image">
-            <?php if($flag){ ?>
-                <?php foreach($differentImages as $differentImage){ ?>
-                    <picture>
-                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/complements/'.$differentImage.'.webp'; ?>" type="image/webp">
-                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/complements/'.$differentImage.'.png'; ?>" type="image/png">
-                        <img src="<?php echo $_ENV['HOST'].'/build/img/complements/'.$differentImage.'.png'; ?>" alt="Imagen del extra">
-                    </picture>
-                <?php } ?>
-            <?php } else{ ?>
+    <?php if($flag){ ?>
+        <?php if(0 !== count($differentImages)){ ?>
+            <p class="form__text">Imágenes actuales:</p>
+            <div class="form__image">
+            <?php foreach($differentImages as $differentImage){ ?>
+                <picture>
+                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/complements/'.$differentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/complements/'.$differentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/build/img/complements/'.$differentImage.'.png'; ?>" alt="Imagen del complemento">
+                </picture>
+            <?php } ?>
+            </div>
+        <?php }?>
+    <?php } else{ ?>
+        <?php if(isset($complement->currentImage) && !empty($complement->currentImage)){ ?>
+            <p class="form__text">Imagen actual:</p>
+            <div class="form__image">
                 <picture>
                     <source srcset="<?php echo $_ENV['HOST'].'/build/img/complements/'.$complement->currentImage.'.webp'; ?>" type="image/webp">
                     <source srcset="<?php echo $_ENV['HOST'].'/build/img/complements/'.$complement->currentImage.'.png'; ?>" type="image/png">
-                    <img src="<?php echo $_ENV['HOST'].'/build/img/complements/'.$complement->currentImage.'.png'; ?>" alt="Imagen del extra">
+                    <img src="<?php echo $_ENV['HOST'].'/build/img/complements/'.$complement->currentImage.'.png'; ?>" alt="Imagen del complemento">
                 </picture>
-            <?php } ?>
-        </div>
-    <?php }?>
+            </div>
+        <?php }?>
+    <?php } ?>
 
 </fieldset>
 

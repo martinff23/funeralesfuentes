@@ -26,26 +26,31 @@
         <!-- <input type="file" class="form__input form__input--file" id="product_image" name="product_image"> -->
     </div>
 
-    <?php if(isset($product->currentImage)) {?>
-        <p class="form__text">Imagen actual:</p>
-        <div class="form__image">
-            <?php if($flag){ ?>
-                <?php foreach($differentImages as $differentImage){ ?>
-                    <picture>
-                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/products/'.$differentImage.'.webp'; ?>" type="image/webp">
-                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/products/'.$differentImage.'.png'; ?>" type="image/png">
-                        <img src="<?php echo $_ENV['HOST'].'/build/img/products/'.$differentImage.'.png'; ?>" alt="Imagen del producto">
-                    </picture>
-                <?php } ?>
-            <?php } else{ ?>
+    <?php if($flag){ ?>
+        <?php if(0 !== count($differentImages)){ ?>
+            <p class="form__text">Imágenes actuales:</p>
+            <div class="form__image">
+            <?php foreach($differentImages as $differentImage){ ?>
+                <picture>
+                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/products/'.$differentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/products/'.$differentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/build/img/products/'.$differentImage.'.png'; ?>" alt="Imagen del producto">
+                </picture>
+            <?php } ?>
+            </div>
+        <?php }?>
+    <?php } else{ ?>
+        <?php if(isset($product->currentImage) && !empty($product->currentImage)){ ?>
+            <p class="form__text">Imagen actual:</p>
+            <div class="form__image">
                 <picture>
                     <source srcset="<?php echo $_ENV['HOST'].'/build/img/products/'.$product->currentImage.'.webp'; ?>" type="image/webp">
                     <source srcset="<?php echo $_ENV['HOST'].'/build/img/products/'.$product->currentImage.'.png'; ?>" type="image/png">
                     <img src="<?php echo $_ENV['HOST'].'/build/img/products/'.$product->currentImage.'.png'; ?>" alt="Imagen del producto">
                 </picture>
-            <?php } ?>
-        </div>
-    <?php }?>
+            </div>
+        <?php }?>
+    <?php } ?>
 
 </fieldset>
 

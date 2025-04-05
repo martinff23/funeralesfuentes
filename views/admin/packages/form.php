@@ -16,7 +16,7 @@
         <div id="image_tags_div" class="form__list"></div>
     </div>
 
-    <?php if(isset($package->currentImage)) {?>
+    <?php if(isset($package->currentImage) && !empty($package->currentImage)){ ?>
         <p class="form__text">Imagen actual:</p>
         <div class="form__image">
             <picture>

@@ -15,9 +15,7 @@ class AuthController {
     public static function login(Router $router) {
 
         $alerts = [];
-
         if('POST'===$_SERVER['REQUEST_METHOD']) {
-    
             $auth = new User($_POST);
             $alerts = $auth->validateLogin();
             
@@ -29,6 +27,8 @@ class AuthController {
                 } else {
                     if(!$user->confirmed){
                         User::setAlert('error', 'El usuario no esta confirmado');
+                    } else if("INACTIVE" === strtoupper($user->status)){
+                        User::setAlert('error', 'El usuario no esta habilitado');
                     } else{
                         // El Usuario existe
                         if( password_verify($_POST['password'], $user->password) ){
@@ -60,7 +60,6 @@ class AuthController {
 
         $alerts = User::getAlerts();
         
-        // Render a la vista 
         $router->render('auth/login', [
             'title' => 'Inicio de sesión',
             'alerts' => $alerts
@@ -75,7 +74,6 @@ class AuthController {
             header('Location: /');
             exit();
         }
-       
     }
 
     public static function register(Router $router){
@@ -96,6 +94,7 @@ class AuthController {
                 $_POST['image']=$user->currentImage;
             }
 
+            $_POST['status'] = "ACTIVE";
             $user->sincronize($_POST);
             
             $alerts = $user->validateAccount();
@@ -144,7 +143,6 @@ class AuthController {
             }
         }
 
-        // Render a la vista
         $router->render('auth/register', [
             'title' => 'Creación de cuenta',
             'user' => $user, 
@@ -163,7 +161,7 @@ class AuthController {
                 // Buscar el usuario
                 $user = User::where('email', $auth->email);
 
-                if($user instanceof User && $user->confirmed) {
+                if($user instanceof User && $user->confirmed && "ACTIVE" === strtoupper($user->status)) {
 
                     // Generar un nuevo token
                     $user->createToken();
@@ -185,12 +183,11 @@ class AuthController {
                  
                     // Usuario::setAlerta('error', 'El Usuario no existe o no esta confirmado');
 
-                    $alerts['error'][] = 'El Usuario no existe o no esta confirmado';
+                    $alerts['error'][] = 'El Usuario no existe, está inhabilitado o no esta confirmado';
                 }
             }
         }
 
-        // Muestra la vista
         $router->render('auth/forgot', [
             'title' => 'Olvidé mi contraseña',
             'alerts' => $alerts
@@ -200,16 +197,14 @@ class AuthController {
     public static function reset(Router $router) {
 
         $token = s($_GET['token']);
-
         $validToken = true;
-
         if(!$token) header('Location: /');
 
         // Identificar el usuario con este token
         $user = User::where('token', $token);
 
         if(!$user instanceof User){
-            User::setAlert('error', 'Token no válido');
+            User::setAlert('error', 'Usuario no válido');
             $alerts = User::getAlerts();
             // Muestra la vista
             $router->render('auth/reset', [
@@ -217,17 +212,18 @@ class AuthController {
                 'alerts' => $alerts,
                 'validToken' => $validToken
             ]);
-            
         } else{
             if(empty($user)) {
-                User::setAlert('error', 'Token no válido');
+                User::setAlert('error', 'Usuario no válido');
+                $validToken = false;
+            } else if("INACTIVE" === strtoupper($user->status)) {
+                User::setAlert('error', 'Usuario inhabilitado');
                 $validToken = false;
             }
             if('POST'===$_SERVER['REQUEST_METHOD']) {
 
                 // Añadir el nuevo password
                 $user->sincronize($_POST);
-                debug($user);
     
                 // Validar el password
                 $alerts = $user->validatePasswordRecovery();
@@ -250,7 +246,7 @@ class AuthController {
             }
     
             $alerts = User::getAlerts();
-            // Muestra la vista
+            
             $router->render('auth/reset', [
                 'title' => 'Reestablecer contraseña',
                 'alerts' => $alerts,
@@ -260,7 +256,6 @@ class AuthController {
     }
 
     public static function message(Router $router) {
-
         $router->render('auth/message', [
             'title' => 'Cuenta creada exitosamente'
         ]);
@@ -281,6 +276,9 @@ class AuthController {
             if(empty($user)) {
                 // No se encontró un usuario con ese token
                 User::setAlert('error', 'Token no válido, la cuenta no se confirmó');
+            } else if("INACTIVE" === strtoupper($user->status)) {
+                // No se encontró un usuario con ese token
+                User::setAlert('error', 'Usuario inhabilitado, la cuenta no se confirmó');
             } else {
                 // Confirmar la cuenta
                 $user->confirmed = 1;
@@ -290,11 +288,9 @@ class AuthController {
                 // Guardar en la BD
                 $user->saveElement();
     
-                User::setAlert('success', 'Cuenta Comprobada Correctamente');
+                User::setAlert('success', 'Cuenta comprobada correctamente');
             }
         }
-
-     
 
         $router->render('auth/confirm', [
             'title' => 'Confirma tu cuenta Funerales Fuentes',

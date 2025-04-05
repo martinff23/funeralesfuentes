@@ -4,7 +4,7 @@ namespace Model;
 
 class Cemetery extends ActiveRecord{
     protected static $table = 'cemeteries';
-    protected static $databaseColumns = ['id', 'category_id', 'cemetery_name', 'cemetery_description', 'cemetery_cost', 'cemetery_price', 'cemetery_inventory', 'image', 'tags', 'cemetery_networks', 'latitude', 'longitude', 'address', 'open_date'];
+    protected static $databaseColumns = ['id', 'category_id', 'cemetery_name', 'cemetery_description', 'cemetery_cost', 'cemetery_price', 'cemetery_inventory', 'image', 'tags', 'cemetery_networks', 'latitude', 'longitude', 'address', 'open_date', 'status'];
 
     public $id;
     public $category_id;
@@ -20,6 +20,7 @@ class Cemetery extends ActiveRecord{
     public $longitude;
     public $address;
     public $open_date;
+    public $status;
     
     public $currentImage;
 
@@ -38,6 +39,7 @@ class Cemetery extends ActiveRecord{
         $this->longitude = $args['longitude'] ?? '';
         $this->address = $args['address'] ?? '';
         $this->open_date = $args['open_date'] ?? '';
+        $this->status = $args['status'] ?? '';
     }
 
     public function validate() {
@@ -64,6 +66,9 @@ class Cemetery extends ActiveRecord{
         }
         if(!$this->open_date) {
             self::$alerts['error'][] = 'La fecha de apertura es obligatoria';
+        }
+        if("NONE" === strtoupper($this->status)) {
+            self::$alerts['error'][] = 'El estado es obligatorio';
         }
     
         return self::$alerts;

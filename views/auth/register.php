@@ -21,11 +21,21 @@
         </div>
         <div class="form__field">
             <label class="form__label" for="password">Contraseña</label>
-            <input type="password" class="form__input" placeholder="Tu contraseña" id="password" name="password">
+            <div class="password-wrapper">
+                <input type="password" class="form__input" placeholder="Tu contraseña" id="password" name="password">
+                <button type="button" class="toggle-password">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
         </div>
         <div class="form__field">
             <label class="form__label" for="password2">Repetir contraseña</label>
-            <input type="password" class="form__input" placeholder="Repetir contraseña" id="password2" name="password2">
+            <div class="password-wrapper">
+                <input type="password" class="form__input" placeholder="Repetir contraseña" id="password2" name="password2">
+                <button type="button" class="toggle-password">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
         </div>
         <div class="form__field">
             <label for="user_image" class="form__label">Fotografía</label>

@@ -21,31 +21,48 @@
         <input type="text" class="form__input" id="hearse_cost" name="hearse_cost" placeholder="Costo de la carroza" value="<?php echo $hearse->hearse_cost??'';?>">
     </div>
     <div class="form__field">
+        <label for="purchase_date" class="form__label">Fecha de compra</label>
+        <input type="date" class="form__input" id="purchase_date" name="purchase_date" placeholder="Longitud" value="<?php echo $hearse->purchase_date??'';?>">
+    </div>
+    <div class="form__field">
+        <label for="status" class="form__label">Estado</label>
+        <select class="form__input" id="status" name="status">
+            <option value="NONE" <?php echo empty($hearse->status) ? 'selected' : '';?>>- SELECCIONA UN ESTADO -</option>
+            <option value="ACTIVE" <?php echo 'ACTIVE' === strtoupper($hearse->status) ? 'selected' : '';?>>ACTIVA</option>
+            <option value="INACTIVE" <?php echo 'INACTIVE' === strtoupper($hearse->status) ? 'selected' : '';?>>INACTIVA</option>
+        </select>
+    </div>
+    <div class="form__field">
         <label for="hearse_image" class="form__label">Imagen</label>
         <input type="file" class="form__input form__input--file" id="hearse_image" name="hearse_image[]" multiple accept="image/*">
         <!-- <input type="file" class="form__input form__input--file" id="hearse_image" name="hearse_image"> -->
     </div>
 
-    <?php if(isset($hearse->currentImage)) {?>
-        <p class="form__text">Imagen actual:</p>
-        <div class="form__image">
-            <?php if($flag){ ?>
-                <?php foreach($differentImages as $differentImage){ ?>
-                    <picture>
-                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$differentImage.'.webp'; ?>" type="image/webp">
-                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$differentImage.'.png'; ?>" type="image/png">
-                        <img src="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$differentImage.'.png'; ?>" alt="Imagen de la carroza">
-                    </picture>
-                <?php } ?>
-            <?php } else{ ?>
+    <?php if($flag){ ?>
+        <?php if(0 !== count($differentImages)){ ?>
+            <p class="form__text">Imágenes actuales:</p>
+            <div class="form__image">
+            <?php foreach($differentImages as $differentImage){ ?>
+                <picture>
+                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$differentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$differentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$differentImage.'.png'; ?>" alt="Imagen de la carroza">
+                </picture>
+            <?php } ?>
+            </div>
+        <?php }?>
+    <?php } else{ ?>
+        <?php if(isset($hearse->currentImage) && !empty($hearse->currentImage)){ ?>
+            <p class="form__text">Imagen actual:</p>
+            <div class="form__image">
                 <picture>
                     <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$hearse->currentImage.'.webp'; ?>" type="image/webp">
                     <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$hearse->currentImage.'.png'; ?>" type="image/png">
                     <img src="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$hearse->currentImage.'.png'; ?>" alt="Imagen de la carroza">
                 </picture>
-            <?php } ?>
-        </div>
-    <?php }?>
+            </div>
+        <?php }?>
+    <?php } ?>
 
 </fieldset>
 

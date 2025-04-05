@@ -14,6 +14,7 @@ use Controllers\APIInventoryController;
 use Controllers\APILocationsController;
 use Controllers\APIProductsController;
 use Controllers\APIServicesController;
+use Controllers\APIUsersController;
 use MVC\Router;
 use Controllers\AuthController;
 use Controllers\BranchesController;
@@ -148,6 +149,7 @@ $router->get('/api/birthdays', [APIBirthdaysController::class, 'index']);
 $router->get('/api/locations', [APILocationsController::class, 'locations']);
 $router->get('/api/contact', [APIContactController::class, 'contact']);
 $router->post('/api/contact', [APIContactController::class, 'contact']);
+$router->post('/api/deleteuser', [APIUsersController::class, 'deleteUserN']);
 
 // Public areas
 $router->get('/', [PagesController::class, 'index']);
@@ -176,5 +178,10 @@ $router->get('/user/email', [UserPagesController::class, 'email']);
 $router->post('/user/email', [UserPagesController::class, 'email']);
 $router->get('/user/subscriptions', [UserPagesController::class, 'subscriptions']);
 $router->post('/user/subscriptions', [UserPagesController::class, 'subscriptions']);
+$router->get('/user/plans', [UserPagesController::class, 'plans']);
+$router->post('/user/plans', [UserPagesController::class, 'plans']);
+$router->get('/user/digitickets', [UserPagesController::class, 'digitickets']);
+$router->post('/user/digitickets', [UserPagesController::class, 'digitickets']);
+$router->get('/user/history', [UserPagesController::class, 'history']);
 
 $router->verifyRoutes();

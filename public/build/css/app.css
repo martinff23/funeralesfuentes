@@ -1433,6 +1433,28 @@ h3 {
   width: 100%;
 }
 
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper .toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #666;
+  font-size: 1.5rem;
+}
+
+.password-wrapper .toggle-password:focus {
+  outline: none;
+}
+
 .header {
   min-height: 55rem;
   background-image: url(../img/header.avif);

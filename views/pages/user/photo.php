@@ -18,9 +18,9 @@
             <input type="file" class="form__input form__input--file" id="user_image" name="user_image">
         </div>
 
-        <?php if(isset($user->currentImage)) {?>
-            <p class="user-options__text">Imagen actual:</p>
-            <div class="user-options__image">
+        <?php if(isset($user->currentImage) && !empty($user->currentImage)){ ?>
+            <p class="form__text">Imagen actual:</p>
+            <div class="form__image">
                 <picture>
                     <source srcset="<?php echo $_ENV['HOST'].'/build/img/users/'.$user->currentImage.'.webp'; ?>" type="image/webp">
                     <source srcset="<?php echo $_ENV['HOST'].'/build/img/users/'.$user->currentImage.'.png'; ?>" type="image/png">

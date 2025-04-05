@@ -35,9 +35,9 @@
                 <i class="fa-solid fa-newspaper user-options__icon"></i>
                 <span class="user-options__menu-text">Gestionar suscripciones</span>
             </a>
-            <a href="/user/delete" class="user-options__link <?php echo currentPage('/user/delete');?>">
+            <a href="#" id="delete-user-link" data-userid=<?php echo $user->id; ?> class="user-options__link <?php echo currentPage('/user/delete'); ?>">
                 <i class="fa-solid fa-user-xmark user-options__icon"></i>
-                <span class="user-options__menu-text">Borrar cuenta</span>
+                <span class="user-options__menu-text">Inhabilitar cuenta</span>
             </a>
         </div>
     </div>

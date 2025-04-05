@@ -13,7 +13,12 @@
         </div>
         <div class="form__field">
             <label class="form__label" for="password">Contraseña</label>
-            <input type="password" class="form__input" placeholder="Tu contraseña" id="password" name="password">
+            <div class="password-wrapper">
+                <input type="password" class="form__input" placeholder="Tu contraseña" id="password" name="password">
+                <button type="button" class="toggle-password">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
         </div>
         <input type="submit" class="form__submit" value="Iniciar sesión">
     </form>
