@@ -8,7 +8,7 @@ const cssnano = require('cssnano');
 const postcss = require('gulp-postcss');
 const sourcemaps = require('gulp-sourcemaps');
 
-// Imagenes
+// Images
 const cache = require('gulp-cache');
 const imagemin = require('gulp-imagemin');
 const webp = require('gulp-webp');
@@ -25,7 +25,7 @@ const webpack = require('webpack-stream');
 const paths = {
     scss: 'src/scss/**/*.scss',
     js: 'src/js/**/*.js',
-    imagenes: 'src/img/**/*'
+    images: 'src/img/**/*'
 }
 function css() {
     return src(paths.scss)
@@ -58,8 +58,8 @@ function javascript() {
         .pipe(dest('./public/build/js'))
 }
 
-function imagenes() {
-    return src(paths.imagenes)
+function images() {
+    return src(paths.images)
         .pipe( cache(imagemin({ optimizationLevel: 3})))
         .pipe( dest('public/build/img'))
 }
@@ -87,15 +87,16 @@ function versionAvif( done ) {
 function dev(done) {
     watch( paths.scss, css );
     watch( paths.js, javascript );
-    watch( paths.imagenes, imagenes)
-    watch( paths.imagenes, versionWebp)
-    watch( paths.imagenes, versionAvif)
+    watch( paths.images, images)
+    watch( paths.images, versionWebp)
+    watch( paths.images, versionAvif)
     done()
 }
 
 exports.css = css;
 exports.js = javascript;
-exports.imagenes = imagenes;
+exports.images = images;
 exports.versionWebp = versionWebp;
 exports.versionAvif = versionAvif;
-exports.dev = parallel( css, imagenes, versionWebp, versionAvif, javascript, dev) ;
+exports.dev = parallel(css, images, versionWebp, versionAvif, javascript, dev);
+exports.build = parallel(css, images, versionWebp, versionAvif, javascript);
