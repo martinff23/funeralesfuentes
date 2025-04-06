@@ -49,7 +49,7 @@ class ProductsController {
                 'user' => $user
             ]);
         } else{
-            // Page 404
+            header('Location: /404');
         }
     }
 
@@ -86,7 +86,7 @@ class ProductsController {
                             continue;
                         }
                 
-                        $image = $manager->read($tmpNameFile)->cover(800, 600);
+                        $image = $manager->read($tmpNameFile)->resize(800, 600);
                         $pngImage = $image->encode(new PngEncoder(80));
                         $webpImage = $image->encode(new WebpEncoder(80));
                 
@@ -154,7 +154,7 @@ class ProductsController {
                 'user' => $user
             ]);
         } else{
-            // Page 404
+            header('Location: /404');
         }
     }
 
@@ -216,7 +216,7 @@ class ProductsController {
                                 continue;
                             }
                     
-                            $image = $manager->read($tmpNameFile)->cover(800, 600);
+                            $image = $manager->read($tmpNameFile)->resize(800, 600);
                             $pngImage = $image->encode(new PngEncoder(80));
                             $webpImage = $image->encode(new WebpEncoder(80));
                     
@@ -274,6 +274,16 @@ class ProductsController {
                                         unlink($oldWebpPath);
                                     }
                                 }
+                            } else{
+                                $oldPngPath  = $imageFolder . $product->currentImage . '.png';
+                                $oldWebpPath = $imageFolder . $product->currentImage . '.webp';
+
+                                if (file_exists($oldPngPath)) {
+                                    unlink($oldPngPath);
+                                }
+                                if (file_exists($oldWebpPath)) {
+                                    unlink($oldWebpPath);
+                                }
                             }
         
                             // Put image on server
@@ -304,7 +314,7 @@ class ProductsController {
                 ]);
             }   
         } else{
-            // Page 404
+            header('Location: /404');
         }
     }
 

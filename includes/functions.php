@@ -280,3 +280,21 @@ function create_mail_sign($author, $author_mail, $author_phones){
 
     return $sign;
 }
+
+function getRandomImageFromFolder(string $folder, array $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif']){
+    if (!is_dir($folder)) return null;
+
+    $files = scandir($folder);
+    $images = [];
+
+    foreach ($files as $file) {
+        $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+        if (in_array($extension, $allowedExtensions)) {
+            $images[] = $file;
+        }
+    }
+
+    if (empty($images)) return null;
+
+    return $images[array_rand($images)];
+}

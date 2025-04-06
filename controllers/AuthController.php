@@ -86,8 +86,8 @@ class AuthController {
             $imageName=md5(uniqid(rand(),true));
             if(!empty(trim($_FILES['user_image']['tmp_name']))){
                 $manager = new ImageManager(new Driver());
-                $pngImage=$manager->read(trim($_FILES['user_image']['tmp_name']))->cover(800,600)->encode(new PngEncoder(80));
-                $webpImage=$manager->read(trim($_FILES['user_image']['tmp_name']))->cover(800,600)->encode(new WebpEncoder(80));
+                $pngImage=$manager->read(trim($_FILES['user_image']['tmp_name']))->resize(800,600)->encode(new PngEncoder(80));
+                $webpImage=$manager->read(trim($_FILES['user_image']['tmp_name']))->resize(800,600)->encode(new WebpEncoder(80));
                 $_POST['image']=$imageName;
                 $savePicture=true;
             } else{

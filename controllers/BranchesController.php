@@ -49,7 +49,7 @@ class BranchesController {
                 'user' => $user
             ]);   
         } else{
-            // Page 404
+            header('Location: /404');
         }
     }
 
@@ -86,7 +86,7 @@ class BranchesController {
                             continue;
                         }
                 
-                        $image = $manager->read($tmpNameFile)->cover(800, 600);
+                        $image = $manager->read($tmpNameFile)->resize(800, 600);
                         $pngImage = $image->encode(new PngEncoder(80));
                         $webpImage = $image->encode(new WebpEncoder(80));
                 
@@ -155,7 +155,7 @@ class BranchesController {
                 'user' => $user
             ]);   
         } else{
-            // Page 404
+            header('Location: /404');
         }
     }
 
@@ -216,7 +216,7 @@ class BranchesController {
                                 continue;
                             }
                     
-                            $image = $manager->read($tmpNameFile)->cover(800, 600);
+                            $image = $manager->read($tmpNameFile)->resize(800, 600);
                             $pngImage = $image->encode(new PngEncoder(80));
                             $webpImage = $image->encode(new WebpEncoder(80));
                     
@@ -275,6 +275,16 @@ class BranchesController {
                                         unlink($oldWebpPath);
                                     }
                                 }
+                            } else{
+                                $oldPngPath  = $imageFolder . $branch->currentImage . '.png';
+                                $oldWebpPath = $imageFolder . $branch->currentImage . '.webp';
+
+                                if (file_exists($oldPngPath)) {
+                                    unlink($oldPngPath);
+                                }
+                                if (file_exists($oldWebpPath)) {
+                                    unlink($oldWebpPath);
+                                }
                             }
         
                             // Put image on server
@@ -305,7 +315,7 @@ class BranchesController {
                 ]);
             }
         } else{
-            // Page 404
+            header('Location: /404');
         }
     }
 

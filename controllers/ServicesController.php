@@ -48,7 +48,7 @@ class ServicesController {
                 'user' => $user
             ]);
         } else{
-            // Page 404
+            header('Location: /404');
         }
     }
 
@@ -85,7 +85,7 @@ class ServicesController {
                             continue;
                         }
                 
-                        $image = $manager->read($tmpNameFile)->cover(800, 600);
+                        $image = $manager->read($tmpNameFile)->resize(800, 600);
                         $pngImage = $image->encode(new PngEncoder(80));
                         $webpImage = $image->encode(new WebpEncoder(80));
                 
@@ -151,7 +151,7 @@ class ServicesController {
                 'user' => $user
             ]);   
         } else{
-            // Page 404
+            header('Location: /404');
         }
     }
 
@@ -212,7 +212,7 @@ class ServicesController {
                                 continue;
                             }
                     
-                            $image = $manager->read($tmpNameFile)->cover(800, 600);
+                            $image = $manager->read($tmpNameFile)->resize(800, 600);
                             $pngImage = $image->encode(new PngEncoder(80));
                             $webpImage = $image->encode(new WebpEncoder(80));
                     
@@ -269,6 +269,16 @@ class ServicesController {
                                         unlink($oldWebpPath);
                                     }
                                 }
+                            } else{
+                                $oldPngPath  = $imageFolder . $service->currentImage . '.png';
+                                $oldWebpPath = $imageFolder . $service->currentImage . '.webp';
+
+                                if (file_exists($oldPngPath)) {
+                                    unlink($oldPngPath);
+                                }
+                                if (file_exists($oldWebpPath)) {
+                                    unlink($oldWebpPath);
+                                }
                             }
         
                             // Put image on server
@@ -296,7 +306,7 @@ class ServicesController {
                 ]);
             }
         } else{
-            // Page 404
+            header('Location: /404');
         }
     }
 

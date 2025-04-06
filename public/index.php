@@ -24,6 +24,7 @@ use Controllers\ComplementsController;
 use Controllers\CotizationsController;
 use Controllers\CrematoriesController;
 use Controllers\DashboardController;
+use Controllers\FilesController;
 use Controllers\HearsesController;
 use Controllers\IntranetController;
 use Controllers\PackagesController;
@@ -39,6 +40,8 @@ $router = new Router();
 $router->get('/login', [AuthController::class, 'login']);
 $router->post('/login', [AuthController::class, 'login']);
 $router->post('/logout', [AuthController::class, 'logout']);
+
+$router->get('/404', [PagesController::class, 'error']);
 
 // Create account
 $router->get('/register', [AuthController::class, 'register']);
@@ -128,6 +131,13 @@ $router->post('/dashboard/alliances/create', [AlliancesController::class, 'creat
 $router->get('/dashboard/alliances/edit', [AlliancesController::class, 'edit']);
 $router->post('/dashboard/alliances/edit', [AlliancesController::class, 'edit']);
 $router->post('/dashboard/alliances/delete', [AlliancesController::class, 'delete']);
+
+$router->get('/dashboard/files', [FilesController::class, 'dashboard']);
+$router->get('/dashboard/files/create', [FilesController::class, 'create']);
+$router->post('/dashboard/files/create', [FilesController::class, 'create']);
+$router->get('/dashboard/files/edit', [FilesController::class, 'edit']);
+$router->post('/dashboard/files/edit', [FilesController::class, 'edit']);
+$router->post('/dashboard/files/delete', [FilesController::class, 'delete']);
 
 $router->get('/dashboard/cotization', [CotizationsController::class, 'dashboard']);
 

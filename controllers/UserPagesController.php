@@ -33,10 +33,10 @@ class UserPagesController {
                     'user' => $user
                 ]);
             } else{
-                // Pagina 404
+                header('Location: /404');
             }
         } else{
-            // Pagina 404
+            header('Location: /404');
         }
     }
 
@@ -79,10 +79,10 @@ class UserPagesController {
                     'alerts' => $alerts
                 ]);
             } else{
-                // Pagina 404
+                header('Location: /404');
             }
         } else{
-            // Pagina 404
+            header('Location: /404');
         }
     }
 
@@ -129,10 +129,10 @@ class UserPagesController {
                     'alerts' => $alerts
                 ]);
             } else{
-                // Pagina 404
+                header('Location: /404');
             }
         } else{
-            // Pagina 404
+            header('Location: /404');
         }
     }
 
@@ -182,10 +182,10 @@ class UserPagesController {
                     'alerts' => $alerts
                 ]);
             } else{
-                // Pagina 404
+                header('Location: /404');
             }
         } else{
-            // Pagina 404
+            header('Location: /404');
         }
     }
 
@@ -207,7 +207,7 @@ class UserPagesController {
             if($user){
                 $photograph = $photograph->find($user->id);
                 if(!$photograph){
-                    // Pagina 404
+                    header('Location: /404');
                 } else{
                     $user->currentImage = $user->image;
                     
@@ -220,8 +220,8 @@ class UserPagesController {
 
                         if(!empty(trim($_FILES['user_image']['tmp_name']))){
                             $manager = new ImageManager(new Driver());
-                            $pngImage=$manager->read(trim($_FILES['user_image']['tmp_name']))->cover(800,600)->encode(new PngEncoder(80));
-                            $webpImage=$manager->read(trim($_FILES['user_image']['tmp_name']))->cover(800,600)->encode(new WebpEncoder(80));
+                            $pngImage=$manager->read(trim($_FILES['user_image']['tmp_name']))->resize(800,600)->encode(new PngEncoder(80));
+                            $webpImage=$manager->read(trim($_FILES['user_image']['tmp_name']))->resize(800,600)->encode(new WebpEncoder(80));
                             $_POST['image']=$imageName;
                             $savePicture=true;
                         } else{
@@ -273,10 +273,10 @@ class UserPagesController {
                     ]);
                 }
             } else{
-                // Pagina 404
+                header('Location: /404');
             }
         } else{
-            // Pagina 404
+            header('Location: /404');
         }
     }
 
@@ -316,10 +316,10 @@ class UserPagesController {
                     'alerts' => $alerts
                 ]);
             } else{
-                // Pagina 404
+                header('Location: /404');
             }
         } else{
-            // Pagina 404
+            header('Location: /404');
         }
     }
 
@@ -339,10 +339,10 @@ class UserPagesController {
                     'user' => $user
                 ]);
             } else{
-                // Pagina 404
+                header('Location: /404');
             }
         } else{
-            // Pagina 404
+            header('Location: /404');
         }
     }
 
@@ -362,10 +362,10 @@ class UserPagesController {
                     'user' => $user
                 ]);
             } else{
-                // Pagina 404
+                header('Location: /404');
             }
         } else{
-            // Pagina 404
+            header('Location: /404');
         }
     }
 
@@ -388,10 +388,10 @@ class UserPagesController {
                     'funerals' => $funerals
                 ]);
             } else{
-                // Pagina 404
+                header('Location: /404');
             }
         } else{
-            // Pagina 404
+            header('Location: /404');
         }
     }
 }

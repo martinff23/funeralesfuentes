@@ -1,0 +1,77 @@
+@use 'base/mixins' as mix;
+@use 'base/variables' as var;
+
+.file{
+    &__name{
+        margin: 0 0 1rem 0;
+        font-size: 2.5rem;
+        font-weight: var.$bold;
+        align-items: center;
+        text-align: center;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        @include mix.tablet{
+            -webkit-line-clamp: 1;
+            line-clamp: 1;
+        }
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    &__information{
+        padding: 1rem;
+        // border-radius: 1rem;
+        background-color: var.$c_blue;
+        border: 1px solid var.$c_blue;
+        color: var.$c_golden;
+        // color: var.$c_blue;
+        transition: 300ms background-color ease;
+        &:hover{
+            cursor: pointer;
+            background-color: darken(var.$c_blue, 10%);
+            color: var.$c_golden;
+        }
+    }
+    &__information-details{
+        align-items: center;
+    }
+    &__image{
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        background-color: var.$c_white;
+        // border-radius: 1rem;
+    }
+    &__description{
+        color: var.$c_golden;
+        // color: var.$c_blue;
+        margin: 2rem 0 0 0;
+        align-items: center;
+        text-align: justify;
+        font-size: 1.6rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    &__price{
+        margin: 1rem 0 0 0;
+        font-weight: var.$black;
+        font-size: 2.5rem;
+        color: var.$c_golden;
+        // color: var.$c_blue;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+.error {  
+    &__image {
+        background-color: transparent;
+        width: 400px;
+        height: 400px;
+        margin: 0 auto;
+        display: block;
+    }
+}

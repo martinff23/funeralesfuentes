@@ -28,7 +28,7 @@ class Router{
         if ($fn) {
             call_user_func($fn, $this);
         } else {
-            echo "Página No Encontrada o Ruta no válida";
+            header('Location: /404');
         }
     }
 
@@ -48,7 +48,7 @@ class Router{
 
         if(str_contains($currentURL,'/dashboard')){
             include_once __DIR__ . '/views/adminLayout.php';
-        } else if(str_contains($currentURL,'/login') || str_contains($currentURL,'/register') || str_contains($currentURL,'/forgot')){
+        } else if(str_contains($currentURL,'/login') || str_contains($currentURL,'/register') || str_contains($currentURL,'/forgot') || str_contains($currentURL,'/404')){
             include_once __DIR__ . '/views/loginLayout.php';
         } else{
             include_once __DIR__ . '/views/layout.php';

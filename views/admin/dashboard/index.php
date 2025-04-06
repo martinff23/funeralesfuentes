@@ -44,5 +44,9 @@
                 <i class="fa-solid fa-handshake intranet-options__icon"></i>
                 <span class="intranet-options__menu-text">Alianzas</span>
             </a>
+            <a href="/dashboard/files" class="intranet-options__link <?php echo currentPage('/dashboard/files');?>">
+                <i class="fa-solid fa-file intranet-options__icon"></i>
+                <span class="intranet-options__menu-text">Archivos</span>
+            </a>
         </div>
     </div>

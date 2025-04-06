@@ -45,6 +45,10 @@
                 <i class="fa-solid fa-handshake dashboard__icon"></i>
                 <span class="dashboard__menu-text">Alianzas</span>
             </a>
+            <a href="/dashboard/files" class="dashboard__link <?php echo currentPage('/files');?>">
+                <i class="fa-solid fa-file dashboard__icon"></i>
+                <span class="dashboard__menu-text">Archivos</span>
+            </a>
         <?php }?>
         <?php if(isAuth() && !isAdmin()){ ?>
             <a href="/dashboard/cotization" class="dashboard__link <?php echo currentPage('/cotization');?>">

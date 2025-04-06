@@ -25,7 +25,7 @@ class HearsesController {
             $user = User::find($_SESSION['id']);
             
         } else{
-            // Page 404
+            header('Location: /404');
         }
 
         $currentPage = $_GET['page'];
@@ -87,7 +87,7 @@ class HearsesController {
                             continue;
                         }
                 
-                        $image = $manager->read($tmpNameFile)->cover(800, 600);
+                        $image = $manager->read($tmpNameFile)->resize(800, 600);
                         $pngImage = $image->encode(new PngEncoder(80));
                         $webpImage = $image->encode(new WebpEncoder(80));
                 
@@ -155,7 +155,7 @@ class HearsesController {
                 'user' => $user
             ]);   
         } else{
-            // Page 404
+            header('Location: /404');
         }
     }
 
@@ -217,7 +217,7 @@ class HearsesController {
                                 continue;
                             }
                     
-                            $image = $manager->read($tmpNameFile)->cover(800, 600);
+                            $image = $manager->read($tmpNameFile)->resize(800, 600);
                             $pngImage = $image->encode(new PngEncoder(80));
                             $webpImage = $image->encode(new WebpEncoder(80));
                     
@@ -275,6 +275,16 @@ class HearsesController {
                                         unlink($oldWebpPath);
                                     }
                                 }
+                            } else{
+                                $oldPngPath  = $imageFolder . $hearse->currentImage . '.png';
+                                $oldWebpPath = $imageFolder . $hearse->currentImage . '.webp';
+
+                                if (file_exists($oldPngPath)) {
+                                    unlink($oldPngPath);
+                                }
+                                if (file_exists($oldWebpPath)) {
+                                    unlink($oldWebpPath);
+                                }
                             }
         
                             // Put image on server
@@ -305,7 +315,7 @@ class HearsesController {
                 ]);
             }   
         } else{
-            // Page 404
+            header('Location: /404');
         }
     }
 

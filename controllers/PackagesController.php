@@ -43,7 +43,7 @@ class PackagesController {
             $user =  User::find($_SESSION['id']);
             
         } else{
-            // Page 404
+            header('Location: /404');
         }
 
         $currentPage = $_GET['page'];
@@ -90,7 +90,7 @@ class PackagesController {
             $user =  User::find($_SESSION['id']);
             
         } else{
-            // Page 404
+            header('Location: /404');
         }
         
         $alerts=[];
@@ -112,8 +112,8 @@ class PackagesController {
             $imageName = md5(uniqid(rand(),true));
             if(!empty(trim($_FILES['package_image']['tmp_name']))){
                 $manager = new ImageManager(new Driver());
-                $pngImage = $manager->read(trim($_FILES['package_image']['tmp_name']))->cover(800,600)->encode(new PngEncoder(80));
-                $webpImage = $manager->read(trim($_FILES['package_image']['tmp_name']))->cover(800,600)->encode(new WebpEncoder(80));
+                $pngImage = $manager->read(trim($_FILES['package_image']['tmp_name']))->resize(800,600)->encode(new PngEncoder(80));
+                $webpImage = $manager->read(trim($_FILES['package_image']['tmp_name']))->resize(800,600)->encode(new WebpEncoder(80));
                 $_POST['image'] = $imageName;
                 $savePicture = true;
             }
@@ -309,7 +309,7 @@ class PackagesController {
             $user =  User::find($_SESSION['id']);
             
         } else{
-            // Page 404
+            header('Location: /404');
         }
         
         $alerts=[];
@@ -343,8 +343,8 @@ class PackagesController {
                 $imageName=md5(uniqid(rand(),true));
                 if(!empty(trim($_FILES['package_image']['tmp_name']))){
                     $manager = new ImageManager(new Driver());
-                    $pngImage=$manager->read(trim($_FILES['package_image']['tmp_name']))->cover(800,600)->encode(new PngEncoder(80));
-                    $webpImage=$manager->read(trim($_FILES['package_image']['tmp_name']))->cover(800,600)->encode(new WebpEncoder(80));
+                    $pngImage=$manager->read(trim($_FILES['package_image']['tmp_name']))->resize(800,600)->encode(new PngEncoder(80));
+                    $webpImage=$manager->read(trim($_FILES['package_image']['tmp_name']))->resize(800,600)->encode(new WebpEncoder(80));
                     $_POST['image']=$imageName;
                     $savePicture=true;
                 } else{
@@ -493,6 +493,16 @@ class PackagesController {
     
                         // Make the foldar ALWAYS writable
                         chmod($imageFolder, 0777);
+
+                        $oldPngPath  = $imageFolder . $package->currentImage . '.png';
+                        $oldWebpPath = $imageFolder . $package->currentImage . '.webp';
+
+                        if (file_exists($oldPngPath)) {
+                            unlink($oldPngPath);
+                        }
+                        if (file_exists($oldWebpPath)) {
+                            unlink($oldWebpPath);
+                        }
     
                         // Put image on server
                         $pngImage->save(trim($imageFolder.$imageName).'.png');

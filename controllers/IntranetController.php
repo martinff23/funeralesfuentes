@@ -25,7 +25,7 @@ class IntranetController {
                 'birthdays' => $birthdays
             ]);
         } else{
-            // Page 404
+            header('Location: /404');
         }
     }
 }

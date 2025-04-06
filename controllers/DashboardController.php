@@ -38,7 +38,7 @@ class DashboardController {
             ]);
 
         } else{
-            // Page 404
+            header('Location: /404');
         }
     }
 }

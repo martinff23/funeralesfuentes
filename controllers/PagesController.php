@@ -66,7 +66,7 @@ class PagesController {
                     'user' => $user
                 ]);
             } else{
-                // Page 404
+                header('Location: /404');
             }
         } else{
 
@@ -97,7 +97,7 @@ class PagesController {
                     'user' => $user
                 ]);
             } else{
-                // Page 404
+                header('Location: /404');
             }
         } else{
             $router->render('pages/about',[
@@ -125,7 +125,7 @@ class PagesController {
                     'user' => $user
                 ]);
             } else{
-                // Page 404
+                header('Location: /404');
             }
         } else{
             $router->render('pages/packages',[
@@ -154,7 +154,7 @@ class PagesController {
                     'user' => $user
                 ]);
             } else{
-                // Page 404
+                header('Location: /404');
             }
         } else{
             $router->render('pages/products',[
@@ -183,7 +183,7 @@ class PagesController {
                     'user' => $user
                 ]);
             } else{
-                // Page 404
+                header('Location: /404');
             }
         } else{
             $router->render('pages/services',[
@@ -213,7 +213,7 @@ class PagesController {
                     'user' => $user
                 ]);
             } else{
-                // Page 404
+                header('Location: /404');
             }
         } else{
             $router->render('pages/branches',[
@@ -244,7 +244,7 @@ class PagesController {
                     'user' => $user
                 ]);
             } else{
-                // Page 404
+                header('Location: /404');
             }
         } else{
             $router->render('pages/chapels',[
@@ -275,7 +275,7 @@ class PagesController {
                     'user' => $user
                 ]);
             } else{
-                // Page 404
+                header('Location: /404');
             }
         } else{
             $router->render('pages/hearses',[
@@ -306,7 +306,7 @@ class PagesController {
                     'user' => $user
                 ]);
             } else{
-                // Page 404
+                header('Location: /404');
             }
         } else{
             $router->render('pages/cemeteries',[
@@ -337,7 +337,7 @@ class PagesController {
                     'user' => $user
                 ]);
             } else{
-                // Page 404
+                header('Location: /404');
             }
         } else{
             $router->render('pages/crematories',[
@@ -364,7 +364,7 @@ class PagesController {
                     'user' => $user
                 ]);
             } else{
-                // Page 404
+                header('Location: /404');
             }
         } else{
             $router->render('pages/cotization',[
@@ -373,4 +373,16 @@ class PagesController {
         }
     }
 
+    public static function error(Router $router){
+        session_start();
+
+        $folder_name = __DIR__ . '/../public/build/img/error';
+
+        $selectedImage = getRandomImageFromFolder($folder_name, ['png', 'jpg', 'jpeg']);
+
+        $router->render('pages/error',[
+            'title' => 'Página no encontrada',
+            'selectedImage' => $selectedImage
+        ]);
+    }
 }

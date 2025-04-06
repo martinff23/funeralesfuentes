@@ -48,7 +48,7 @@ class ComplementsController {
                 'user' => $user
             ]);   
         } else{
-            // Page 404
+            header('Location: /404');
         }
     }
 
@@ -85,7 +85,7 @@ class ComplementsController {
                             continue;
                         }
                 
-                        $image = $manager->read($tmpNameFile)->cover(800, 600);
+                        $image = $manager->read($tmpNameFile)->resize(800, 600);
                         $pngImage = $image->encode(new PngEncoder(80));
                         $webpImage = $image->encode(new WebpEncoder(80));
                 
@@ -153,7 +153,7 @@ class ComplementsController {
                 'user' => $user
             ]);
         } else{
-            // Page 404
+            header('Location: /404');
         }
     }
 
@@ -214,7 +214,7 @@ class ComplementsController {
                                 continue;
                             }
                     
-                            $image = $manager->read($tmpNameFile)->cover(800, 600);
+                            $image = $manager->read($tmpNameFile)->resize(800, 600);
                             $pngImage = $image->encode(new PngEncoder(80));
                             $webpImage = $image->encode(new WebpEncoder(80));
                     
@@ -272,6 +272,16 @@ class ComplementsController {
                                         unlink($oldWebpPath);
                                     }
                                 }
+                            } else{
+                                $oldPngPath  = $imageFolder . $complement->currentImage . '.png';
+                                $oldWebpPath = $imageFolder . $complement->currentImage . '.webp';
+
+                                if (file_exists($oldPngPath)) {
+                                    unlink($oldPngPath);
+                                }
+                                if (file_exists($oldWebpPath)) {
+                                    unlink($oldWebpPath);
+                                }
                             }
         
                             // Put image on server
@@ -302,7 +312,7 @@ class ComplementsController {
                 ]);
             }   
         } else{
-            // Page 404
+            header('Location: /404');
         }
     }
 

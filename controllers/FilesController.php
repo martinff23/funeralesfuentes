@@ -8,10 +8,10 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\Encoders\PngEncoder;
 use Intervention\Image\Encoders\WebpEncoder;
-use Model\Alliance;
+use Model\File;
 use Model\User;
 
-class AlliancesController {
+class FilesController {
     
     public static function dashboard(Router $router){
         session_start();
@@ -26,23 +26,23 @@ class AlliancesController {
             $currentPage = filter_var($currentPage, FILTER_VALIDATE_INT);
 
             if(!$currentPage || $currentPage < 1){
-                header('Location: /dashboard/alliances?page=1');
+                header('Location: /dashboard/files?page=1');
             }
 
-            $totalRecords = Alliance::countRecords();
+            $totalRecords = File::countRecords();
             $recordsPerPage = $_ENV['ITEMS_PER_PAGE']; // Ajustar a 10
             
             $pagination = new Pagination($currentPage,$recordsPerPage,$totalRecords);
 
             if('0' !== $totalRecords && $pagination->totalPages() < $currentPage){
-                header('Location: /dashboard/alliances?page=1');
+                header('Location: /dashboard/files?page=1');
             }
 
-            $alliances = Alliance::paginate($recordsPerPage,$pagination->calculateOffset());
+            $files = File::paginate($recordsPerPage,$pagination->calculateOffset());
             
-            $router->render('admin/alliances/index',[
-                'title' => 'Alianzas del negocio',
-                'alliances' => $alliances,
+            $router->render('admin/files/index',[
+                'title' => 'Archivos del negocio',
+                'files' => $files,
                 'pagination' => $pagination->pagination(),
                 'user' => $user
             ]);   
@@ -61,27 +61,27 @@ class AlliancesController {
         if(isset($_SESSION['id'])){
             $user =  User::find($_SESSION['id']);
             $alerts = [];
-            $alliance = new Alliance();
+            $file = new File();
 
             if('POST' === $_SERVER['REQUEST_METHOD']){
-                $imageFolder = '../public/build/img/alliances/';
+                $route = $_POST['file_route'];
+                $_POST['route'] = $_POST['file_route'];
+                $_POST['real_name'] = $_FILES['file_image']['name'];
+                $imageFolder = '../public/build/img/'.$route.'/';
                 $savePicture = false;
                 $imageName = md5(uniqid(rand(),true));
 
                 // Read image
-                if(!empty(trim($_FILES['alliance_image']['tmp_name']))){
+                if(!empty(trim($_FILES['file_image']['tmp_name']))){
                     $manager = new ImageManager(new Driver());
-                    $pngImage = $manager->read(trim($_FILES['alliance_image']['tmp_name']))->resize(800,600)->encode(new PngEncoder(80));
-                    $webpImage = $manager->read(trim($_FILES['alliance_image']['tmp_name']))->resize(800,600)->encode(new WebpEncoder(80));
+                    $pngImage = $manager->read(trim($_FILES['file_image']['tmp_name']))->resize(800,600)->encode(new PngEncoder(80));
+                    $webpImage = $manager->read(trim($_FILES['file_image']['tmp_name']))->resize(800,600)->encode(new WebpEncoder(80));
                     $_POST['image'] = $imageName;
                     $savePicture = true;
                 }
-
-                $_POST['business_name'] = trim($_POST['alliance_name']);
-                $_POST['status'] = trim($_POST['alliance_status']);
                 
-                $alliance->sincronize($_POST);
-                $alerts = $alliance->validate();
+                $file->sincronize($_POST);
+                $alerts = $file->validate();
 
                 if(empty($alerts)){
                     if($savePicture){
@@ -98,17 +98,17 @@ class AlliancesController {
                         $webpImage->save(trim($imageFolder.$imageName).'.webp');
                     }
 
-                    $result = $alliance->saveElement();
+                    $result = $file->saveElement();
                     if($result){
-                        header('Location: /dashboard/alliances');
+                        header('Location: /dashboard/files');
                     }
                 }
             }
 
-            $router->render('admin/alliances/create',[
-                'title' => 'Registrar alianza',
+            $router->render('admin/files/create',[
+                'title' => 'Guardar archivo',
                 'alerts' => $alerts,
-                'alliance' => $alliance,
+                'file' => $file,
                 'user' => $user
             ]);   
         } else{
@@ -130,37 +130,37 @@ class AlliancesController {
             $id = filter_var($id,FILTER_VALIDATE_INT);
 
             if(!$id){
-                header('Location: /dashboard/alliances');
+                header('Location: /dashboard/files');
             }
 
-            $alliance = Alliance::find($id);
+            $file = File::find($id);
 
-            if(!$alliance || !$alliance instanceof Alliance){
-                header('Location: /dashboard/alliances');
+            if(!$file || !$file instanceof File){
+                header('Location: /dashboard/files');
             } else{
-                $alliance->currentImage=$alliance->image;
+                $file->currentImage=$file->image;
 
                 if('POST' === $_SERVER['REQUEST_METHOD']){
-                    $imageFolder = '../public/build/img/alliances/';
+                    $route = $_POST['file_route'];
+                    $_POST['route'] = $_POST['file_route'];
+                    $_POST['real_name'] = $_FILES['file_image']['name'];
+                    $imageFolder = '../public/build/img/'.$route.'/';
                     $savePicture = false;
                     $imageName = md5(uniqid(rand(),true));
 
                     // Read image
-                    if(!empty(trim($_FILES['alliance_image']['tmp_name']))){
+                    if(!empty(trim($_FILES['file_image']['tmp_name']))){
                         $manager = new ImageManager(new Driver());
-                        $pngImage = $manager->read(trim($_FILES['alliance_image']['tmp_name']))->resize(800,600)->encode(new PngEncoder(80));
-                        $webpImage = $manager->read(trim($_FILES['alliance_image']['tmp_name']))->resize(800,600)->encode(new WebpEncoder(80));
+                        $pngImage = $manager->read(trim($_FILES['file_image']['tmp_name']))->resize(800,600)->encode(new PngEncoder(80));
+                        $webpImage = $manager->read(trim($_FILES['file_image']['tmp_name']))->resize(800,600)->encode(new WebpEncoder(80));
                         $_POST['image'] = $imageName;
                         $savePicture = true;
                     } else{
-                        $_POST['image'] = $alliance->currentImage;
+                        $_POST['image'] = $file->currentImage;
                     }
 
-                    $_POST['business_name'] = trim($_POST['alliance_name']);
-                    $_POST['status'] = trim($_POST['alliance_status']);
-
-                    $alliance->sincronize($_POST);
-                    $alerts = $alliance->validate();
+                    $file->sincronize($_POST);
+                    $alerts = $file->validate();
 
                     if(empty($alerts)){
                         if($savePicture){
@@ -171,23 +171,33 @@ class AlliancesController {
         
                             // Make the foldar ALWAYS writable
                             chmod($imageFolder, 0777);
+
+                            $oldPngPath  = $imageFolder . $file->currentImage . '.png';
+                            $oldWebpPath = $imageFolder . $file->currentImage . '.webp';
+                            
+                            if (file_exists($oldPngPath)) {
+                                unlink($oldPngPath);
+                            }
+                            if (file_exists($oldWebpPath)) {
+                                unlink($oldWebpPath);
+                            }
         
                             // Put image on server
                             $pngImage->save(trim($imageFolder.$imageName).'.png');
                             $webpImage->save(trim($imageFolder.$imageName).'.webp');
                         }
         
-                        $result = $alliance->saveElement();
+                        $result = $file->saveElement();
                         if($result){
-                            header('Location: /dashboard/alliances');
+                            header('Location: /dashboard/files');
                         }
                     }
                 }
 
-                $router->render('admin/alliances/edit',[
-                    'title' => 'Editar alianza',
+                $router->render('admin/files/edit',[
+                    'title' => 'Editar archivo',
                     'alerts' => $alerts,
-                    'alliance' => $alliance??null,
+                    'file' => $file ?? null,
                     'user' => $user
                 ]);
             }   
@@ -205,14 +215,14 @@ class AlliancesController {
         
         if('POST' === $_SERVER['REQUEST_METHOD']){
             $id = $_POST['id'];
-            $alliance = Alliance::find($id);
-            if(!isset($alliance) || !$alliance instanceof Alliance){
-                header('Location: /dashboard/alliances');
+            $file = File::find($id);
+            if(!isset($file) || !$file instanceof File){
+                header('Location: /dashboard/files');
             }
             
-            $result = $alliance->deleteElement();
+            $result = $file->deleteElement();
             if($result){
-                header('Location: /dashboard/alliances');
+                header('Location: /dashboard/files');
             }
         }
     }
