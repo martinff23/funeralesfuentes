@@ -1,19 +1,50 @@
 document.addEventListener("DOMContentLoaded", () => {
-    initApp();
-  });
-  
-  async function initApp() {
-    const dateInfoEl = document.getElementById("date-info");
-    const birthdaysTable = document.querySelector("#birthdays-table tbody");
-    const spinner = createSpinner();
-    let birthdays = [];
-  
-    if (!dateInfoEl && !birthdaysTable) return; // Only if the two elements are not present, erase them. Before it was an OR
-  
+  checkLocationPermission();
+  initApp();
+});
+
+async function checkLocationPermission() {
+  let locationPermission = null;
+
+  if (navigator.permissions && navigator.permissions.query) {
+    try {
+      const result = await navigator.permissions.query({ name: "geolocation" });
+      locationPermission = result;
+    } catch (error) {
+      console.warn("No se pudo consultar el permiso de geolocalización:", error);
+    }
+  }
+
+  const locationDenied = locationPermission && locationPermission.state === "denied";
+
+  if (locationDenied) {
+    Swal.fire({
+      title: "Ubicación desactivada",
+      html: `
+        Para acceder a todas las funciones del sistema (como clima, ubicación y más),<br>
+        por favor activa el permiso de <strong>ubicación</strong> en la configuración de tu navegador.
+      `,
+      icon: "warning",
+      confirmButtonText: "Entendido",
+      background: "#fff",
+      color: "#0A1433"
+    });
+  }
+}
+
+async function initApp() {
+  const dateInfoEl = document.getElementById("date-info");
+  const birthdaysTable = document.querySelector("#birthdays-table tbody");
+  const spinner = createSpinner();
+  let birthdays = [];
+
+  if (dateInfoEl) {
     showLoading(dateInfoEl, spinner);
     updateGreeting();
     initDateTimeAndWeather(dateInfoEl);
-  
+  }
+
+  if (birthdaysTable) {
     try {
       const data = await fetchBirthdays();
       birthdays = formatBirthdays(data);
@@ -22,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error fetching birthdays:", err);
     }
   }
+}
   
   function createSpinner() {
     const spinner = document.createElement("div");
