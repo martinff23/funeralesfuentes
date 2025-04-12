@@ -87,7 +87,7 @@ class AuthController {
                 die("Por favor verifica que no eres un robot.");
             }
 
-            $secretKey = "6Le3OhYrAAAAALRf4U1lMILizgaIzZ_06C2yNX96";
+            $secretKey = $_ENV['CAP_SEC'];
             $ip = $_SERVER['REMOTE_ADDR'];
 
             $response = file_get_contents(
