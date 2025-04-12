@@ -81,6 +81,24 @@ class AuthController {
         $user = new User;
 
         if('POST'===$_SERVER['REQUEST_METHOD']){
+            $captcha = $_POST['g-recaptcha-response'];
+            
+            if (empty($captcha)) {
+                die("Por favor verifica que no eres un robot.");
+            }
+
+            $secretKey = "6Le3OhYrAAAAALRf4U1lMILizgaIzZ_06C2yNX96";
+            $ip = $_SERVER['REMOTE_ADDR'];
+
+            $response = file_get_contents(
+                "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$captcha&remoteip=$ip"
+            );
+            $responseKeys = json_decode($response, true);
+
+            if (!$responseKeys["success"]) {
+                die("Verificación fallida, intenta de nuevo.");
+            }
+
             $imageFolder='../public/build/img/users/';
 
             $imageName=md5(uniqid(rand(),true));

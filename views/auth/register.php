@@ -41,6 +41,7 @@
             <label for="user_image" class="form__label">Fotografía</label>
             <input type="file" class="form__input form__input--file" id="user_image" name="user_image">
         </div>
+        <div class="g-recaptcha" data-sitekey="6Le3OhYrAAAAAFJOB25T1OEjmz9UklHbRBv26asP"></div>
         <input type="submit" class="form__submit" value="Crear cuenta">
     </form>
     <div class="actions">
