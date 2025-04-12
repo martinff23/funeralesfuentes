@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-  checkLocationPermission();
+  let url = window.location.href;
+  if(url.includes("dashboard")){
+    checkLocationPermission();
+  }
   initApp();
 });
 
