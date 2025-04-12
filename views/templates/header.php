@@ -6,9 +6,9 @@
                 <?php if(isAdmin()){ ?>
                     <div class="header__form">
                         <picture>
-                            <source srcset="<?php echo $_ENV['HOST'].'/build/img/users/'.$user->image.'.webp'; ?>" type="image/webp">
-                            <source srcset="<?php echo $_ENV['HOST'].'/build/img/users/'.$user->image.'.png'; ?>" type="image/png">
-                            <img class="header__user-image" onerror="this.style.display='none'" loading="lazy" width="20" height="20" src="<?php echo $_ENV['HOST'].'/build/img/users/'.$user->image.'.png'; ?>" alt="us">
+                            <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/users/'.$user->image.'.webp'; ?>" type="image/webp">
+                            <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/users/'.$user->image.'.png'; ?>" type="image/png">
+                            <img class="header__user-image" onerror="this.style.display='none'" loading="lazy" width="20" height="20" src="<?php echo $_ENV['HOST'].'/public/build/img/users/'.$user->image.'.png'; ?>" alt="us">
                         </picture>
                         <a href="/user/menu" class="header__link"><?php echo $_SESSION['name']; ?></a>
                     </div>
@@ -16,9 +16,9 @@
                 <?php } else if(isEmployee()){ ?>
                     <div class="header__form">
                         <picture>
-                            <source srcset="<?php echo $_ENV['HOST'].'/build/img/users/'.$user->image.'.webp'; ?>" type="image/webp">
-                            <source srcset="<?php echo $_ENV['HOST'].'/build/img/users/'.$user->image.'.png'; ?>" type="image/png">
-                            <img class="header__user-image" onerror="this.style.display='none'" loading="lazy" width="20" height="20" src="<?php echo $_ENV['HOST'].'/build/img/users/'.$user->image.'.png'; ?>" alt="us">
+                            <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/users/'.$user->image.'.webp'; ?>" type="image/webp">
+                            <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/users/'.$user->image.'.png'; ?>" type="image/png">
+                            <img class="header__user-image" onerror="this.style.display='none'" loading="lazy" width="20" height="20" src="<?php echo $_ENV['HOST'].'/public/build/img/users/'.$user->image.'.png'; ?>" alt="us">
                         </picture>
                         <a href="/user/menu" class="header__link"><?php echo $_SESSION['name']; ?></a>
                     </div>
@@ -26,9 +26,9 @@
                 <?php } else{ ?>
                     <div class="header__form">
                         <picture>
-                            <source srcset="<?php echo $_ENV['HOST'].'/build/img/users/'.$user->image.'.webp'; ?>" type="image/webp">
-                            <source srcset="<?php echo $_ENV['HOST'].'/build/img/users/'.$user->image.'.png'; ?>" type="image/png">
-                            <img class="header__user-image" onerror="this.style.display='none'" loading="lazy" width="20" height="20" src="<?php echo $_ENV['HOST'].'/build/img/users/'.$user->image.'.png'; ?>" alt="us">
+                            <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/users/'.$user->image.'.webp'; ?>" type="image/webp">
+                            <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/users/'.$user->image.'.png'; ?>" type="image/png">
+                            <img class="header__user-image" onerror="this.style.display='none'" loading="lazy" width="20" height="20" src="<?php echo $_ENV['HOST'].'/public/build/img/users/'.$user->image.'.png'; ?>" alt="us">
                         </picture>
                         <a href="/user/menu" class="header__link"><?php echo $_SESSION['name']; ?></a>
                     </div>

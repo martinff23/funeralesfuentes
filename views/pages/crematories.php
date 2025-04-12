@@ -26,9 +26,9 @@
                 <p class="crematory__name"><?php echo $crematory->crematory_name; ?></p>
                 <div class="crematory__information-details">
                     <picture>
-                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$imageToShow.'.webp'; ?>" type="image/webp">
-                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$imageToShow.'.png'; ?>" type="image/png">
-                        <img class="crematory__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$imageToShow.'.png'; ?>" alt="Imagen del crematorio">
+                        <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/crematories/'.$imageToShow.'.webp'; ?>" type="image/webp">
+                        <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/crematories/'.$imageToShow.'.png'; ?>" type="image/png">
+                        <img class="crematory__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/public/build/img/crematories/'.$imageToShow.'.png'; ?>" alt="Imagen del crematorio">
                     </picture>
                     <p class="crematory__description"><?php echo $crematory->crematory_description; ?></p>
                     <!-- <p class="crematory__price">Precio: $<?php echo number_format($crematory->crematory_price); ?> MXN</p> -->

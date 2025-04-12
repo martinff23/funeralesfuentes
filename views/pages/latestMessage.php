@@ -6,9 +6,9 @@
     <div class="about__grid">
         <div class="about__image">
             <picture>
-                <source srcset="build/img/POST_18022025.avif" type="image/avif">
-                <source srcset="build/img/POST_18022025.webp" type="image/webp">
-                <img loading="lazy" src="build/img/POST_18022025.png" width="200" height="300" alt="Mensaje de Martín Fuentes Sánchez, Director General de Funerales Fuentes">
+                <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/POST_18022025.avif';?>" type="image/avif">
+                <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/POST_18022025.webp';?>" type="image/webp">
+                <img loading="lazy" src="<?php echo $_ENV['HOST'].'/public/build/img/POST_18022025.png';?>" width="200" height="300" alt="Mensaje de Martín Fuentes Sánchez, Director General de Funerales Fuentes">
             </picture>
         </div>
         <div class="about__content">

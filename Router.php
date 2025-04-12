@@ -45,7 +45,8 @@ class Router{
         $content = ob_get_clean();
 
         //Use layout according to URL
-        $currentURL = $_SERVER['PATH_INFO'] ?? '/';
+        // $currentURL = $_SERVER['PATH_INFO'] ?? '/';
+        $currentURL = strtok($_SERVER['REQUEST_URI'], '?') ?? '/';
 
         if(str_contains($currentURL,'/dashboard')){
             include_once __DIR__ . '/views/adminLayout.php';

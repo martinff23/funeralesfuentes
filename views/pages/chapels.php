@@ -26,9 +26,9 @@
                 <p class="chapel__name"><?php echo $chapel->chapel_name; ?></p>
                 <div class="chapel__information-details">
                     <picture>
-                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$imageToShow.'.webp'; ?>" type="image/webp">
-                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$imageToShow.'.png'; ?>" type="image/png">
-                        <img class="chapel__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$imageToShow.'.png'; ?>" alt="Imagen de la capilla">
+                        <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/chapels/'.$imageToShow.'.webp'; ?>" type="image/webp">
+                        <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/chapels/'.$imageToShow.'.png'; ?>" type="image/png">
+                        <img class="chapel__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/public/build/img/chapels/'.$imageToShow.'.png'; ?>" alt="Imagen de la capilla">
                     </picture>
                     <p class="chapel__description"><?php echo $chapel->chapel_description; ?></p>
                     <!-- <p class="chapel__price">Precio: $<?php echo number_format($chapel->chapel_price); ?> MXN</p> -->

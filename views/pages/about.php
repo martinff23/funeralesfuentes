@@ -4,30 +4,30 @@
         <div class="about__grid">
             <div class="about__image">
                 <picture>
-                    <source srcset="build/img/mission_about.avif" type="image/avif">
-                    <source srcset="build/img/mission_about.webp" type="image/webp">
-                    <img loading="lazy" src="build/img/mission_about.png" width="20" height="30" alt="Misión de Funerales Fuentes">
+                    <source srcset="public/build/img/mission_about.avif" type="image/avif">
+                    <source srcset="public/build/img/mission_about.webp" type="image/webp">
+                    <img loading="lazy" src="public/build/img/mission_about.png" width="20" height="30" alt="Misión de Funerales Fuentes">
                 </picture>
             </div>
             <div class="about__image">
                 <picture>
-                    <source srcset="build/img/vision_about.avif" type="image/avif">
-                    <source srcset="build/img/vision_about.webp" type="image/webp">
-                    <img loading="lazy" src="build/img/vision_about.png" width="20" height="30" alt="Visión de Funerales Fuentes">
+                    <source srcset="public/build/img/vision_about.avif" type="image/avif">
+                    <source srcset="public/build/img/vision_about.webp" type="image/webp">
+                    <img loading="lazy" src="public/build/img/vision_about.png" width="20" height="30" alt="Visión de Funerales Fuentes">
                 </picture>
             </div>
             <div class="about__image">
                 <picture>
-                    <source srcset="build/img/believes_about.avif" type="image/avif">
-                    <source srcset="build/img/believes_about.webp" type="image/webp">
-                    <img loading="lazy" src="build/img/believes_about.png" width="20" height="30" alt="Creencias de Funerales Fuentes">
+                    <source srcset="public/build/img/believes_about.avif" type="image/avif">
+                    <source srcset="public/build/img/believes_about.webp" type="image/webp">
+                    <img loading="lazy" src="public/build/img/believes_about.png" width="20" height="30" alt="Creencias de Funerales Fuentes">
                 </picture>
             </div>
             <div class="about__image">
                 <picture>
-                    <source srcset="build/img/values_about.avif" type="image/avif">
-                    <source srcset="build/img/values_about.webp" type="image/webp">
-                    <img loading="lazy" src="build/img/values_about.png" width="20" height="30" alt="Valores de Funerales Fuentes">
+                    <source srcset="public/build/img/values_about.avif" type="image/avif">
+                    <source srcset="public/build/img/values_about.webp" type="image/webp">
+                    <img loading="lazy" src="public/build/img/values_about.png" width="20" height="30" alt="Valores de Funerales Fuentes">
                 </picture>
             </div>
         </div>
@@ -35,9 +35,9 @@
         <div class="about__grid">
             <div class="about__image">
                 <picture>
-                    <source srcset="build/img/mission_about.avif" type="image/avif">
-                    <source srcset="build/img/mission_about.webp" type="image/webp">
-                    <img loading="lazy" src="build/img/mission_about.png" width="20" height="30" alt="Misión de Funerales Fuentes">
+                    <source srcset="public/build/img/mission_about.avif" type="image/avif">
+                    <source srcset="public/build/img/mission_about.webp" type="image/webp">
+                    <img loading="lazy" src="public/build/img/mission_about.png" width="20" height="30" alt="Misión de Funerales Fuentes">
                 </picture>
             </div>
             <div class="about__content">
@@ -62,9 +62,9 @@
             </div>
             <div class="about__image">
                 <picture>
-                    <source srcset="build/img/vision_about.avif" type="image/avif">
-                    <source srcset="build/img/vision_about.webp" type="image/webp">
-                    <img loading="lazy" src="build/img/vision_about.png" width="20" height="30" alt="Visión de Funerales Fuentes">
+                    <source srcset="public/build/img/vision_about.avif" type="image/avif">
+                    <source srcset="public/build/img/vision_about.webp" type="image/webp">
+                    <img loading="lazy" src="public/build/img/vision_about.png" width="20" height="30" alt="Visión de Funerales Fuentes">
                 </picture>
             </div>
             <div class="about__content">
@@ -84,9 +84,9 @@
             </div>
             <div class="about__image">
                 <picture>
-                    <source srcset="build/img/believes_about.avif" type="image/avif">
-                    <source srcset="build/img/believes_about.webp" type="image/webp">
-                    <img loading="lazy" src="build/img/believes_about.png" width="20" height="30" alt="Creencias de Funerales Fuentes">
+                    <source srcset="public/build/img/believes_about.avif" type="image/avif">
+                    <source srcset="public/build/img/believes_about.webp" type="image/webp">
+                    <img loading="lazy" src="public/build/img/believes_about.png" width="20" height="30" alt="Creencias de Funerales Fuentes">
                 </picture>
             </div>
             <div class="about__content">
@@ -107,9 +107,9 @@
             </div>
             <div class="about__image">
                 <picture>
-                    <source srcset="build/img/values_about.avif" type="image/avif">
-                    <source srcset="build/img/values_about.webp" type="image/webp">
-                    <img loading="lazy" src="build/img/values_about.png" width="20" height="30" alt="Valores de Funerales Fuentes">
+                    <source srcset="public/build/img/values_about.avif" type="image/avif">
+                    <source srcset="public/build/img/values_about.webp" type="image/webp">
+                    <img loading="lazy" src="public/build/img/values_about.png" width="20" height="30" alt="Valores de Funerales Fuentes">
                 </picture>
             </div>
             <div class="about__content">

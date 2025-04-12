@@ -121,39 +121,39 @@ use Model\Package;
     <div class="alliances-logos">
       <?php foreach($alliances as $alliance){ ?>
         <?php /** @var \Model\Alliance $alliance */ ?>
-        <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
+        <img src="<?php echo $_ENV['HOST'].'/public/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
       <?php } ?>
       <?php foreach($alliances as $alliance){ ?>
         <?php /** @var \Model\Alliance $alliance */ ?>
-        <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
+        <img src="<?php echo $_ENV['HOST'].'/public/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
       <?php } ?>
       <?php foreach($alliances as $alliance){ ?>
         <?php /** @var \Model\Alliance $alliance */ ?>
-        <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
+        <img src="<?php echo $_ENV['HOST'].'/public/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
       <?php } ?>
       <?php foreach($alliances as $alliance){ ?>
         <?php /** @var \Model\Alliance $alliance */ ?>
-        <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
+        <img src="<?php echo $_ENV['HOST'].'/public/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
       <?php } ?>
       <?php foreach($alliances as $alliance){ ?>
         <?php /** @var \Model\Alliance $alliance */ ?>
-        <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
+        <img src="<?php echo $_ENV['HOST'].'/public/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
       <?php } ?>
       <?php foreach($alliances as $alliance){ ?>
         <?php /** @var \Model\Alliance $alliance */ ?>
-        <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
+        <img src="<?php echo $_ENV['HOST'].'/public/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
       <?php } ?>
       <?php foreach($alliances as $alliance){ ?>
         <?php /** @var \Model\Alliance $alliance */ ?>
-        <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
+        <img src="<?php echo $_ENV['HOST'].'/public/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
       <?php } ?>
       <?php foreach($alliances as $alliance){ ?>
         <?php /** @var \Model\Alliance $alliance */ ?>
-        <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
+        <img src="<?php echo $_ENV['HOST'].'/public/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
       <?php } ?>
       <?php foreach($alliances as $alliance){ ?>
         <?php /** @var \Model\Alliance $alliance */ ?>
-        <img src="<?php echo $_ENV['HOST'].'/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
+        <img src="<?php echo $_ENV['HOST'].'/public/build/img/alliances/'.$alliance->image.'.png';?>" alt="<?php echo $alliance->business_name;?>">
       <?php } ?>
     </div>
   </div>

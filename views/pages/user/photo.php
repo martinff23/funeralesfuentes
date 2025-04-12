@@ -22,9 +22,9 @@
             <p class="form__text">Imagen actual:</p>
             <div class="form__image">
                 <picture>
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/users/'.$user->currentImage.'.webp'; ?>" type="image/webp">
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/users/'.$user->currentImage.'.png'; ?>" type="image/png">
-                    <img src="<?php echo $_ENV['HOST'].'/build/img/users/'.$user->currentImage.'.png'; ?>" alt="Imagen del usuario">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/users/'.$user->currentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/users/'.$user->currentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/public/build/img/users/'.$user->currentImage.'.png'; ?>" alt="Imagen del usuario">
                 </picture>
             </div>
         <?php }?>

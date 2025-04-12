@@ -37,9 +37,9 @@
                                 <p class="branch__name"><?php echo $subbranch->branch_name; ?></p>
                                 <div class="branch__information-details">
                                     <picture>
-                                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/branches/'.$imageToShow.'.webp'; ?>" type="image/webp">
-                                        <source srcset="<?php echo $_ENV['HOST'].'/build/img/branches/'.$imageToShow.'.png'; ?>" type="image/png">
-                                        <img class="branch__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/build/img/branches/'.$imageToShow.'.png'; ?>" alt="Imagen de la capilla">
+                                        <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/branches/'.$imageToShow.'.webp'; ?>" type="image/webp">
+                                        <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/branches/'.$imageToShow.'.png'; ?>" type="image/png">
+                                        <img class="branch__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/public/build/img/branches/'.$imageToShow.'.png'; ?>" alt="Imagen de la capilla">
                                     </picture>
                                     <p class="branch__description"><?php echo $subbranch->branch_description; ?></p>
                                 </div>

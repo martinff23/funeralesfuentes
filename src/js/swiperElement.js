@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const imageSlides = images.map((img) => `
         <div class="swiper-slide">
-          <img src="/build/img/${imageType}/${img.trim()}.png"
+          <img src="/public/build/img/${imageType}/${img.trim()}.png"
                style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;" 
                alt="Imagen de ${name}" />
         </div>
