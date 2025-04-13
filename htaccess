@@ -1,8 +1,0 @@
-RewriteEngine On
-
-# Si tu proyecto está en una subcarpeta (ajusta si es necesario)
-# RewriteBase /funeralesfuentes/
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.php [QSA,L]
