@@ -90,6 +90,8 @@ class RelationsController {
         }
 
         if(isset($_SESSION['id'])){
+            // debug($_SERVER['HTTP_REFERER']);
+
             $user = User::find($_SESSION['id']);
             $alerts = [];
             $id = $_GET['id'];
@@ -117,7 +119,7 @@ class RelationsController {
                 }
 
                 $router->render('admin/relations/edit',[
-                    'title' => 'Editar país',
+                    'title' => 'Editar relación de contacto',
                     'alerts' => $alerts,
                     'relation' => $relation ?? null,
                     'user' => $user

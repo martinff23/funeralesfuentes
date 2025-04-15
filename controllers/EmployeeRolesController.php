@@ -39,7 +39,7 @@ class EmployeeRolesController {
             $jobroles = EmployeeRole::paginateStatus($recordsPerPage,$pagination->calculateOffset(), 'ACTIVE');
 
             $router->render('admin/jobroles/index',[
-                'title' => 'Roles laborales',
+                'title' => 'Posiciones laborales',
                 'jobroles' => $jobroles,
                 'pagination' => $pagination->pagination(),
                 'user' => $user
