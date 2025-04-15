@@ -44,9 +44,9 @@
             <div class="form__image">
             <?php foreach($differentImages as $differentImage){ ?>
                 <picture>
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$differentImage.'.webp'; ?>" type="image/webp">
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$differentImage.'.png'; ?>" type="image/png">
-                    <img src="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$differentImage.'.png'; ?>" alt="Imagen de la carroza">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/hearses/'.$differentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/hearses/'.$differentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/public/build/img/hearses/'.$differentImage.'.png'; ?>" alt="Imagen de la carroza">
                 </picture>
             <?php } ?>
             </div>
@@ -56,9 +56,9 @@
             <p class="form__text">Imagen actual:</p>
             <div class="form__image">
                 <picture>
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$hearse->currentImage.'.webp'; ?>" type="image/webp">
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$hearse->currentImage.'.png'; ?>" type="image/png">
-                    <img src="<?php echo $_ENV['HOST'].'/build/img/hearses/'.$hearse->currentImage.'.png'; ?>" alt="Imagen de la carroza">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/hearses/'.$hearse->currentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/hearses/'.$hearse->currentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/public/build/img/hearses/'.$hearse->currentImage.'.png'; ?>" alt="Imagen de la carroza">
                 </picture>
             </div>
         <?php }?>

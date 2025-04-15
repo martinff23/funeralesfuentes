@@ -48,10 +48,12 @@ class Router{
         // $currentURL = $_SERVER['PATH_INFO'] ?? '/';
         $currentURL = strtok($_SERVER['REQUEST_URI'], '?') ?? '/';
 
-        if(str_contains($currentURL,'/dashboard')){
+        if("ADMIN" === strtoupper(getTypeOfHeader($currentURL, isAdmin(), isEmployee()))){
             include_once __DIR__ . '/views/adminLayout.php';
-        } else if(str_contains($currentURL,'/login') || str_contains($currentURL,'/register') || str_contains($currentURL,'/forgot') || str_contains($currentURL,'/404')){
+        } else if("LOGIN" === strtoupper(getTypeOfHeader($currentURL, isAdmin(), isEmployee()))){
             include_once __DIR__ . '/views/loginLayout.php';
+        } else if("SHORT" === strtoupper(getTypeOfHeader($currentURL, isAdmin(), isEmployee()))){
+            include_once __DIR__ . '/views/shortLayout.php';
         } else{
             include_once __DIR__ . '/views/layout.php';
         }

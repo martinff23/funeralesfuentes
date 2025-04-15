@@ -20,9 +20,9 @@
         <p class="form__text">Imagen actual:</p>
         <div class="form__image">
             <picture>
-                <source srcset="<?php echo $_ENV['HOST'].'/build/img/packages/'.$package->currentImage.'.webp'; ?>" type="image/webp">
-                <source srcset="<?php echo $_ENV['HOST'].'/build/img/packages/'.$package->currentImage.'.png'; ?>" type="image/png">
-                <img src="<?php echo $_ENV['HOST'].'/build/img/packages/'.$package->currentImage.'.png'; ?>" alt="Imagen del paquete">
+                <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/packages/'.$package->currentImage.'.webp'; ?>" type="image/webp">
+                <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/packages/'.$package->currentImage.'.png'; ?>" type="image/png">
+                <img src="<?php echo $_ENV['HOST'].'/public/build/img/packages/'.$package->currentImage.'.png'; ?>" alt="Imagen del paquete">
             </picture>
         </div>
     <?php }?>

@@ -36,9 +36,9 @@
             <div class="form__image">
             <?php foreach($differentImages as $differentImage){ ?>
                 <picture>
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$differentImage.'.webp'; ?>" type="image/webp">
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$differentImage.'.png'; ?>" type="image/png">
-                    <img src="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$differentImage.'.png'; ?>" alt="Imagen del crematorio">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/crematories/'.$differentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/crematories/'.$differentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/public/build/img/crematories/'.$differentImage.'.png'; ?>" alt="Imagen del crematorio">
                 </picture>
             <?php } ?>
             </div>
@@ -48,9 +48,9 @@
             <p class="form__text">Imagen actual:</p>
             <div class="form__image">
                 <picture>
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$crematory->currentImage.'.webp'; ?>" type="image/webp">
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$crematory->currentImage.'.png'; ?>" type="image/png">
-                    <img src="<?php echo $_ENV['HOST'].'/build/img/crematories/'.$crematory->currentImage.'.png'; ?>" alt="Imagen del crematorio">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/crematories/'.$crematory->currentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/crematories/'.$crematory->currentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/public/build/img/crematories/'.$crematory->currentImage.'.png'; ?>" alt="Imagen del crematorio">
                 </picture>
             </div>
         <?php }?>

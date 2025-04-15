@@ -36,9 +36,9 @@
             <div class="form__image">
             <?php foreach($differentImages as $differentImage){ ?>
                 <picture>
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$differentImage.'.webp'; ?>" type="image/webp">
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$differentImage.'.png'; ?>" type="image/png">
-                    <img src="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$differentImage.'.png'; ?>" alt="Imagen de la capilla">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/chapels/'.$differentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/chapels/'.$differentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/public/build/img/chapels/'.$differentImage.'.png'; ?>" alt="Imagen de la capilla">
                 </picture>
             <?php } ?>
             </div>
@@ -48,9 +48,9 @@
             <p class="form__text">Imagen actual:</p>
             <div class="form__image">
                 <picture>
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$chapel->currentImage.'.webp'; ?>" type="image/webp">
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$chapel->currentImage.'.png'; ?>" type="image/png">
-                    <img src="<?php echo $_ENV['HOST'].'/build/img/chapels/'.$chapel->currentImage.'.png'; ?>" alt="Imagen de la capilla">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/chapels/'.$chapel->currentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/chapels/'.$chapel->currentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/public/build/img/chapels/'.$chapel->currentImage.'.png'; ?>" alt="Imagen de la capilla">
                 </picture>
             </div>
         <?php }?>

@@ -21,30 +21,30 @@ class AuthController {
             
             if(empty($alerts)) {
                 // Verificar que el usuario exista
-                $user = User::where('email', $auth->email);
-                if(!$user instanceof User){
+                $us = User::where('email', $auth->email);
+                if(!$us instanceof User){
                     User::setAlert('error', 'El usuario no existe');
                 } else {
-                    if(!$user->confirmed){
+                    if(!$us->confirmed){
                         User::setAlert('error', 'El usuario no esta confirmado');
-                    } else if("INACTIVE" === strtoupper($user->status)){
+                    } else if("INACTIVE" === strtoupper($us->status)){
                         User::setAlert('error', 'El usuario no esta habilitado');
                     } else{
                         // El Usuario existe
-                        if( password_verify($_POST['password'], $user->password) ){
+                        if( password_verify($_POST['password'], $us->password) ){
                             // Iniciar la sesión
                             session_start();    
-                            $_SESSION['id'] = $user->id;
-                            $_SESSION['name'] = $user->name;
-                            $_SESSION['f_name'] = $user->f_name;
-                            $_SESSION['email'] = $user->email;
-                            $_SESSION['isAdmin'] = $user->isAdmin ?? null;
-                            $_SESSION['isEmployee'] = $user->isEmployee ?? null;
+                            $_SESSION['id'] = $us->id;
+                            $_SESSION['name'] = $us->name;
+                            $_SESSION['f_name'] = $us->f_name;
+                            $_SESSION['email'] = $us->email;
+                            $_SESSION['isAdmin'] = $us->isAdmin ?? null;
+                            $_SESSION['isEmployee'] = $us->isEmployee ?? null;
 
                             //Redirection
-                            if($user->isAdmin){
+                            if($us->isAdmin){
                                 header('Location: /dashboard/start');
-                            } else if($user->isEmployee){
+                            } else if($us->isEmployee){
                                 header('Location: /dashboard/start');
                             } else{
                                 header('Location: /');
@@ -78,7 +78,7 @@ class AuthController {
 
     public static function register(Router $router){
         $alerts = [];
-        $user = new User;
+        $us = new User;
 
         if('POST'===$_SERVER['REQUEST_METHOD']){
             $captcha = $_POST['g-recaptcha-response'];
@@ -100,26 +100,45 @@ class AuthController {
             }
 
             $imageFolder='../public/build/img/users/';
+            $savePicture = false;
+            $imagesToSave = [];
+            $imageName = md5(uniqid(rand(),true));
 
-            $imageName=md5(uniqid(rand(),true));
-            if(!empty(trim($_FILES['user_image']['tmp_name']))){
+            // Read image
+            if (!empty($_FILES['user_image']['tmp_name'])) {
                 $manager = new ImageManager(new Driver());
-                $pngImage=$manager->read(trim($_FILES['user_image']['tmp_name']))->resize(800,600)->encode(new PngEncoder(80));
-                $webpImage=$manager->read(trim($_FILES['user_image']['tmp_name']))->resize(800,600)->encode(new WebpEncoder(80));
-                $_POST['image']=$imageName;
-                $savePicture=true;
-            } else{
-                $_POST['image']=$user->currentImage;
+                $tmpNameFiles = $_FILES['user_image']['tmp_name'];
+                $imagesToSave = [];
+            
+                $tmpNameFile = trim($tmpNameFiles);
+        
+                $image = $manager->read($tmpNameFile)->resize(800, 600);
+                $pngImage = $image->encode(new PngEncoder(80));
+                $webpImage = $image->encode(new WebpEncoder(80));
+        
+                // Guardar en array temporal
+                $imagesToSave[] = [
+                    'name' => $imageName,
+                    'png' => $pngImage,
+                    'webp' => $webpImage
+                ];
+            
+                $_POST['image'] = $imageName;
+                $savePicture = true;
+            } else {
+                $_POST['image'] = $us->image;
             }
 
             $_POST['status'] = "ACTIVE";
-            $user->sincronize($_POST);
+            $_POST['registerOrigin'] = "0";
+            $us->sincronize($_POST);
             
-            $alerts = $user->validateAccount();
+            $alerts = $us->validateAccount();
 
-            if(empty($alerts)) {if($savePicture){
-
-                // Create folder if does not exist
+            if(empty($alerts)) {
+                
+                if($savePicture){
+                    // Create folder if does not exist
                     if(!is_dir(trim($imageFolder))){
                         mkdir(trim($imageFolder),0777,true);
                     }
@@ -127,30 +146,46 @@ class AuthController {
                     // Make the foldar ALWAYS writable
                     chmod($imageFolder, 0777);
 
+                    // Delete previous images before saving the new ones
+                    $oldPngPath  = $imageFolder . $us->currentImage . '.png';
+                    $oldWebpPath = $imageFolder . $us->currentImage . '.webp';
+
+                    if (file_exists($oldPngPath)) {
+                        unlink($oldPngPath);
+                    }
+                    if (file_exists($oldWebpPath)) {
+                        unlink($oldWebpPath);
+                    }
+
                     // Put image on server
-                    $pngImage->save(trim($imageFolder.$imageName).'.png');
-                    $webpImage->save(trim($imageFolder.$imageName).'.webp');
+                    foreach($imagesToSave as $imageToSave){
+                        $currentPngImage = $imageToSave['png'];
+                        $currentWebpImage = $imageToSave['webp'];
+                        $currentPngImage->save(trim($imageFolder.$imageToSave['name']).'.png');
+                        $currentWebpImage->save(trim($imageFolder.$imageToSave['name']).'.webp');
+                    }
                 }
-                $userExists = User::where('email', $user->email);
+
+                $userExists = User::where('email', $us->email);
 
                 if($userExists) {
                     User::setAlert('error', 'El Usuario ya esta registrado');
                     $alerts = User::getAlerts();
                 } else {
                     // Hashear el password
-                    $user->hashPassword();
+                    $us->hashPassword();
 
                     // Eliminar password2
-                    unset($user->password2);
+                    unset($us->password2);
 
                     // Generar el Token
-                    $user->createToken();
+                    $us->createToken();
 
                     // Crear un nuevo usuario
-                    $resultado =  $user->saveElement();
+                    $resultado =  $us->saveElement();
 
                     // Enviar email
-                    $email = new Email($user->email, $user->name, $user->token);
+                    $email = new Email($us->email, $us->name, $us->token);
                     $email->sendConfirmation();
                     
 
@@ -163,7 +198,7 @@ class AuthController {
 
         $router->render('auth/register', [
             'title' => 'Creación de cuenta',
-            'user' => $user, 
+            'us' => $us, 
             'alerts' => $alerts
         ]);
     }
@@ -177,19 +212,19 @@ class AuthController {
 
             if(empty($alerts)) {
                 // Buscar el usuario
-                $user = User::where('email', $auth->email);
+                $us = User::where('email', $auth->email);
 
-                if($user instanceof User && $user->confirmed && "ACTIVE" === strtoupper($user->status)) {
+                if($us instanceof User && $us->confirmed && "ACTIVE" === strtoupper($us->status)) {
 
                     // Generar un nuevo token
-                    $user->createToken();
-                    unset($user->password2);
+                    $us->createToken();
+                    unset($us->password2);
 
                     // Actualizar el usuario
-                    $user->saveElement();
+                    $us->saveElement();
 
                     // Enviar el email
-                    $email = new Email( $user->email, $user->name, $user->token );
+                    $email = new Email( $us->email, $us->name, $us->token );
                     $email->sendInstructions();
 
 
@@ -219,9 +254,9 @@ class AuthController {
         if(!$token) header('Location: /');
 
         // Identificar el usuario con este token
-        $user = User::where('token', $token);
+        $us = User::where('token', $token);
 
-        if(!$user instanceof User){
+        if(!$us instanceof User){
             User::setAlert('error', 'Usuario no válido');
             $alerts = User::getAlerts();
             // Muestra la vista
@@ -231,30 +266,30 @@ class AuthController {
                 'validToken' => $validToken
             ]);
         } else{
-            if(empty($user)) {
+            if(empty($us)) {
                 User::setAlert('error', 'Usuario no válido');
                 $validToken = false;
-            } else if("INACTIVE" === strtoupper($user->status)) {
+            } else if("INACTIVE" === strtoupper($us->status)) {
                 User::setAlert('error', 'Usuario inhabilitado');
                 $validToken = false;
             }
             if('POST'===$_SERVER['REQUEST_METHOD']) {
 
                 // Añadir el nuevo password
-                $user->sincronize($_POST);
+                $us->sincronize($_POST);
     
                 // Validar el password
-                $alerts = $user->validatePasswordRecovery();
+                $alerts = $us->validatePasswordRecovery();
     
                 if(empty($alerts)) {
                     // Hashear el nuevo password
-                    $user->hashPassword();
+                    $us->hashPassword();
     
                     // Eliminar el Token
-                    $user->token = null;
+                    $us->token = null;
     
                     // Guardar el usuario en la BD
-                    $resultado = $user->saveElement();
+                    $resultado = $us->saveElement();
     
                     // Redireccionar
                     if($resultado) {
@@ -274,9 +309,24 @@ class AuthController {
     }
 
     public static function message(Router $router) {
-        $router->render('auth/message', [
-            'title' => 'Cuenta creada exitosamente'
-        ]);
+        session_start();
+
+        if(!empty($_SESSION)){
+            $user = User::find($_SESSION['id']);
+            if($user){
+                $router->render('auth/message', [
+                    'title' => 'Cuenta creada exitosamente',
+                    'user' => $user
+                ]);
+            } else{
+                header('Location: /404');
+            }
+        } else{
+            $router->render('auth/message', [
+                'title' => 'Cuenta creada exitosamente'
+            ]);
+        }
+
     }
 
     public static function confirmaccount(Router $router) {
@@ -286,25 +336,25 @@ class AuthController {
         if(!$token) header('Location: /');
 
         // Encontrar al usuario con este token
-        $user = User::where('token', $token);
+        $us = User::where('token', $token);
 
-        if(!$user instanceof User){
+        if(!$us instanceof User){
             User::setAlert('error', 'Token no válido, la cuenta no se confirmó');
         } else{
-            if(empty($user)) {
+            if(empty($us)) {
                 // No se encontró un usuario con ese token
                 User::setAlert('error', 'Token no válido, la cuenta no se confirmó');
-            } else if("INACTIVE" === strtoupper($user->status)) {
+            } else if("INACTIVE" === strtoupper($us->status)) {
                 // No se encontró un usuario con ese token
                 User::setAlert('error', 'Usuario inhabilitado, la cuenta no se confirmó');
             } else {
                 // Confirmar la cuenta
-                $user->confirmed = 1;
-                $user->token = '';
-                unset($user->password2);
+                $us->confirmed = 1;
+                $us->token = '';
+                unset($us->password2);
                 
                 // Guardar en la BD
-                $user->saveElement();
+                $us->saveElement();
     
                 User::setAlert('success', 'Cuenta comprobada correctamente');
             }

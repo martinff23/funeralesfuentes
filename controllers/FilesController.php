@@ -29,7 +29,7 @@ class FilesController {
                 header('Location: /dashboard/files?page=1');
             }
 
-            $totalRecords = File::countRecords();
+            $totalRecords = File::countRecords('status', 'ACTIVE');
             $recordsPerPage = $_ENV['ITEMS_PER_PAGE']; // Ajustar a 10
             
             $pagination = new Pagination($currentPage,$recordsPerPage,$totalRecords);
@@ -38,7 +38,7 @@ class FilesController {
                 header('Location: /dashboard/files?page=1');
             }
 
-            $files = File::paginate($recordsPerPage,$pagination->calculateOffset());
+            $files = File::paginateStatus($recordsPerPage,$pagination->calculateOffset(), 'ACTIVE');
             
             $router->render('admin/files/index',[
                 'title' => 'Archivos del negocio',
@@ -67,7 +67,7 @@ class FilesController {
                 $route = $_POST['file_route'];
                 $_POST['route'] = $_POST['file_route'];
                 $_POST['real_name'] = $_FILES['file_image']['name'];
-                $imageFolder = '../public/build/img/'.$route.'/';
+                $imageFolder = 'public/build/img/'.$route.'/';
                 $savePicture = false;
                 $imageName = md5(uniqid(rand(),true));
 
@@ -144,7 +144,7 @@ class FilesController {
                     $route = $_POST['file_route'];
                     $_POST['route'] = $_POST['file_route'];
                     $_POST['real_name'] = $_FILES['file_image']['name'];
-                    $imageFolder = '../public/build/img/'.$route.'/';
+                    $imageFolder = 'public/build/img/'.$route.'/';
                     $savePicture = false;
                     $imageName = md5(uniqid(rand(),true));
 
@@ -158,7 +158,7 @@ class FilesController {
                     } else{
                         $_POST['image'] = $file->currentImage;
                     }
-
+                    
                     $file->sincronize($_POST);
                     $alerts = $file->validate();
 
@@ -206,7 +206,7 @@ class FilesController {
         }
     }
 
-    public static function delete(Router $router){
+    public static function delete(){
         session_start();
 
         if(isAuth() && !isAdmin()){
@@ -220,7 +220,7 @@ class FilesController {
                 header('Location: /dashboard/files');
             }
             
-            $result = $file->deleteElement();
+            $result = $file->deleteNElement();
             if($result){
                 header('Location: /dashboard/files');
             }

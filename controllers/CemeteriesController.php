@@ -30,7 +30,7 @@ class CemeteriesController {
                 header('Location: /dashboard/cemeteries?page=1');
             }
 
-            $totalRecords = Cemetery::countRecords();
+            $totalRecords = Cemetery::countRecords('status', 'ACTIVE');
             $recordsPerPage = $_ENV['ITEMS_PER_PAGE']; // Ajustar a 10
             
             $pagination = new Pagination($currentPage,$recordsPerPage,$totalRecords);
@@ -39,7 +39,7 @@ class CemeteriesController {
                 header('Location: /dashboard/cemeteries?page=1');
             }
 
-            $cemeteries = Cemetery::paginate($recordsPerPage,$pagination->calculateOffset());
+            $cemeteries = Cemetery::paginateStatus($recordsPerPage,$pagination->calculateOffset(), 'ACTIVE');
 
             $router->render('admin/cemeteries/index',[
                 'title' => 'Cementerios ofrecidos',
@@ -316,7 +316,7 @@ class CemeteriesController {
         }
     }
 
-    public static function delete(Router $router){
+    public static function delete(){
         session_start();
 
         if(isAuth() && !isAdmin()){
@@ -330,7 +330,7 @@ class CemeteriesController {
                 header('Location: /dashboard/cemeteries');
             }
             
-            $result = $cemetery->deleteElement();
+            $result = $cemetery->deleteNElement();
             if($result){
                 header('Location: /dashboard/cemeteries');
             }

@@ -52,9 +52,9 @@
             <div class="form__image">
             <?php foreach($differentImages as $differentImage){ ?>
                 <picture>
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/branches/'.$differentImage.'.webp'; ?>" type="image/webp">
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/branches/'.$differentImage.'.png'; ?>" type="image/png">
-                    <img src="<?php echo $_ENV['HOST'].'/build/img/branches/'.$differentImage.'.png'; ?>" alt="Imagen de la sucursal o punto de venta">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/branches/'.$differentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/branches/'.$differentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/public/build/img/branches/'.$differentImage.'.png'; ?>" alt="Imagen de la sucursal o punto de venta">
                 </picture>
             <?php } ?>
             </div>
@@ -64,9 +64,9 @@
             <p class="form__text">Imagen actual:</p>
             <div class="form__image">
                 <picture>
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/branches/'.$branch->currentImage.'.webp'; ?>" type="image/webp">
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/branches/'.$branch->currentImage.'.png'; ?>" type="image/png">
-                    <img src="<?php echo $_ENV['HOST'].'/build/img/branches/'.$branch->currentImage.'.png'; ?>" alt="Imagen de la sucursal o punto de venta">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/branches/'.$branch->currentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/branches/'.$branch->currentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/public/build/img/branches/'.$branch->currentImage.'.png'; ?>" alt="Imagen de la sucursal o punto de venta">
                 </picture>
             </div>
         <?php }?>

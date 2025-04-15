@@ -38,6 +38,9 @@
     <?php if ($start) { ?>
         <?php if (empty($hearses)) { ?>
             <h3 class="page-element__no-elements">Estamos trabajando arduamente para tener esto a tu disposición. Esperalo muy pronto...</h3>
+            <picture>
+                <img class="error__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/public/build/img/wip/'.$selectedImage; ?>" alt="Imagen del trabajo en curso">
+            </picture>
         <?php } else { ?>
             <div class="hearses slider swiper">
                 <div class="swiper-wrapper">
@@ -50,6 +53,9 @@
     <?php } else { ?>
         <?php if (empty($hearses)) { ?>
             <h3 class="page-element__no-elements">Estamos trabajando arduamente para tener esto a tu disposición. Esperalo muy pronto...</h3>
+            <picture>
+                <img class="error__image" loading="lazy" width="200" height="300" src="<?php echo $_ENV['HOST'].'/public/build/img/wip/'.$selectedImage; ?>" alt="Imagen del trabajo en curso">
+            </picture>
         <?php } else {
             $order = ['own' => 'Propias', 'external' => 'Externas'];
             foreach ($order as $key => $label) {

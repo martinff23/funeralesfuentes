@@ -1604,6 +1604,7 @@ h3 {
 }
 .header__text {
   font-size: 2rem;
+  font-style: italic;
   font-weight: 700;
   color: #e6d36c;
   margin: 1rem 0;
@@ -2021,6 +2022,7 @@ h3 {
   text-transform: uppercase;
   font-weight: 700;
   margin-top: 0.5rem;
+  text-align: center;
 }
 .dashboard__content {
   padding: 1rem 1rem 3rem 1rem;
@@ -2364,6 +2366,41 @@ h3 {
   width: min(95%, 140rem);
   margin: 0 auto;
   margin-top: 1rem;
+}
+.intranet-options__usgrid {
+  margin: 0 auto;
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(1, 1fr);
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .intranet-options__usgrid {
+    display: grid;
+    gap: 0;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.intranet-options__grid-menu {
+  margin: 0 auto;
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(1, 1fr);
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .intranet-options__grid-menu {
+    display: grid;
+    gap: 0;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .intranet-options__grid-menu {
+    display: grid;
+    gap: 0;
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 .intranet-options__grid {
   margin: 0 auto;

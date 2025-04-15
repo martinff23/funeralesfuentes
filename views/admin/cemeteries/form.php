@@ -36,9 +36,9 @@
             <div class="form__image">
             <?php foreach($differentImages as $differentImage){ ?>
                 <picture>
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/cemeteries/'.$differentImage.'.webp'; ?>" type="image/webp">
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/cemeteries/'.$differentImage.'.png'; ?>" type="image/png">
-                    <img src="<?php echo $_ENV['HOST'].'/build/img/cemeteries/'.$differentImage.'.png'; ?>" alt="Imagen del cementerio">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/cemeteries/'.$differentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/cemeteries/'.$differentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/public/build/img/cemeteries/'.$differentImage.'.png'; ?>" alt="Imagen del cementerio">
                 </picture>
             <?php } ?>
             </div>
@@ -48,9 +48,9 @@
             <p class="form__text">Imagen actual:</p>
             <div class="form__image">
                 <picture>
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/cemeteries/'.$cemetery->currentImage.'.webp'; ?>" type="image/webp">
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/cemeteries/'.$cemetery->currentImage.'.png'; ?>" type="image/png">
-                    <img src="<?php echo $_ENV['HOST'].'/build/img/cemeteries/'.$cemetery->currentImage.'.png'; ?>" alt="Imagen del cementerio">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/cemeteries/'.$cemetery->currentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/cemeteries/'.$cemetery->currentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/public/build/img/cemeteries/'.$cemetery->currentImage.'.png'; ?>" alt="Imagen del cementerio">
                 </picture>
             </div>
         <?php }?>

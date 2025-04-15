@@ -9,15 +9,19 @@
     <form method="POST" class="form" action="/register" enctype="multipart/form-data">
         <div class="form__field">
             <label class="form__label" for="name">Nombre</label>
-            <input type="text" class="form__input" placeholder="Tu nombre" id="name" name="name" value="<?php echo $user->name?>">
+            <input type="text" class="form__input" placeholder="Tu nombre" id="name" name="name" value="<?php echo $us->name?>">
         </div>
         <div class="form__field">
             <label class="form__label" for="f_name">Apellido(s)</label>
-            <input type="text" class="form__input" placeholder="Tu(s) apellido(s)" id="f_name" name="f_name" value="<?php echo $user->f_name?>">
+            <input type="text" class="form__input" placeholder="Tu(s) apellido(s)" id="f_name" name="f_name" value="<?php echo $us->f_name?>">
         </div>
         <div class="form__field">
             <label class="form__label" for="email">Correo electrónico</label>
-            <input type="email" class="form__input" placeholder="Tu correo electrónico" id="email" name="email" value="<?php echo $user->email?>">
+            <input type="email" class="form__input" placeholder="Tu correo electrónico" id="email" name="email" value="<?php echo $us->email?>">
+        </div>
+        <div class="form__field">
+            <label class="form__label" for="telephone">Teléfono</label>
+            <input type="tel" class="form__input" placeholder="Tu teléfono" id="telephone" name="telephone" value="<?php echo $us->telephone?>">
         </div>
         <div class="form__field">
             <label class="form__label" for="password">Contraseña</label>

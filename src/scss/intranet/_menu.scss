@@ -139,6 +139,25 @@
 .intranet-options{
     @include mix.container;
     margin-top: 1rem;
+    &__usgrid{
+        margin: 0 auto;
+        @include mix.grid(1,0);
+        align-items: center;
+        @include mix.tablet{
+            @include mix.grid(2,0);
+        }
+    }
+    &__grid-menu{
+        margin: 0 auto;
+        @include mix.grid(1,0);
+        align-items: center;
+        @include mix.tablet{
+            @include mix.grid(2,0);
+        }
+        @include mix.desktop{
+            @include mix.grid(4,0);
+        }
+    }
     &__grid{
         margin: 0 auto;
         @include mix.grid(1,0);

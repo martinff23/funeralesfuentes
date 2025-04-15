@@ -35,7 +35,7 @@ class HearsesController {
             header('Location: /dashboard/hearses?page=1');
         }
 
-        $totalRecords = Hearse::countRecords();
+        $totalRecords = Hearse::countRecords('status', 'ACTIVE');
         $recordsPerPage = $_ENV['ITEMS_PER_PAGE']; // Ajustar a 10
         
         $pagination = new Pagination($currentPage,$recordsPerPage,$totalRecords);
@@ -44,7 +44,7 @@ class HearsesController {
             header('Location: /dashboard/hearses?page=1');
         }
 
-        $hearses = Hearse::paginate($recordsPerPage,$pagination->calculateOffset());
+        $hearses = Hearse::paginateStatus($recordsPerPage,$pagination->calculateOffset(), 'ACTIVE');
 
         $router->render('admin/hearses/index',[
             'title' => 'Carrozas ofrecidas',
@@ -319,7 +319,7 @@ class HearsesController {
         }
     }
 
-    public static function delete(Router $router){
+    public static function delete(){
         session_start();
 
         if(isAuth() && !isAdmin()){
@@ -333,7 +333,7 @@ class HearsesController {
                 header('Location: /dashboard/hearses');
             }
             
-            $result = $hearse->deleteElement();
+            $result = $hearse->deleteNElement();
             if($result){
                 header('Location: /dashboard/hearses');
             }

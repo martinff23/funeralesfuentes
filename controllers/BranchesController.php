@@ -31,7 +31,7 @@ class BranchesController {
                 header('Location: /dashboard/branches?page=1');
             }
 
-            $totalRecords = Branch::countRecords();
+            $totalRecords = Branch::countRecords('status', 'ACTIVE');
             $recordsPerPage = $_ENV['ITEMS_PER_PAGE']; // Ajustar a 10
             
             $pagination = new Pagination($currentPage,$recordsPerPage,$totalRecords);
@@ -40,7 +40,7 @@ class BranchesController {
                 header('Location: /dashboard/branches?page=1');
             }
 
-            $branches = Branch::paginate($recordsPerPage,$pagination->calculateOffset());
+            $branches = Branch::paginateStatus($recordsPerPage,$pagination->calculateOffset(), 'ACTIVE');
 
             $router->render('admin/branches/index',[
                 'title' => 'Sucursales',
@@ -319,7 +319,7 @@ class BranchesController {
         }
     }
 
-    public static function delete(Router $router){
+    public static function delete(){
         session_start();
 
         if(isAuth() && !isAdmin()){
@@ -333,7 +333,7 @@ class BranchesController {
                 header('Location: /dashboard/branches');
             }
             
-            $result = $branch->deleteElement();
+            $result = $branch->deleteNElement();
             if($result){
                 header('Location: /dashboard/branches');
             }

@@ -4,12 +4,13 @@ namespace Model;
 
 class User extends ActiveRecord {
     protected static $table = 'users';
-    protected static $databaseColumns = ['id', 'name', 'f_name', 'email', 'password', 'image', 'confirmed', 'token', 'isAdmin', 'isEmployee', 'acceptsMarketing', 'acceptsPromos', 'status'];
+    protected static $databaseColumns = ['id', 'name', 'f_name', 'email', 'telephone', 'password', 'image', 'confirmed', 'token', 'isAdmin', 'isEmployee', 'acceptsMarketing', 'acceptsPromos', 'status', 'registerOrigin'];
 
     public $id;
     public $name;
     public $f_name;
     public $email;
+    public $telephone;
     public $password;
     public $image;
     public $password2;
@@ -20,6 +21,7 @@ class User extends ActiveRecord {
     public $acceptsMarketing;
     public $acceptsPromos;
     public $status;
+    public $registerOrigin;
 
     public $currentPassword;
     public $currentImage;
@@ -31,6 +33,7 @@ class User extends ActiveRecord {
         $this->name = $args['name'] ?? '';
         $this->f_name = $args['f_name'] ?? '';
         $this->email = $args['email'] ?? '';
+        $this->telephone = $args['telephone'] ?? '';
         $this->password = $args['password'] ?? '';
         $this->image = $args['image'] ?? '';
         $this->password2 = $args['password2'] ?? '';
@@ -41,6 +44,7 @@ class User extends ActiveRecord {
         $this->acceptsMarketing = $args['acceptsMarketing'] ?? 0;
         $this->acceptsPromos = $args['acceptsPromos'] ?? 0;
         $this->status = $args['status'] ?? '';
+        $this->registerOrigin = $args['registerOrigin'] ?? '0';
     }
 
     // Validar el Login de Usuarios
@@ -83,9 +87,11 @@ class User extends ActiveRecord {
         if(!$this->email) {
             self::$alerts['error'][] = 'El correo electrónico es obligatorio';
         }
+        if(!$this->telephone) {
+            self::$alerts['error'][] = 'El teléfono es obligatorio';
+        }
         if (!$this->password) {
             self::$alerts['error'][] = 'La contraseña es obligatoria';
-            return;
         }
     
         // Minimum length

@@ -20,9 +20,9 @@ class UserPagesController {
     public static function index(Router $router){
         session_start();
 
-        if(isAuth() && isAdmin()){
-            header('Location: /dashboard/start');
-        }
+        // if(isAuth() && isAdmin()){
+        //     header('Location: /dashboard/start');
+        // }
 
         if(!empty($_SESSION)){
             $user = User::find($_SESSION['id']);
@@ -43,9 +43,9 @@ class UserPagesController {
     public static function info(Router $router){
         session_start();
 
-        if(isAuth() && isAdmin()){
-            header('Location: /dashboard/start');
-        }
+        // if(isAuth() && isAdmin()){
+        //     header('Location: /dashboard/start');
+        // }
 
         $alerts = [];
         $user = new User;
@@ -192,9 +192,9 @@ class UserPagesController {
     public static function photo(Router $router){
         session_start();
 
-        if(isAuth() && isAdmin()){
-            header('Location: /dashboard/start');
-        }
+        // if(isAuth() && isAdmin()){
+        //     header('Location: /dashboard/start');
+        // }
 
         $alerts=[];
         $user = new User;

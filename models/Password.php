@@ -21,7 +21,6 @@ class Password extends ActiveRecord {
     public function validatePassword() {
         if (!$this->password) {
             self::$alerts['error'][] = 'La contraseña es obligatoria';
-            return;
         }
     
         // Longitud mínima

@@ -29,7 +29,7 @@ class AlliancesController {
                 header('Location: /dashboard/alliances?page=1');
             }
 
-            $totalRecords = Alliance::countRecords();
+            $totalRecords = Alliance::countRecords('status', 'ACTIVE');
             $recordsPerPage = $_ENV['ITEMS_PER_PAGE']; // Ajustar a 10
             
             $pagination = new Pagination($currentPage,$recordsPerPage,$totalRecords);
@@ -38,7 +38,7 @@ class AlliancesController {
                 header('Location: /dashboard/alliances?page=1');
             }
 
-            $alliances = Alliance::paginate($recordsPerPage,$pagination->calculateOffset());
+            $alliances = Alliance::paginateStatus($recordsPerPage,$pagination->calculateOffset(), 'ACTIVE');
             
             $router->render('admin/alliances/index',[
                 'title' => 'Alianzas del negocio',
@@ -210,7 +210,7 @@ class AlliancesController {
                 header('Location: /dashboard/alliances');
             }
             
-            $result = $alliance->deleteElement();
+            $result = $alliance->deleteNElement();
             if($result){
                 header('Location: /dashboard/alliances');
             }

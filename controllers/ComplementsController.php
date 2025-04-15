@@ -30,7 +30,7 @@ class ComplementsController {
                 header('Location: /dashboard/complements?page=1');
             }
 
-            $totalRecords = Complement::countRecords();
+            $totalRecords = Complement::countRecords('status', 'ACTIVE');
             $recordsPerPage = $_ENV['ITEMS_PER_PAGE']; // Ajustar a 10
             
             $pagination = new Pagination($currentPage,$recordsPerPage,$totalRecords);
@@ -39,7 +39,7 @@ class ComplementsController {
                 header('Location: /dashboard/complements?page=1');
             }
 
-            $complements = Complement::paginate($recordsPerPage,$pagination->calculateOffset());
+            $complements = Complement::paginateStatus($recordsPerPage,$pagination->calculateOffset(), 'ACTIVE');
             
             $router->render('admin/complements/index',[
                 'title' => 'Extras ofrecidos',
@@ -316,7 +316,7 @@ class ComplementsController {
         }
     }
 
-    public static function delete(Router $router){
+    public static function delete(){
         session_start();
 
         if(isAuth() && !isAdmin()){
@@ -330,7 +330,7 @@ class ComplementsController {
                 header('Location: /dashboard/complements');
             }
             
-            $result = $complement->deleteElement();
+            $result = $complement->deleteNElement();
             if($result){
                 header('Location: /dashboard/complements');
             }

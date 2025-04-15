@@ -5,6 +5,8 @@
         <select class="form__input" id="file_route" name="file_route">
             <option value="NONE" <?php echo empty($file->route) ? 'selected' : '';?>>- SELECCIONA UN TIPO -</option>
             <option value="error" <?php echo 'ERROR' === strtoupper($file->route) ? 'selected' : '';?>>IMAGENES DE ERROR</option>
+            <option value="wip" <?php echo 'WIP' === strtoupper($file->route) ? 'selected' : '';?>>IMAGENES DE TRABAJO EN CURSO</option>
+            <option value="success" <?php echo 'SUCCESS' === strtoupper($file->route) ? 'selected' : '';?>>IMAGENES DE EXITO</option>
         </select>
     </div>
     <div class="form__field">
@@ -20,9 +22,9 @@
         <p class="form__text">Imagen actual:</p>
         <div class="form__image">
             <picture>
-                <source srcset="<?php echo $_ENV['HOST'].'/build/img/'.$file->route.'/'.$file->currentImage.'.webp'; ?>" type="image/webp">
-                <source srcset="<?php echo $_ENV['HOST'].'/build/img/'.$file->route.'/'.$file->currentImage.'.png'; ?>" type="image/png">
-                <img src="<?php echo $_ENV['HOST'].'/build/img/'.$file->route.'/'.$file->currentImage.'.png'; ?>" alt="Imagen de la alianza">
+                <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/'.$file->route.'/'.$file->currentImage.'.webp'; ?>" type="image/webp">
+                <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/'.$file->route.'/'.$file->currentImage.'.png'; ?>" type="image/png">
+                <img src="<?php echo $_ENV['HOST'].'/public/build/img/'.$file->route.'/'.$file->currentImage.'.png'; ?>" alt="Imagen de la alianza">
             </picture>
         </div>
     <?php }?>

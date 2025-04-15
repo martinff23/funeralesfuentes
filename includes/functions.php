@@ -1,6 +1,8 @@
 <?php
 
 use Model\Category;
+use Model\Employee;
+use Model\EmployeeRole;
 
 function debug($variable) : string {
     echo "<pre>";
@@ -237,7 +239,7 @@ function create_mail_header(){
     $header .= '<tr>';
     $header .= '<td align="center" style="padding: 15px 0;">';
     $header .= '<a href="https://www.funeralesfuentes.com" target="_blank">';
-    $header .= '<img src="' . $_ENV['HOST'] . '/build/img/title.png" alt="Logo Funerales Fuentes" width="175" height="50" style="display: block;">';
+    $header .= '<img src="' . $_ENV['HOST'] . '/public/build/img/title.png" alt="Logo Funerales Fuentes" width="175" height="50" style="display: block;">';
     $header .= '</a>';
     $header .= '</td>';
     $header .= '</tr>';
@@ -256,7 +258,7 @@ function create_mail_sign($author, $author_mail, $author_phones){
     $sign .= '<tr>';
     $sign .= '<td style="padding-right: 15px;">';
     $sign .= '<a href="https://www.funeralesfuentes.com" target="_blank">';
-    $sign .= '<img src="' . $_ENV['HOST'] . '/build/img/firma.png" alt="Logo Funerales Fuentes" width="80" style="border-radius: 4px;">';
+    $sign .= '<img src="' . $_ENV['HOST'] . '/public/build/img/firma.png" alt="Logo Funerales Fuentes" width="80" style="border-radius: 4px;">';
     $sign .= '</a>';
     $sign .= '</td>';
     $sign .= '<td>';
@@ -297,4 +299,195 @@ function getRandomImageFromFolder(string $folder, array $allowedExtensions = ['j
     if (empty($images)) return null;
 
     return $images[array_rand($images)];
+}
+
+function getTypeOfHeader($value, $isAdmin = false, $isEmployee = false){
+    $result = "LARGE";
+    $assigned = false;
+
+    $adminElements = [
+        '/dashboard',
+        '/dashboard/products',
+        '/dashboard/services',
+        '/dashboard/hearses',
+        '/dashboard/branches',
+        '/dashboard/chapels',
+        '/dashboard/cemeteries',
+        '/dashboard/crematories'
+    ];
+
+    $loginElements = [
+        '/login',
+        '/register',
+        '/forgot',
+        '/404'
+    ];
+
+    $shortElements = [
+        '/about',
+        '/products',
+        '/services',
+        '/hearses',
+        '/branches',
+        '/chapels',
+        '/cemeteries',
+        '/crematories'
+    ];
+
+    if(str_contains($value, '/user')){
+        if($isAdmin){
+            $result = "ADMIN";
+            $assigned = true;
+        } else{
+            $result = "LOGIN";
+            $assigned = true;
+        }
+    }
+
+    if(str_contains($value, '/message')){
+        if($isAdmin){
+            $result = "ADMIN";
+            $assigned = true;
+        } else{
+            $result = "LOGIN";
+            $assigned = true;
+        }
+    }
+
+    if(str_contains($value, '/dashboard/users/reset')){
+        if($isAdmin){
+            $result = "ADMIN";
+            $assigned = true;
+        } else if($isEmployee){
+            $result = "SHORT";
+            $assigned = true;
+        } else{
+            $result = "LOGIN";
+            $assigned = true;
+        }
+    }
+
+    if(!$assigned){
+        foreach($adminElements as $element){
+            if(str_contains($value, $element)){
+                $result = "ADMIN";
+                $assigned = true;
+            }
+        } 
+    }
+    
+    if(!$assigned){
+        foreach($loginElements as $element){
+            if(str_contains($value, $element)){
+                $result = "LOGIN";
+                $assigned = true;
+            }
+        }
+    }
+    
+    if(!$assigned){
+        foreach($shortElements as $element){
+            if(str_contains($value, $element)){
+                $result = "SHORT";
+                $assigned = true;
+            }
+        }
+    }
+
+    return $result;
+}
+
+function getUserRole(){
+    if(isEmployee()){
+        return "EMPLOYEE";
+    } else if(isAdmin()){
+        return "ADMIN";
+    } else{
+        return "USER";
+    }
+}
+
+function getUserRoleAlt($user){
+    if("1" === $user->isAdmin){
+        return "ADMIN";
+    } else if("1" === $user->isEmployee){
+        return "EMPLOYEE";
+    } else{
+        return "USER";
+    }
+}
+
+function getDatabaseRoles($role){
+    $dbroles = [];
+    if("ADMIN" === strtoupper($role)){
+        $dbroles = [
+            'isAdmin' => 1,
+            'isEmployee' => 0 
+        ];
+    } else if("EMPLOYEE" === strtoupper($role)){
+        $dbroles = [
+            'isAdmin' => 0,
+            'isEmployee' => 1 
+        ];
+    } else{
+        $dbroles = [
+            'isAdmin' => 0,
+            'isEmployee' => 0 
+        ];
+    }
+    return $dbroles;
+}
+
+function getVisualValue($realValue){
+    $result = "";
+    switch(strtoupper($realValue)){
+        case 'ACTIVE':
+            $result = "Activo";
+        break;
+        case 'INACTIVE':
+            $result = "Inhabilitado";
+        break;
+        case 'ADMIN':
+            $result = "Administrador";
+        break;
+        case 'EMPLOYEE':
+            $result = "Empleado";
+        break;
+        case 'USER':
+            $result = "Usuario";
+        break;
+        default:
+        $result = "Activo";
+        break;
+    }
+    return $result;
+}
+
+function generateEmployeeCode(EmployeeRole $role){
+    $count = (Employee::countRecords('positionId', $role->id)*1) + 1;
+    return strtoupper($role->name).str_pad($count, 15, '0', STR_PAD_LEFT);
+}
+
+function lookForRoleId($roles, $id) {
+    foreach ($roles as $rol) {
+        if ($rol->id === $id) {
+            return $rol;
+        }
+    }
+    return null;
+}
+
+function getDateYear($dataDate){
+    $date = new DateTime($dataDate);
+    return $date->format('Y');
+}
+
+function getPeriod($date, $periods) {
+    $timestamp = strtotime($date);
+    $year = date('Y', $timestamp);
+    $month = date('n', $timestamp);
+
+    $periodo = ceil(($month / 12) * $periods);
+
+    return $year . '/' . $periodo;
 }

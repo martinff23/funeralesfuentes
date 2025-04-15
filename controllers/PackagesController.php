@@ -53,7 +53,7 @@ class PackagesController {
             header('Location: /dashboard/packages?page=1');
         }
 
-        $totalRecords = Package::countRecords();
+        $totalRecords = Package::countRecords('status', 'ACTIVE');
         $recordsPerPage = $_ENV['ITEMS_PER_PAGE']; // Ajustar a 10
         
         $pagination = new Pagination($currentPage,$recordsPerPage,$totalRecords);
@@ -62,7 +62,7 @@ class PackagesController {
             header('Location: /dashboard/packages?page=1');
         }
 
-        $packages=Package::paginate($recordsPerPage,$pagination->calculateOffset());
+        $packages=Package::paginateStatus($recordsPerPage,$pagination->calculateOffset(), 'ACTIVE');
 
         $router->render('admin/packages/index',[
             'title'=>'Paquetes ofrecidos',
@@ -540,7 +540,7 @@ class PackagesController {
      * @param Router $router MVC Router instance
      * @return void
      */
-    public static function delete(Router $router){
+    public static function delete(){
         session_start();
 
         if(isAuth() && !isAdmin()){
@@ -554,7 +554,7 @@ class PackagesController {
                 header('Location: /dashboard/packages');
             }
             
-            $result=$package->deleteElement();
+            $result=$package->deleteNElement();
             if($result){
                 header('Location: /dashboard/packages');
             }

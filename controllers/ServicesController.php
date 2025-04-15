@@ -30,7 +30,7 @@ class ServicesController {
                 header('Location: /dashboard/services?page=1');
             }
 
-            $totalRecords = Service::countRecords();
+            $totalRecords = Service::countRecords('status', 'ACTIVE');
             $recordsPerPage = $_ENV['ITEMS_PER_PAGE']; // Ajustar a 10
             
             $pagination = new Pagination($currentPage,$recordsPerPage,$totalRecords);
@@ -39,7 +39,7 @@ class ServicesController {
                 header('Location: /dashboard/services?page=1');
             }
 
-            $services = Service::paginate($recordsPerPage,$pagination->calculateOffset());
+            $services = Service::paginateStatus($recordsPerPage,$pagination->calculateOffset(), 'ACTIVE');
 
             $router->render('admin/services/index',[
                 'title' => 'Servicios ofrecidos',
@@ -310,7 +310,7 @@ class ServicesController {
         }
     }
 
-    public static function delete(Router $router){
+    public static function delete(){
         session_start();
 
         if(isAuth() && !isAdmin()){
@@ -324,7 +324,7 @@ class ServicesController {
                 header('Location: /dashboard/services');
             }
             
-            $result=$service->deleteElement();
+            $result=$service->deleteNElement();
             if($result){
                 header('Location: /dashboard/services');
             }

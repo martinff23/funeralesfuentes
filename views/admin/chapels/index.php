@@ -1,6 +1,10 @@
 <h1 class="dashboard__heading"><?php echo $title;?></h1>
 
 <div class="dashboard__button-container">
+    <a class="dashboard__button" href="/dashboard/workElements">
+        <i class="fa-solid fa-circle-arrow-left"></i>
+        Volver
+    </a>
     <a class="dashboard__button" href="/dashboard/chapels/create">
         <i class="fa-solid fa-circle-plus"></i>
         Añadir capilla

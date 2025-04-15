@@ -24,9 +24,9 @@
             <div class="form__image">
             <?php foreach($differentImages as $differentImage){ ?>
                 <picture>
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/complements/'.$differentImage.'.webp'; ?>" type="image/webp">
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/complements/'.$differentImage.'.png'; ?>" type="image/png">
-                    <img src="<?php echo $_ENV['HOST'].'/build/img/complements/'.$differentImage.'.png'; ?>" alt="Imagen del complemento">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/complements/'.$differentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/complements/'.$differentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/public/build/img/complements/'.$differentImage.'.png'; ?>" alt="Imagen del complemento">
                 </picture>
             <?php } ?>
             </div>
@@ -36,9 +36,9 @@
             <p class="form__text">Imagen actual:</p>
             <div class="form__image">
                 <picture>
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/complements/'.$complement->currentImage.'.webp'; ?>" type="image/webp">
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/complements/'.$complement->currentImage.'.png'; ?>" type="image/png">
-                    <img src="<?php echo $_ENV['HOST'].'/build/img/complements/'.$complement->currentImage.'.png'; ?>" alt="Imagen del complemento">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/complements/'.$complement->currentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/complements/'.$complement->currentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/public/build/img/complements/'.$complement->currentImage.'.png'; ?>" alt="Imagen del complemento">
                 </picture>
             </div>
         <?php }?>

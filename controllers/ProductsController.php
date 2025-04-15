@@ -31,7 +31,7 @@ class ProductsController {
                 header('Location: /dashboard/products?page=1');
             }
 
-            $totalRecords = Product::countRecords();
+            $totalRecords = Product::countRecords('status', 'ACTIVE');
             $recordsPerPage = $_ENV['ITEMS_PER_PAGE']; // Ajustar a 10
             
             $pagination = new Pagination($currentPage,$recordsPerPage,$totalRecords);
@@ -40,7 +40,7 @@ class ProductsController {
                 header('Location: /dashboard/products?page=1');
             }
 
-            $products = Product::paginate($recordsPerPage,$pagination->calculateOffset());
+            $products = Product::paginateStatus($recordsPerPage,$pagination->calculateOffset(), 'ACTIVE');
             
             $router->render('admin/products/index',[
                 'title' => 'Productos ofrecidos',
@@ -318,7 +318,7 @@ class ProductsController {
         }
     }
 
-    public static function delete(Router $router){
+    public static function delete(){
         session_start();
 
         if(isAuth() && !isAdmin()){
@@ -332,7 +332,7 @@ class ProductsController {
                 header('Location: /dashboard/products');
             }
             
-            $result = $product->deleteElement();
+            $result = $product->deleteNElement();
             if($result){
                 header('Location: /dashboard/products');
             }

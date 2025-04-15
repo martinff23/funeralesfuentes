@@ -24,9 +24,9 @@
             <div class="form__image">
             <?php foreach($differentImages as $differentImage){ ?>
                 <picture>
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/services/'.$differentImage.'.webp'; ?>" type="image/webp">
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/services/'.$differentImage.'.png'; ?>" type="image/png">
-                    <img src="<?php echo $_ENV['HOST'].'/build/img/services/'.$differentImage.'.png'; ?>" alt="Imagen del servicio">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/services/'.$differentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/services/'.$differentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/public/build/img/services/'.$differentImage.'.png'; ?>" alt="Imagen del servicio">
                 </picture>
             <?php } ?>
             </div>
@@ -36,9 +36,9 @@
             <p class="form__text">Imagen actual:</p>
             <div class="form__image">
                 <picture>
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/services/'.$service->currentImage.'.webp'; ?>" type="image/webp">
-                    <source srcset="<?php echo $_ENV['HOST'].'/build/img/services/'.$service->currentImage.'.png'; ?>" type="image/png">
-                    <img src="<?php echo $_ENV['HOST'].'/build/img/services/'.$service->currentImage.'.png'; ?>" alt="Imagen del servicio">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/services/'.$service->currentImage.'.webp'; ?>" type="image/webp">
+                    <source srcset="<?php echo $_ENV['HOST'].'/public/build/img/services/'.$service->currentImage.'.png'; ?>" type="image/png">
+                    <img src="<?php echo $_ENV['HOST'].'/public/build/img/services/'.$service->currentImage.'.png'; ?>" alt="Imagen del servicio">
                 </picture>
             </div>
         <?php }?>

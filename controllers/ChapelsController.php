@@ -30,7 +30,7 @@ class ChapelsController {
                 header('Location: /dashboard/chapels?page=1');
             }
 
-            $totalRecords = Chapel::countRecords();
+            $totalRecords = Chapel::countRecords('status', 'ACTIVE');
             $recordsPerPage = $_ENV['ITEMS_PER_PAGE']; // Ajustar a 10
             
             $pagination = new Pagination($currentPage,$recordsPerPage,$totalRecords);
@@ -39,7 +39,7 @@ class ChapelsController {
                 header('Location: /dashboard/chapels?page=1');
             }
 
-            $chapels = Chapel::paginate($recordsPerPage,$pagination->calculateOffset());
+            $chapels = Chapel::paginateStatus($recordsPerPage,$pagination->calculateOffset(), 'ACTIVE');
 
             $router->render('admin/chapels/index',[
                 'title' => 'Capillas ofrecidas',
@@ -316,7 +316,7 @@ class ChapelsController {
         }
     }
 
-    public static function delete(Router $router){
+    public static function delete(){
         session_start();
 
         if(isAuth() && !isAdmin()){
@@ -330,7 +330,7 @@ class ChapelsController {
                 header('Location: /dashboard/chapels');
             }
             
-            $result = $chapel->deleteElement();
+            $result = $chapel->deleteNElement();
             if($result){
                 header('Location: /dashboard/chapels');
             }

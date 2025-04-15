@@ -148,6 +148,27 @@ class ActiveRecord {
         return $result;
     }
 
+    // Records pagination status
+    public static function paginateStatus($recordsPerPage, $offset, $status){
+        $query = "SELECT * FROM " . static::$table . " WHERE status = '".$status."' ORDER BY id ASC LIMIT ".$recordsPerPage." OFFSET ".$offset."" ;
+        $result = self::querySQL($query);
+        return $result;
+    }
+
+    // Records pagination with condition
+    public static function paginateWhere($recordsPerPage, $offset, $whereClause){
+        $query = "SELECT * FROM " . static::$table . " WHERE isAdmin = '".$whereClause['isAdmin']."' AND isEmployee = '".$whereClause['isEmployee']."' ORDER BY id ASC LIMIT ".$recordsPerPage." OFFSET ".$offset."" ;
+        $result = self::querySQL($query);
+        return $result;
+    }
+
+    // Records pagination with condition
+    public static function paginateWhereStatus($recordsPerPage, $offset, $whereClause, $status){
+        $query = "SELECT * FROM " . static::$table . " WHERE isAdmin = '".$whereClause['isAdmin']."' AND isEmployee = '".$whereClause['isEmployee']."' AND status = '".$status."' ORDER BY id ASC LIMIT ".$recordsPerPage." OFFSET ".$offset."" ;
+        $result = self::querySQL($query);
+        return $result;
+    }
+
     // Busqueda Where con Columna 
     public static function where($column, $value) {
         $query = "SELECT * FROM " . static::$table . " WHERE ".$column." = '".$value."'";

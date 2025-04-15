@@ -32,14 +32,20 @@ use Controllers\ComplementsController;
 use Controllers\CotizationsController;
 use Controllers\CrematoriesController;
 use Controllers\DashboardController;
+use Controllers\EmployeeRolesController;
 use Controllers\FilesController;
 use Controllers\HearsesController;
+use Controllers\IdentificationsController;
 use Controllers\IntranetController;
+use Controllers\OpsCountriesController;
 use Controllers\PackagesController;
 use Controllers\PagesController;
 use Controllers\ProductsController;
+use Controllers\RelationsController;
 use Controllers\ServicesController;
+use Controllers\SpecialProgramsController;
 use Controllers\UserPagesController;
+use Controllers\UsersController;
 
 $router = new Router();
 
@@ -69,6 +75,25 @@ $router->get('/confirmAccount', [AuthController::class, 'confirmaccount']);
 
 // Admin area
 $router->get('/dashboard/start', [DashboardController::class, 'dashboard']);
+$router->get('/dashboard/users', [DashboardController::class, 'usersMenu']);
+$router->get('/dashboard/workElements', [DashboardController::class, 'workElementsMenu']);
+$router->get('/dashboard/recordElements', [DashboardController::class, 'recordElementsMenu']);
+$router->get('/dashboard/alliMenu', [DashboardController::class, 'alliancesMenu']);
+
+$router->get('/dashboard/users/employees', [UsersController::class, 'empDashboard']);
+$router->get('/dashboard/users/employees/create', [UsersController::class, 'empCreate']);
+$router->post('/dashboard/users/employees/create', [UsersController::class, 'empCreate']);
+$router->get('/dashboard/users/employees/edit', [UsersController::class, 'empEdit']);
+$router->post('/dashboard/users/employees/edit', [UsersController::class, 'empEdit']);
+$router->post('/dashboard/users/employees/delete', [UsersController::class, 'empDelete']);
+$router->get('/dashboard/users/others', [UsersController::class, 'othDashboard']);
+$router->get('/dashboard/users/others/create', [UsersController::class, 'othCreate']);
+$router->post('/dashboard/users/others/create', [UsersController::class, 'othCreate']);
+$router->get('/dashboard/users/others/edit', [UsersController::class, 'othEdit']);
+$router->post('/dashboard/users/others/edit', [UsersController::class, 'othEdit']);
+$router->post('/dashboard/users/others/delete', [UsersController::class, 'othDelete']);
+$router->get('/dashboard/users/reset', [UsersController::class, 'updatePassword']);
+$router->post('/dashboard/users/reset', [UsersController::class, 'updatePassword']);
 
 $router->get('/dashboard/services', [ServicesController::class, 'dashboard']);
 $router->get('/dashboard/services/create', [ServicesController::class, 'create']);
@@ -147,6 +172,41 @@ $router->get('/dashboard/files/edit', [FilesController::class, 'edit']);
 $router->post('/dashboard/files/edit', [FilesController::class, 'edit']);
 $router->post('/dashboard/files/delete', [FilesController::class, 'delete']);
 
+$router->get('/dashboard/specialprograms', [SpecialProgramsController::class, 'dashboard']);
+$router->get('/dashboard/specialprograms/create', [SpecialProgramsController::class, 'create']);
+$router->post('/dashboard/specialprograms/create', [SpecialProgramsController::class, 'create']);
+$router->get('/dashboard/specialprograms/edit', [SpecialProgramsController::class, 'edit']);
+$router->post('/dashboard/specialprograms/edit', [SpecialProgramsController::class, 'edit']);
+$router->post('/dashboard/specialprograms/delete', [SpecialProgramsController::class, 'delete']);
+
+$router->get('/dashboard/opscountries', [OpsCountriesController::class, 'dashboard']);
+$router->get('/dashboard/opscountries/create', [OpsCountriesController::class, 'create']);
+$router->post('/dashboard/opscountries/create', [OpsCountriesController::class, 'create']);
+$router->get('/dashboard/opscountries/edit', [OpsCountriesController::class, 'edit']);
+$router->post('/dashboard/opscountries/edit', [OpsCountriesController::class, 'edit']);
+$router->post('/dashboard/opscountries/delete', [OpsCountriesController::class, 'delete']);
+
+$router->get('/dashboard/identifications', [IdentificationsController::class, 'dashboard']);
+$router->get('/dashboard/identifications/create', [IdentificationsController::class, 'create']);
+$router->post('/dashboard/identifications/create', [IdentificationsController::class, 'create']);
+$router->get('/dashboard/identifications/edit', [IdentificationsController::class, 'edit']);
+$router->post('/dashboard/identifications/edit', [IdentificationsController::class, 'edit']);
+$router->post('/dashboard/identifications/delete', [IdentificationsController::class, 'delete']);
+
+$router->get('/dashboard/relations', [RelationsController::class, 'dashboard']);
+$router->get('/dashboard/relations/create', [RelationsController::class, 'create']);
+$router->post('/dashboard/relations/create', [RelationsController::class, 'create']);
+$router->get('/dashboard/relations/edit', [RelationsController::class, 'edit']);
+$router->post('/dashboard/relations/edit', [RelationsController::class, 'edit']);
+$router->post('/dashboard/relations/delete', [RelationsController::class, 'delete']);
+
+$router->get('/dashboard/jobroles', [EmployeeRolesController::class, 'dashboard']);
+$router->get('/dashboard/jobroles/create', [EmployeeRolesController::class, 'create']);
+$router->post('/dashboard/jobroles/create', [EmployeeRolesController::class, 'create']);
+$router->get('/dashboard/jobroles/edit', [EmployeeRolesController::class, 'edit']);
+$router->post('/dashboard/jobroles/edit', [EmployeeRolesController::class, 'edit']);
+$router->post('/dashboard/jobroles/delete', [EmployeeRolesController::class, 'delete']);
+
 $router->get('/dashboard/cotization', [CotizationsController::class, 'dashboard']);
 
 // Intranet area
@@ -182,7 +242,6 @@ $router->get('/hearses', [PagesController::class, 'hearses']);
 $router->get('/cemeteries', [PagesController::class, 'cemeteries']);
 $router->get('/crematories', [PagesController::class, 'crematories']);
 $router->get('/cotization', [PagesController::class, 'cotization']);
-
 
 // User sites
 $router->get('/user/menu', [UserPagesController::class, 'index']);

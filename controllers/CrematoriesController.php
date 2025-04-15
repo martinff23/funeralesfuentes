@@ -30,7 +30,7 @@ class CrematoriesController {
                 header('Location: /dashboard/crematories?page=1');
             }
 
-            $totalRecords = Crematory::countRecords();
+            $totalRecords = Crematory::countRecords('status', 'ACTIVE');
             $recordsPerPage = $_ENV['ITEMS_PER_PAGE']; // Ajustar a 10
             
             $pagination = new Pagination($currentPage,$recordsPerPage,$totalRecords);
@@ -39,7 +39,7 @@ class CrematoriesController {
                 header('Location: /dashboard/crematories?page=1');
             }
 
-            $crematories = Crematory::paginate($recordsPerPage,$pagination->calculateOffset());
+            $crematories = Crematory::paginateStatus($recordsPerPage,$pagination->calculateOffset(), 'ACTIVE');
 
             $router->render('admin/crematories/index',[
                 'title' => 'Crematorios ofrecidos',
@@ -316,7 +316,7 @@ class CrematoriesController {
         }
     }
 
-    public static function delete(Router $router){
+    public static function delete(){
         session_start();
 
         if(isAuth() && !isAdmin()){
@@ -330,7 +330,7 @@ class CrematoriesController {
                 header('Location: /dashboard/crematories');
             }
             
-            $result=$crematory->deleteElement();
+            $result=$crematory->deleteNElement();
             if($result){
                 header('Location: /dashboard/crematories');
             }

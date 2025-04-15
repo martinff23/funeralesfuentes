@@ -143,6 +143,9 @@ class PagesController {
         }
 
         $formatedProducts = groupProductsByCategory(Product::all(), groupCategories(Category::allWhere('type','product')));
+        
+        $folder_name = __DIR__ . '/../public/build/img/wip';
+        $selectedImage = getRandomImageFromFolder($folder_name, ['png', 'jpg', 'jpeg']);
 
         if(!empty($_SESSION)){
             $user = User::find($_SESSION['id']);
@@ -151,6 +154,7 @@ class PagesController {
                 $router->render('pages/products',[
                     'title' => 'Productos funerarios',
                     'products' => $formatedProducts,
+                    'selectedImage' => $selectedImage,
                     'user' => $user
                 ]);
             } else{
@@ -159,7 +163,8 @@ class PagesController {
         } else{
             $router->render('pages/products',[
                 'title' => 'Productos funerarios',
-                'products' => $formatedProducts
+                'products' => $formatedProducts,
+                'selectedImage' => $selectedImage,
             ]);
         }
     }
@@ -173,6 +178,9 @@ class PagesController {
 
         $groupedServices = groupServicesByCategory(Service::all(), groupCategories(Category::allWhere('type','service')));
 
+        $folder_name = __DIR__ . '/../public/build/img/wip';
+        $selectedImage = getRandomImageFromFolder($folder_name, ['png', 'jpg', 'jpeg']);
+
         if(!empty($_SESSION)){
             $user = User::find($_SESSION['id']);
 
@@ -180,6 +188,7 @@ class PagesController {
                 $router->render('pages/services',[
                     'title' => 'Servicios funerarios',
                     'services' => $groupedServices,
+                    'selectedImage' => $selectedImage,
                     'user' => $user
                 ]);
             } else{
@@ -188,7 +197,8 @@ class PagesController {
         } else{
             $router->render('pages/services',[
                 'title' => 'Servicios funerarios',
-                'services' => $groupedServices
+                'services' => $groupedServices,
+                'selectedImage' => $selectedImage
             ]);
         }
     }
@@ -202,6 +212,9 @@ class PagesController {
 
         $groupedBranches = groupBranchesByCategory(Branch::all(), groupCategories(Category::allWhere('type','branch')));
 
+        $folder_name = __DIR__ . '/../public/build/img/wip';
+        $selectedImage = getRandomImageFromFolder($folder_name, ['png', 'jpg', 'jpeg']);
+
         if(!empty($_SESSION)){
             $user = User::find($_SESSION['id']);
 
@@ -210,6 +223,7 @@ class PagesController {
                     'title' => 'Sucursales y puntos de venta',
                     'branches' => $groupedBranches,
                     'start' => false,
+                    'selectedImage' => $selectedImage,
                     'user' => $user
                 ]);
             } else{
@@ -219,7 +233,8 @@ class PagesController {
             $router->render('pages/branches',[
                 'title' => 'Sucursales y puntos de venta',
                 'branches' => $groupedBranches,
-                'start' => false
+                'start' => false,
+                'selectedImage' => $selectedImage,
             ]);
         }
     }
@@ -233,6 +248,9 @@ class PagesController {
 
         $groupedChapels = groupChapelsByCategory(Chapel::all(), groupCategories(Category::allWhere('type','chapel')));
 
+        $folder_name = __DIR__ . '/../public/build/img/wip';
+        $selectedImage = getRandomImageFromFolder($folder_name, ['png', 'jpg', 'jpeg']);
+
         if(!empty($_SESSION)){
             $user = User::find($_SESSION['id']);
 
@@ -241,6 +259,7 @@ class PagesController {
                     'title' => 'Capillas de velación',
                     'chapels' => $groupedChapels,
                     'start' => false,
+                    'selectedImage' => $selectedImage,
                     'user' => $user
                 ]);
             } else{
@@ -250,7 +269,8 @@ class PagesController {
             $router->render('pages/chapels',[
                 'title' => 'Capillas de velación',
                 'chapels' => $groupedChapels,
-                'start' => false
+                'start' => false,
+                'selectedImage' => $selectedImage
             ]);
         }
     }
@@ -264,6 +284,9 @@ class PagesController {
 
         $groupedHearses = groupHearsesByCategory(Hearse::all(), groupCategories(Category::allWhere('type','hearse')));
 
+        $folder_name = __DIR__ . '/../public/build/img/wip';
+        $selectedImage = getRandomImageFromFolder($folder_name, ['png', 'jpg', 'jpeg']);
+
         if(!empty($_SESSION)){
             $user = User::find($_SESSION['id']);
 
@@ -272,6 +295,7 @@ class PagesController {
                     'title' => 'Carrozas',
                     'hearses' => $groupedHearses,
                     'start' => false,
+                    'selectedImage' => $selectedImage,
                     'user' => $user
                 ]);
             } else{
@@ -281,7 +305,8 @@ class PagesController {
             $router->render('pages/hearses',[
                 'title' => 'Carrozas',
                 'hearses' => $groupedHearses,
-                'start' => false
+                'start' => false,
+                'selectedImage' => $selectedImage
             ]);
         }
     }
@@ -295,6 +320,9 @@ class PagesController {
 
         $groupedCemeteries = groupCemeteriesByCategory(Cemetery::all(), groupCategories(Category::allWhere('type','cemetery')));
 
+        $folder_name = __DIR__ . '/../public/build/img/wip';
+        $selectedImage = getRandomImageFromFolder($folder_name, ['png', 'jpg', 'jpeg']);
+
         if(!empty($_SESSION)){
             $user = User::find($_SESSION['id']);
 
@@ -303,6 +331,7 @@ class PagesController {
                     'title' => 'Cementerios',
                     'cemeteries' => $groupedCemeteries,
                     'start' => false,
+                    'selectedImage' => $selectedImage,
                     'user' => $user
                 ]);
             } else{
@@ -312,7 +341,8 @@ class PagesController {
             $router->render('pages/cemeteries',[
                 'title' => 'Cementerios',
                 'cemeteries' => $groupedCemeteries,
-                'start' => false
+                'start' => false,
+                'selectedImage' => $selectedImage
             ]);
         }
     }
@@ -326,6 +356,9 @@ class PagesController {
 
         $groupedCrematories = groupCrematoriesByCategory(Crematory::all(), groupCategories(Category::allWhere('type','crematory')));
 
+        $folder_name = __DIR__ . '/../public/build/img/wip';
+        $selectedImage = getRandomImageFromFolder($folder_name, ['png', 'jpg', 'jpeg']);
+
         if(!empty($_SESSION)){
             $user = User::find($_SESSION['id']);
 
@@ -334,6 +367,7 @@ class PagesController {
                     'title' => 'Crematorios',
                     'crematories' => $groupedCrematories,
                     'start' => false,
+                    'selectedImage' => $selectedImage,
                     'user' => $user
                 ]);
             } else{
@@ -343,7 +377,8 @@ class PagesController {
             $router->render('pages/crematories',[
                 'title' => 'Crematorios',
                 'crematories' => $groupedCrematories,
-                'start' => false
+                'start' => false,
+                'selectedImage' => $selectedImage
             ]);
         }
     }
