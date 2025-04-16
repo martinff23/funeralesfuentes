@@ -212,20 +212,34 @@ class UserPagesController {
                     $user->currentImage = $user->image;
                     
                     if('POST'===$_SERVER['REQUEST_METHOD']){
-                        $imageFolder = '../public/build/img/users/';
+                        $imageFolder = 'public/build/img/users/';
                         $savePicture = false;
-        
-                        // Read image
+                        $imagesToSave = [];
                         $imageName = md5(uniqid(rand(),true));
-
-                        if(!empty(trim($_FILES['user_image']['tmp_name']))){
+    
+                        // Read image
+                        if (!empty($_FILES['user_image']['tmp_name'])) {
                             $manager = new ImageManager(new Driver());
-                            $pngImage=$manager->read(trim($_FILES['user_image']['tmp_name']))->resize(800,600)->encode(new PngEncoder(80));
-                            $webpImage=$manager->read(trim($_FILES['user_image']['tmp_name']))->resize(800,600)->encode(new WebpEncoder(80));
-                            $_POST['image']=$imageName;
-                            $savePicture=true;
-                        } else{
-                            $_POST['image']=$user->currentImage;
+                            $tmpNameFiles = $_FILES['user_image']['tmp_name'];
+                            $imagesToSave = [];
+                        
+                            $tmpNameFile = trim($tmpNameFiles);
+                    
+                            $image = $manager->read($tmpNameFile)->resize(800, 600);
+                            $pngImage = $image->encode(new PngEncoder(80));
+                            $webpImage = $image->encode(new WebpEncoder(80));
+                    
+                            // Guardar en array temporal
+                            $imagesToSave[] = [
+                                'name' => $imageName,
+                                'png' => $pngImage,
+                                'webp' => $webpImage
+                            ];
+                        
+                            $_POST['image'] = $imageName;
+                            $savePicture = true;
+                        } else {
+                            $_POST['image'] = $user->image;
                         }
 
                         $_POST['id'] = $_SESSION['id'];
@@ -242,21 +256,25 @@ class UserPagesController {
             
                                 // Make the foldar ALWAYS writable
                                 chmod($imageFolder, 0777);
-
-                                // Delete previous image
-                                $pngCurrent = trim($imageFolder . $user->currentImage) . '.png';
-                                $webpCurrent = trim($imageFolder . $user->currentImage) . '.webp';
-
-                                if (file_exists($pngCurrent)) {
-                                    unlink($pngCurrent);
+    
+                                // Delete previous images before saving the new ones
+                                $oldPngPath  = $imageFolder . $user->currentImage . '.png';
+                                $oldWebpPath = $imageFolder . $user->currentImage . '.webp';
+    
+                                if (file_exists($oldPngPath)) {
+                                    unlink($oldPngPath);
                                 }
-                                if (file_exists($webpCurrent)) {
-                                    unlink($webpCurrent);
+                                if (file_exists($oldWebpPath)) {
+                                    unlink($oldWebpPath);
                                 }
             
                                 // Put image on server
-                                $pngImage->save(trim($imageFolder.$imageName).'.png');
-                                $webpImage->save(trim($imageFolder.$imageName).'.webp');
+                                foreach($imagesToSave as $imageToSave){
+                                    $currentPngImage = $imageToSave['png'];
+                                    $currentWebpImage = $imageToSave['webp'];
+                                    $currentPngImage->save(trim($imageFolder.$imageToSave['name']).'.png');
+                                    $currentWebpImage->save(trim($imageFolder.$imageToSave['name']).'.webp');
+                                }
                             }
             
                             $result = $photograph->saveElement();
