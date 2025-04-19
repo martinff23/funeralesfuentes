@@ -42,6 +42,13 @@
     &__sidebar{
         background-color: var.$c_blue;
         width: 10rem;
+        // z-index: 1000;
+        // position: relative; 
+        position: relative;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        z-index: 999;
     }
     &__menu{
         padding: 0;
@@ -64,6 +71,21 @@
     &__icon{
         font-size: 1.5rem;
     }
+    &__notification-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+    &__notification-badge {
+        position: absolute;
+        top: -10px;
+        right: -15px;
+        background-color: red;
+        color: white;
+        font-size: 1.35rem;
+        padding: 2px 6px;
+        border-radius: 50%;
+        font-weight: bold;
+    }
     &__menu-text{
         font-size: 1.1rem;
         text-transform: uppercase;
@@ -74,7 +96,10 @@
     &__content{
         padding: 1rem 1rem 3rem 1rem;
         width: 100%;
-        overflow-y: scroll;
+        // overflow-y: scroll;
+        overflow-y: auto;
+        position: relative;
+        z-index: 0;
         @include mix.tablet{
             padding: 1rem 5rem 3rem 5rem;
         }
@@ -104,4 +129,20 @@
         @extend .dashboard__container;
         @include mix.container-md;
     }
+}
+
+.swal2-container {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    justify-content: center;
+    align-items: center; // ✅ CENTRADO vertical
+    z-index: 20 !important; // debajo del sidebar si es necesario
+}
+
+.swal-local-popup {
+    font-size: 1.5rem;
+    width: 100%;
+    max-width: 600px;
 }

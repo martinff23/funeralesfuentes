@@ -4,6 +4,8 @@ namespace Controllers;
 
 use Classes\Email;
 use Model\Birthday;
+use Model\Contact;
+use Model\Task;
 use Model\User;
 use MVC\Router;
 
@@ -17,6 +19,8 @@ class DashboardController {
 
         if(isset($_SESSION['id'])){
             $user =  User::find($_SESSION['id']);
+            $countcontacts = Contact::countRecords('status', 'ACTIVE');
+            $counttasks = Task::countRecords('status', 'ACTIVE');
 
             if("1" === $user->registerOrigin){
                 header('Location: /dashboard/users/reset');
@@ -38,7 +42,9 @@ class DashboardController {
                 $router->render($url,[
                     'title' => $title,
                     'user' => $user,
-                    'birthdays' => $birthdays
+                    'birthdays' => $birthdays,
+                    'countcontacts' => $countcontacts,
+                    'counttasks' => $counttasks
                 ]);
             }
         } else{

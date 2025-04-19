@@ -22,6 +22,7 @@ use Controllers\APIInventoryController;
 use Controllers\APILocationsController;
 use Controllers\APIProductsController;
 use Controllers\APIServicesController;
+use Controllers\APITaskController;
 use Controllers\APIUsersController;
 use MVC\Router;
 use Controllers\AuthController;
@@ -29,6 +30,7 @@ use Controllers\BranchesController;
 use Controllers\CemeteriesController;
 use Controllers\ChapelsController;
 use Controllers\ComplementsController;
+use Controllers\ContactsController;
 use Controllers\CotizationsController;
 use Controllers\CrematoriesController;
 use Controllers\DashboardController;
@@ -44,6 +46,7 @@ use Controllers\ProductsController;
 use Controllers\RelationsController;
 use Controllers\ServicesController;
 use Controllers\SpecialProgramsController;
+use Controllers\TasksController;
 use Controllers\UserPagesController;
 use Controllers\UsersController;
 
@@ -207,7 +210,9 @@ $router->get('/dashboard/jobroles/edit', [EmployeeRolesController::class, 'edit'
 $router->post('/dashboard/jobroles/edit', [EmployeeRolesController::class, 'edit']);
 $router->post('/dashboard/jobroles/delete', [EmployeeRolesController::class, 'delete']);
 
-$router->get('/dashboard/cotization', [CotizationsController::class, 'dashboard']);
+$router->get('/dashboard/contacts', [ContactsController::class, 'dashboard']);
+
+$router->get('/dashboard/tasks', [TasksController::class, 'dashboard']);
 
 // Intranet area
 $router->get('/dashboard/intranet', [IntranetController::class, 'dashboard']);
@@ -228,6 +233,10 @@ $router->get('/api/locations', [APILocationsController::class, 'locations']);
 $router->get('/api/contact', [APIContactController::class, 'contact']);
 $router->post('/api/contact', [APIContactController::class, 'contact']);
 $router->post('/api/deleteuser', [APIUsersController::class, 'deleteUserN']);
+$router->post('/api/takecontact', [APITaskController::class, 'takeContact']);
+$router->post('/api/gettaskinfo', [APITaskController::class, 'getTask']);
+$router->post('/api/completetask', [APITaskController::class, 'completeTask']);
+$router->post('/api/returntask', [APITaskController::class, 'returnTask']);
 
 // Public areas
 $router->get('/', [PagesController::class, 'index']);

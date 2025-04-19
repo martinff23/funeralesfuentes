@@ -25,7 +25,10 @@ class APIContactController{
                 'email' => $input['email'],
             ];
 
-            $_POST['status'] = "CONTACT_URGENT";
+            $_POST['status'] = "ACTIVE";
+            $_POST['assignee'] = 0;
+            $_POST['entered_date'] = date('Y-m-d');
+            $_POST['closed_date'] = '9999/12/31';
             $contact->sincronize($_POST);
             $alerts = $contact->validate();
             if(empty($alerts)){

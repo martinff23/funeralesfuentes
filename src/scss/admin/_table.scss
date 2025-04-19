@@ -21,6 +21,44 @@
     }
     &__td{
         padding: 1.5rem 1rem;
+        &--none{
+            font-weight: bold;
+            @extend .table__td;
+            align-items: center;
+            text-align: center;
+        }
+        &--green{
+            font-weight: bold;
+            @extend .table__td;
+            align-items: center;
+            text-align: center;
+            background-color: var.$c_olive;
+            color: var.$c_white;
+        }
+        &--yellow{
+            font-weight: bold;
+            @extend .table__td;
+            align-items: center;
+            text-align: center;
+            background-color: var.$c_yellow;
+            color: var.$c_blue;
+        }
+        &--blue{
+            font-weight: bold;
+            @extend .table__td;
+            align-items: center;
+            text-align: center;
+            background-color: var.$c_secondary;
+            color: var.$c_blue;
+        }
+        &--red{
+            font-weight: bold;
+            @extend .table__td;
+            align-items: center;
+            text-align: center;
+            background-color: var.$c_red;
+            color: var.$c_white;
+        }
         &--actions{
             @extend .table__td;
             align-items: center;
@@ -31,12 +69,33 @@
                 gap: 1rem;
             }
         }
+        &--actions-contacts{
+            @extend .table__td;
+            align-items: center;
+            text-align: center;
+            @include mix.tablet{
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+            }
+        }
+        &--actions-tasks{
+            @extend .table__td;
+            align-items: center;
+            text-align: center;
+            @include mix.tablet{
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+            }
+        }
     }
     &__action{
         all: unset;
         text-transform: uppercase;
         font-weight: var.$bold;
         padding: 1rem 0;
+        // margin: 0 auto;
         @include mix.tablet{
             padding: 0;
         }
@@ -45,6 +104,39 @@
         }
         &--delete{
             color: var.$c_red;
+        }
+        &--take{
+            border: solid 1px var.$c_blue;
+            color: var.$c_blue;
+            padding: 0.8rem 1rem;
+            border-radius: 0.5rem;
+            &:hover{
+                cursor: pointer;
+                color: var.$c_golden;
+                background-color: var.$c_blue;
+            }
+        }
+        &--complete{
+            border: solid 1px var.$c_olive;
+            color: var.$c_olive;
+            padding: 0.8rem 1rem;
+            border-radius: 0.5rem;
+            &:hover{
+                cursor: pointer;
+                color: var.$c_white;
+                background-color: var.$c_olive;
+            }
+        }
+        &--return{
+            border: solid 1px var.$c_red;
+            color: var.$c_red;
+            padding: 0.8rem 1rem;
+            border-radius: 0.5rem;
+            &:hover{
+                cursor: pointer;
+                color: var.$c_white;
+                background-color: var.$c_red;
+            }
         }
         &:hover{
             cursor: pointer;

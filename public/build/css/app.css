@@ -1996,6 +1996,11 @@ h3 {
 .dashboard__sidebar {
   background-color: rgb(10.2, 20.4, 51);
   width: 10rem;
+  position: relative;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  z-index: 999;
 }
 .dashboard__menu {
   padding: 0;
@@ -2017,6 +2022,21 @@ h3 {
 .dashboard__icon {
   font-size: 1.5rem;
 }
+.dashboard__notification-wrapper {
+  position: relative;
+  display: inline-block;
+}
+.dashboard__notification-badge {
+  position: absolute;
+  top: -10px;
+  right: -15px;
+  background-color: red;
+  color: white;
+  font-size: 1.35rem;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: bold;
+}
 .dashboard__menu-text {
   font-size: 1.1rem;
   text-transform: uppercase;
@@ -2027,7 +2047,9 @@ h3 {
 .dashboard__content {
   padding: 1rem 1rem 3rem 1rem;
   width: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
+  position: relative;
+  z-index: 0;
 }
 @media (min-width: 768px) {
   .dashboard__content {
@@ -2078,6 +2100,22 @@ h3 {
   margin: 0 auto;
 }
 
+.swal2-container {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  justify-content: center;
+  align-items: center;
+  z-index: 20 !important;
+}
+
+.swal-local-popup {
+  font-size: 1.5rem;
+  width: 100%;
+  max-width: 600px;
+}
+
 .table {
   font-size: 1.3rem;
   background-color: #F8FAFC;
@@ -2095,8 +2133,41 @@ h3 {
 .table__tr:nth-of-type(even) {
   background-color: rgb(216.0334728033, 220.5188284519, 226.9665271967);
 }
-.table__td, .table__td--actions {
+.table__td, .table__td--actions-tasks, .table__td--actions-contacts, .table__td--actions, .table__td--red, .table__td--blue, .table__td--yellow, .table__td--green, .table__td--none {
   padding: 1.5rem 1rem;
+}
+.table__td--none {
+  font-weight: bold;
+  align-items: center;
+  text-align: center;
+}
+.table__td--green {
+  font-weight: bold;
+  align-items: center;
+  text-align: center;
+  background-color: #4b5c09;
+  color: #FFFFFF;
+}
+.table__td--yellow {
+  font-weight: bold;
+  align-items: center;
+  text-align: center;
+  background-color: #FFFF00;
+  color: rgb(10.2, 20.4, 51);
+}
+.table__td--blue {
+  font-weight: bold;
+  align-items: center;
+  text-align: center;
+  background-color: #00c8c2;
+  color: rgb(10.2, 20.4, 51);
+}
+.table__td--red {
+  font-weight: bold;
+  align-items: center;
+  text-align: center;
+  background-color: rgb(169, 0, 0);
+  color: #FFFFFF;
 }
 .table__td--actions {
   align-items: center;
@@ -2106,6 +2177,28 @@ h3 {
   .table__td--actions {
     display: flex;
     justify-content: flex-end;
+    gap: 1rem;
+  }
+}
+.table__td--actions-contacts {
+  align-items: center;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .table__td--actions-contacts {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+}
+.table__td--actions-tasks {
+  align-items: center;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .table__td--actions-tasks {
+    display: flex;
+    justify-content: center;
     gap: 1rem;
   }
 }
@@ -2125,6 +2218,39 @@ h3 {
 }
 .table__action--delete {
   color: rgb(169, 0, 0);
+}
+.table__action--take {
+  border: solid 1px rgb(10.2, 20.4, 51);
+  color: rgb(10.2, 20.4, 51);
+  padding: 0.8rem 1rem;
+  border-radius: 0.5rem;
+}
+.table__action--take:hover {
+  cursor: pointer;
+  color: #e6d36c;
+  background-color: rgb(10.2, 20.4, 51);
+}
+.table__action--complete {
+  border: solid 1px #4b5c09;
+  color: #4b5c09;
+  padding: 0.8rem 1rem;
+  border-radius: 0.5rem;
+}
+.table__action--complete:hover {
+  cursor: pointer;
+  color: #FFFFFF;
+  background-color: #4b5c09;
+}
+.table__action--return {
+  border: solid 1px rgb(169, 0, 0);
+  color: rgb(169, 0, 0);
+  padding: 0.8rem 1rem;
+  border-radius: 0.5rem;
+}
+.table__action--return:hover {
+  cursor: pointer;
+  color: #FFFFFF;
+  background-color: rgb(169, 0, 0);
 }
 .table__action:hover {
   cursor: pointer;

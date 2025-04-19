@@ -444,8 +444,35 @@ function getVisualValue($realValue){
         case 'ACTIVE':
             $result = "Activo";
         break;
+        case 'DANGER':
+            $result = "Urgente";
+        break;
+        case 'OUTDATED':
+            $result = "Fecha excedida";
+        break;
+        case 'WARNING':
+            $result = "Atencion";
+        break;
+        case 'COMPLETED':
+            $result = "Completado";
+        break;
         case 'INACTIVE':
             $result = "Inhabilitado";
+        break;
+        case 'RETURNED':
+            $result = "Retornada";
+        break;
+        case 'HIGH':
+            $result = "Alta";
+        break;
+        case 'MEDIUM':
+            $result = "Media";
+        break;
+        case 'LOW':
+            $result = "Baja";
+        break;
+        case 'NONE':
+            $result = "-";
         break;
         case 'ADMIN':
             $result = "Administrador";
@@ -490,4 +517,30 @@ function getPeriod($date, $periods) {
     $periodo = ceil(($month / 12) * $periods);
 
     return $year . '/' . $periodo;
+}
+
+function getCellColorStatus($status){
+    error_log(strtoupper($status));
+    if("WARNING" === strtoupper($status)){
+        return 'yellow';
+    } else if("OUTDATED" === strtoupper($status)){
+        return 'red';
+    } else if("COMPLETED" === strtoupper($status)){
+        return 'green';
+    } else{
+        return '';
+    }
+}
+
+function getCellColorPriority($priority){
+    error_log(strtoupper($priority));
+    if("HIGH" === strtoupper($priority)){
+        return 'red';
+    } else if("MEDIUM" === strtoupper($priority)){
+        return 'yellow';
+    } else if("LOW" === strtoupper($priority)){
+        return 'green';
+    } else{
+        return '';
+    }
 }

@@ -37,6 +37,7 @@ class ActiveRecord {
     public static function querySQL($query) {
         // Consultar la base de datos
         // debug($query);
+        error_log("QUERY: " . $query);
         $result = self::$db->query($query);
 
         // Iterar los resultados
@@ -116,6 +117,13 @@ class ActiveRecord {
     // Obtener todos los Registros vinculados a una palabra
     public static function allWhere($columnName,$columnValue) {
         $query = "SELECT * FROM " . static::$table . " WHERE ".$columnName." LIKE '%" .$columnValue. "%' ORDER BY ".$columnName." ASC";
+        $result = self::querySQL($query);
+        return $result;
+    }
+
+    // Obtener todos los Registros vinculados a una palabra
+    public static function allWhereNot($columnName,$columnValue) {
+        $query = "SELECT * FROM " . static::$table . " WHERE ".$columnName." NOT LIKE '%" .$columnValue. "%' ORDER BY ".$columnName." ASC";
         $result = self::querySQL($query);
         return $result;
     }
@@ -215,6 +223,7 @@ class ActiveRecord {
         $query .= "') ";
 
         // debug($query); // Descomentar si no te funciona algo
+        // error_log($query);
 
         // Resultado de la consulta
         $result = self::$db->query($query);
@@ -240,6 +249,8 @@ class ActiveRecord {
         $query .=  join(', ', $values );
         $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
         $query .= " LIMIT 1 "; 
+        
+        // error_log($query);
 
         // Actualizar BD
         $result = self::$db->query($query);

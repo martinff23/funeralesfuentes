@@ -101,20 +101,6 @@
     </div>
 
     <div class="intranet-options">
-    <p class="intranet-menu__title-text">Tareas y proyectos</p>
-        <div class="intranet-options__grid">
-            <a href="/dashboard/intranet/tasks/internal" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/tasks/internal');?>">
-                <i class="fa-solid fa-list-check intranet-options__icon"></i>
-                <span class="intranet-options__menu-text">Mis tareas internas</span>
-            </a>
-            <a href="/dashboard/intranet/tasks/external" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/tasks/external');?>">
-                <i class="fa-solid fa-diagram-project intranet-options__icon"></i>
-                <span class="intranet-options__menu-text">Mis tareas externas</span>
-            </a>
-        </div>
-    </div>
-
-    <div class="intranet-options">
     <p class="intranet-menu__title-text">Solicitudes y servicios</p>
         <div class="intranet-options__grid">
             <a href="/dashboard/intranet/requests/it" class="intranet-options__link <?php echo currentPage('/dashboard/intranet/requests/it');?>">

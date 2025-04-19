@@ -42,6 +42,10 @@ class ComposerStaticInit0d58b69c3a8b91cf05b76a29918b973f
             'Model\\' => 6,
             'MVC\\' => 4,
         ),
+        'L' => 
+        array (
+            'League\\OAuth2\\Client\\' => 21,
+        ),
         'I' => 
         array (
             'Intervention\\Image\\' => 19,
@@ -119,6 +123,11 @@ class ComposerStaticInit0d58b69c3a8b91cf05b76a29918b973f
         'MVC\\' => 
         array (
             0 => __DIR__ . '/../..' . '/',
+        ),
+        'League\\OAuth2\\Client\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/league/oauth2-client/src',
+            1 => __DIR__ . '/..' . '/league/oauth2-google/src',
         ),
         'Intervention\\Image\\' => 
         array (

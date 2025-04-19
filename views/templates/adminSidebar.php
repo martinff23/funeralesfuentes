@@ -27,14 +27,28 @@
             </a>
         <?php }?>
         <?php if(isAuth() && !isAdmin()){ ?>
-            <a href="/dashboard/cotization" class="dashboard__link <?php echo currentPage('/cotization');?>">
-                <i class="fa-solid fa-dollar-sign dashboard__icon"></i>
-                <span class="dashboard__menu-text">Cotizaciones</span>
+            <a href="/dashboard/contacts" class="dashboard__link <?php echo currentPage('/contacts');?>">
+                <?php if($countcontacts > 0){?>
+                    <div class="dashboard__notification-wrapper">
+                        <i class="fa fa-phone-volume dashboard__icon"></i>
+                        <span class="dashboard__notification-badge"><?php echo $countcontacts; ?></span>
+                    </div>
+                <?php } else { ?>
+                    <i class="fa fa-phone-volume dashboard__icon"></i>
+                <?php } ?>
+                <span class="dashboard__menu-text">Solicitud de contacto</span>
             </a>
-            <!-- <a href="/dashboard/intranet" class="dashboard__link <?php echo currentPage('/intranet');?>">
-                <i class="fa-solid fa-users dashboard__icon"></i>
-                <span class="dashboard__menu-text">Intranet</span>
-            </a> -->
+            <a href="/dashboard/tasks" class="dashboard__link <?php echo currentPage('/tasks');?>">
+                <?php if($counttasks > 0){?> <!-- counttasks -->
+                    <div class="dashboard__notification-wrapper">
+                        <i class="fa-solid fa-list-check dashboard__icon"></i>
+                        <span class="dashboard__notification-badge"><?php echo $counttasks; ?></span>
+                    </div>
+                <?php } else { ?>
+                    <i class="fa-solid fa-list-check dashboard__icon"></i>
+                <?php } ?>
+                <span class="dashboard__menu-text">Mis asignaciones</span>
+            </a>
         <?php }?>
     </nav>
 </aside>

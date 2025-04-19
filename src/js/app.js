@@ -8,3 +8,5 @@ import './nav.js';
 import './swiperElement.js';
 import './userMenu.js';
 import './password.js';
+import './contact.js';
+import './task.js';
